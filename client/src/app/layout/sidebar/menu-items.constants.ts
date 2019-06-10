@@ -1,15 +1,16 @@
-import { Role } from './../../core/models/role.enum';
+
 import { MenuItem } from './menu-item'
+import { RoleEnum } from '@ikubinfo/core/models/role.enum';
 
 export const menuItems: Array<MenuItem> = [{
     url: '/suggestion/dashboard',
     icon: 'fa-dashboard',
     label: 'Dashboard',
-    allowedRoles: [Role.ADMIN, Role.USER]
+    allowedRoles: [RoleEnum.ADMIN, RoleEnum.USER]
 }, {
     url: '/suggestion/posts',
     icon: 'fa-table',
     label: 'Manage posts',
-    allowedRoles: [Role.ADMIN]
+    allowedRoles: [RoleEnum.ADMIN]
 
 }]

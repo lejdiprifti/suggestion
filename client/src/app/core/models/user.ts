@@ -1,4 +1,4 @@
-import { Role } from '@ikubinfo/core/models/role.enum';
+import { Role } from './role';
 
 
 export interface User {

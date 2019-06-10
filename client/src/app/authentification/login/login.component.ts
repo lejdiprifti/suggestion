@@ -30,8 +30,7 @@ export class LoginComponent implements OnInit {
   login(): void {
  this.authService.login(this.loginForm.value).subscribe(
  (res: any)=>{
-   localStorage.setItem('token', res.token);
-  this.authService.setData(this.loginForm.value);
+  this.authService.setData(res);
   this.router.navigate(['/suggestion']);
  },
  err=>{
