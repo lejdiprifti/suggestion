@@ -30,7 +30,7 @@ export class AuthService {
     //TO-DO: Mock Login => Need to be implemented with the real api calls
 
     login(loginContext: Login): Observable<any> {
-     return this.apiService.post('/login',loginContext);
+     return this.apiService.post('login',loginContext);
     
     }
 

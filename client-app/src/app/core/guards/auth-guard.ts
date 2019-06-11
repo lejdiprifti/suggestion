@@ -5,15 +5,16 @@ import {
 } from '@angular/router';
 
 import { AuthService } from '@ikubinfo/core/services/auth.service';
+import { RegisterService } from '../services/register.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthGuard implements CanLoad {
-    constructor(private authService: AuthService, private router: Router) { }
+    constructor(private authService: AuthService, private router: Router , private registerService: RegisterService) { }
 
     canLoad(route: Route): boolean {
-        if (this.authService.isLoggedIn) {
+        if (this.authService.isLoggedIn || this.registerService.isLoggedIn) {
             return true;
         }
         else {

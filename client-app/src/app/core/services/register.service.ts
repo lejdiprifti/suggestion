@@ -5,12 +5,13 @@ import { ApiService } from '../utilities/api.service';
 import { User } from '../models/user';
 import { Subject } from 'rxjs';
 import { RoleEnum } from '../models/role.enum';
+import { Register } from '../models/register';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
-  user: User;
+registerUser: Register;
   onUserChanged: Subject<User>;
   
   constructor(private apiService: ApiService) { 
@@ -18,8 +19,8 @@ export class RegisterService {
     this.loadData();
   }
   
-  register(user: User){
-    return this.apiService.post('/register', user);
+  register(registerUser: Register){
+    return this.apiService.post('register', registerUser);
   }
 
   logout(): void {
@@ -28,13 +29,14 @@ export class RegisterService {
 
 
 
-setData(user: User) {
+setData(registerUser: Register) {
     console.debug(
-        user  ? "Setting current user info. : Clearing current user info." : ""
+      registerUser  ? "Setting current user info. : Clearing current user info." : ""
     );
-    if (user) {
-        sessionStorage.setItem("userData", JSON.stringify(user));
-        this.onUserChanged.next(user);
+    if (registerUser) {
+      this.registerUser = registerUser;
+        sessionStorage.setItem("userData", JSON.stringify(registerUser));
+        this.onUserChanged.next(registerUser);
     } else {
         sessionStorage.removeItem("userData");
 
@@ -50,12 +52,19 @@ get isLoggedIn(): any {
 private loadData() {
 
     if (sessionStorage.getItem("userData")) {
-        this.user = JSON.parse(sessionStorage.getItem("userData"));
+        this.registerUser = JSON.parse(sessionStorage.getItem("userData"));
     }
     else {
-        this.user = null;
+        this.registerUser = null;
     }
 
+}
+ 
+get role(): RoleEnum {
+  if (this.isLoggedIn && this.registerUser.role) {
+      return this.registerUser.role.id;
+  }
+  return null;
 }
 
 

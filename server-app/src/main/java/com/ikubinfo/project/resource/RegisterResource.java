@@ -24,12 +24,10 @@ public class RegisterResource {
 	}
 
 	@POST
-	public Response register(RegisterRequest registerRequest) {
-		try {
+	public Response register(RegisterRequest registerRequest) throws Exception {
+		
 			return Response.ok(registerService.register(registerRequest)).build();
-		}catch(Exception e) {
-			return Response.status(400).build();
-		}
+		
 
 	}
 }

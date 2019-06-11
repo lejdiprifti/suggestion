@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RegisterService } from '@ikubinfo/core/services/register.service';
-import { throwError } from 'rxjs';
+import { throwError, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Role } from '@ikubinfo/core/models/role';
 import { User } from '@ikubinfo/core/models/user';
 import { Register } from '@ikubinfo/core/models/register';
 import { RoleEnum } from '@ikubinfo/core/models/role.enum';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -21,13 +22,15 @@ export class RegisterComponent implements OnInit {
   role:Role;
   registerUser: Register;
   constructor(private router: Router,private fb: FormBuilder ,private registerService: RegisterService) { 
- 
+    this.registerUser = {
+
+    }
   }
 
 
   ngOnInit() {
     this.registerForm = this.fb.group({
-      name: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required],
       role: {
             "id": RoleEnum.USER,
@@ -42,7 +45,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    this.registerUser.username = this.registerForm.value.name;
+    this.registerUser.username = this.registerForm.value.username;
     this.registerUser.password= this.registerForm.value.password;
     this.registerUser.role = this.registerForm.value.role;
     this.registerUser.birthdate = this.registerForm.value.birthdate;
