@@ -11,16 +11,17 @@ import { RoleEnum } from '@ikubinfo/core/models/role.enum';
 import { Login } from '@ikubinfo/core/models/login';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
+import { ApiService } from '../utilities/api.service';
 
 
-
+ 
 @Injectable()
 export class AuthService {
 
     user: User;
     onUserChanged: Subject<User>;
 
-    constructor(private http: HttpClient, private fb: FormBuilder) {
+    constructor(private apiService:ApiService, private fb: FormBuilder) {
         this.onUserChanged = new Subject<User>();
         this.loadData();
     }
@@ -29,7 +30,7 @@ export class AuthService {
     //TO-DO: Mock Login => Need to be implemented with the real api calls
 
     login(loginContext: Login): Observable<any> {
-     return this.http.post('http://localhost:8080/akademia-project/api/login',loginContext);
+     return this.apiService.post('/login',loginContext);
     
     }
 
@@ -81,7 +82,5 @@ export class AuthService {
         return null;
     }
 
-    register(): Observable<User> {
-   return null;
-      }
+
 }

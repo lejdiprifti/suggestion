@@ -4,8 +4,7 @@ import java.util.Date;
 
 import com.ikubinfo.project.entity.RoleEntity;
 
-public class UserModel {
-	private int id;
+public class RegisterRequest {
 	private String username;
 	private String password;
 	private RoleEntity role;
@@ -13,18 +12,9 @@ public class UserModel {
 	private String email;
 	private String address;
 	private boolean flag;
-
-	public UserModel() {
-
-	}
-
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	
+	public RegisterRequest() {
+		
 	}
 
 	public String getUsername() {

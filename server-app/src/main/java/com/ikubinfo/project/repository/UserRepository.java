@@ -79,14 +79,24 @@ public class UserRepository {
 
 		return foundUser;
 	}
+	
+	public boolean isUser(UserEntity userEntity) {
+		TypedQuery<UserEntity> query=entityManager.createQuery("From UserEntity where username=?1", UserEntity.class);
+		query.setParameter(1, userEntity.getUsername());
+		if (query.equals(null)) {
+			return false;
+		}
+		return true;
+	}
 
-	public UserEntity register(UserEntity userEntity) throws Exception {
-		if (getUserByUsername(userEntity.getUsername())==null) {
+	public UserEntity register(UserEntity userEntity) throws Exception{
+		if (isUser(userEntity) == true) {
 	    entityManager.getTransaction().begin();
 	    entityManager.persist(userEntity);
 		entityManager.getTransaction().commit();
 		} else {
-			throw new Exception();
+			System.out.println(userEntity.getUsername());
+	throw new Exception();
 		}
 		return userEntity;
 	}

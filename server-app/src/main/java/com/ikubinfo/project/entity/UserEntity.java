@@ -27,8 +27,6 @@ public class UserEntity {
 	private String address;
 	@Column(name="flag")
 	private boolean flag;
-	@Transient 
-	private String token;
 
 	public UserEntity() {
 
@@ -102,13 +100,6 @@ public class UserEntity {
 		this.flag = delete;
 	}
 
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
 
 	@Override
 	public String toString() {
