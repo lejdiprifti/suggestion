@@ -3,6 +3,7 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { menuItems } from './menu-items.constants';
 import { MenuItem } from './menu-item';
+import { RegisterService } from '@ikubinfo/core/services/register.service';
 
 @Component({
   selector: 'ikubinfo-sidebar',
@@ -18,7 +19,7 @@ export class SidebarComponent {
 
   @Output() collapsedEvent = new EventEmitter<boolean>();
 
-  constructor(public router: Router, private authService: AuthService) {
+  constructor(public router: Router, private authService: AuthService, private registerService:RegisterService) {
     this.router.events.subscribe(val => {
       if (
         val instanceof NavigationEnd &&
@@ -31,8 +32,10 @@ export class SidebarComponent {
   }
 
   loadMenu(): void {
-    if (this.authService.isLoggedIn && this.authService.user.role) {
+    if ((this.authService.isLoggedIn && this.authService.user.role) || (this.registerService.isLoggedIn
+      && this.registerService.registerUser.role.id)) {
       this.items = menuItems.filter(item => item.allowedRoles.includes(this.authService.user.role.id));
+      this.items = menuItems.filter(item => item.allowedRoles.includes(this.registerService.registerUser.role.id));
     }
   }
 
