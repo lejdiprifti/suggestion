@@ -6,16 +6,27 @@
       <form role="form" [formGroup]="registerForm">
         <div class="form-content">
           <div class="form-group">
-            <input type="text" formControlName="username" class="form-control input-underline input-lg" placeholder="Full Name" />
+            <input type="text" formControlName="username" class="form-control input-underline input-lg" placeholder="Username" />
+          <div class="required" *ngIf="registerForm.get('username').dirty && registerForm.get('username').hasError('required')">
+            Username is required.
+            </div> 
+            <div class="required" *ngIf="usernameCtrl.dirty && usernameCtrl.hasError('alreadyUsed')">Username is already used.</div>
           </div>
+          
               <div class="form-group">
                   <input type="date" formControlName="birthdate" class="form-control input-underline input-lg" placeholder="Birthdate" />
-              </div>
+                  <div class="required" *ngIf="birthdateCtrl.dirty && birthdateCtrl.hasError('required')">Birthdate is required.</div>
+              <div class="required" *ngIf="birthdateCtrl.dirty && birthdateCtrl.hasError('tooYoung')">You must be over 18 years old.</div>
+                </div>
                   <div class="form-group">
                   <input type="text" formControlName="address" class="form-control input-underline input-lg" placeholder="Address" />
-          </div>
+          <div class="required" *ngIf="registerForm.get('address').dirty && registerForm.get('address').hasError('required')">Address is required.</div>
+                </div>
           <div class="form-group">
             <input type="text" formControlName="email" class="form-control input-underline input-lg" placeholder="Email" />
+            <div class="required" *ngIf="registerForm.get('email').dirty && registerForm.get('email').hasError('required')">*Email is required.</div>
+            <div class="required" *ngIf="registerForm.get('email').dirty && registerForm.get('email').hasError('pattern')">*Invalid email</div>
+        
           </div>
           <div class="form-group">
             <input type="password" formControlName="password" class="form-control input-underline input-lg" placeholder="Password" />
