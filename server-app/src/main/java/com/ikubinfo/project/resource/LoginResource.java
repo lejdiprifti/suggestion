@@ -27,8 +27,8 @@ public class LoginResource {
 	public Response login(LoginRequest request) {
 		try {
 		return Response.ok(loginService.login(request)).build();
-		}catch(Exception e) {
-			return Response.status(400).build();
+		} catch(NoResultException e) {
+			return Response.status(404).build();
 		}
 	}
 }
