@@ -31,8 +31,13 @@ public class RegisterResource {
 	@POST
 	public Response register(RegisterRequest registerRequest) throws Exception {
 		
+		try {
 			return Response.ok(registerService.register(registerRequest)).build();
-		
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return Response.ok(400).build();
+		}
 
 	}
 	

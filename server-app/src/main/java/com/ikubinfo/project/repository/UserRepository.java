@@ -1,3 +1,4 @@
+
 package com.ikubinfo.project.repository;
 
 import java.util.List;
@@ -7,7 +8,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import com.ikubinfo.project.entity.UserEntity;
-import com.ikubinfo.project.model.UserModel;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
 public class UserRepository {
@@ -21,7 +21,7 @@ public class UserRepository {
 		return entityManager.createQuery("Select u From UserEntity u",UserEntity.class).getResultList();
 	}
 	
-	public UserEntity getUser(String username,String password) throws NoResultException {
+	public UserEntity getUser(String username,String password) {
 		
 		TypedQuery<UserEntity> query=entityManager.createQuery("Select u From UserEntity u where u.username=?1 AND u.password=?2 AND u.flag=:flag",UserEntity.class);
 		query.setParameter(1,username);

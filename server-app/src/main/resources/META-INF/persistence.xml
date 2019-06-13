@@ -4,7 +4,10 @@
              version="2.0">
     <persistence-unit name="akademia" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.ikubinfo.project.entity.CategoryEntity</class>
+        <class>com.ikubinfo.project.entity.RoleEntity</class>
         <class>com.ikubinfo.project.entity.Something</class>
+        <class>com.ikubinfo.project.entity.Subscriptions</class>
         <class>com.ikubinfo.project.entity.UserEntity</class>
         <properties>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

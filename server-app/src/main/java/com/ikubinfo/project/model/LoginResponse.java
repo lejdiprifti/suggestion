@@ -7,7 +7,7 @@ public class LoginResponse {
 	private UserModel user;
 
 	public String getJwt() {
-		return jwt;
+		return jwt; 
 	} 
 
 	public void setJwt(String jwt) {
