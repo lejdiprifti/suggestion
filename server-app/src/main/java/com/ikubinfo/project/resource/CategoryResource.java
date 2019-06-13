@@ -83,7 +83,7 @@ public class CategoryResource  extends BaseResource {
 		@PUT
 		@Path("/subscribe/{id}")
 		public Response subscribe(UserModel user,@PathParam("id") final int id) {
-			return Response.ok(categoryRepository.subscribe(user.getUsername(),categoryRepository.getCategoryById(id))).build();
+			return Response.ok(categoryRepository.subscribe(categoryRepository.getCategoryById(id))).build();
 			
 		}
 		
@@ -91,7 +91,7 @@ public class CategoryResource  extends BaseResource {
 		@Path("/unsubscribe/{id}")
 		public Response unsubscribe(UserModel user,@PathParam("id") final int id) {
 			
-			return Response.ok(categoryRepository.unsubscribe(user.getUsername(),id)).build();
+			return Response.ok(categoryRepository.unsubscribe(id)).build();
 		}
 
 
