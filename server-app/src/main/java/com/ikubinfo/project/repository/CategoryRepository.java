@@ -44,6 +44,7 @@ public class CategoryRepository {
 
 	
 	public CategoryEntity update(CategoryEntity category, int categoryId) {
+
 		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1", CategoryEntity.class);
 		query.setParameter(1, categoryId);
 		CategoryEntity foundCategory=query.getSingleResult();
@@ -74,8 +75,11 @@ public class CategoryRepository {
 		
 	}
 	
+	
+	
 	public CategoryEntity delete(int categoryId) {
-		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c From CategoryEntity c where c.categoryName=?1", CategoryEntity.class);
+		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1", CategoryEntity.class);
+
 		query.setParameter(1, categoryId);
 		CategoryEntity foundCategory=query.getSingleResult();
 		entityManager.getTransaction().begin();

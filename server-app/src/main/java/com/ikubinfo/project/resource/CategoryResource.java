@@ -55,7 +55,7 @@ public class CategoryResource  extends BaseResource {
 		}
 		
 		@PUT
-		@Path("/{categoryName}")
+		@Path("/{categoryId}")
 		public Response update(CategoryEntity category , @PathParam("categoryId") int categoryId) {
 			return Response.ok(categoryService.update(category,categoryId)).build();
 		}

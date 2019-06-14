@@ -5,6 +5,7 @@ import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import com.ikubinfo.project.util.Paths;
+import com.ikubinfo.project.util.PersistenceSingleton;
 
 @ApplicationPath(Paths.BASE)
 public class RestConfiguration extends ResourceConfig {
