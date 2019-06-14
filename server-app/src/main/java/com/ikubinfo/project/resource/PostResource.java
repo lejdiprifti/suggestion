@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.entity.PostEntity;
+import com.ikubinfo.project.repository.PostRepository;
 import com.ikubinfo.project.entity.PostEntity;
 import com.ikubinfo.project.service.PostService;
 import com.ikubinfo.project.service.PostService;
@@ -24,9 +25,10 @@ import com.ikubinfo.project.util.Paths;
 public class PostResource extends BaseResource{
 	
 	private PostService postService;
-	
+	private PostRepository postRepository;
 	public PostResource() {
 		this.postService= new PostService();
+		this.postRepository=new PostRepository();
 	}
 	
 	@GET
@@ -75,6 +77,18 @@ public class PostResource extends BaseResource{
 	public Response delete(@PathParam("postId") int postId) {
 		postService.delete(postId);
 		return Response.noContent().build();
+	}
+	
+	@PUT
+	@Path("/like/{id}")
+	public Response like(@PathParam("id") final int id) {
+		return Response.ok(postRepository.like(postRepository.getPostById(id))).build();
+	}
+	
+	@PUT
+	@Path("/unlike/{id}")
+	public Response unlike(@PathParam("id") final int id) {
+		return Response.ok(postRepository.unlike(postRepository.getPostById(id))).build();
 	}
 	
 }

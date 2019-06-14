@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RegisterService } from '@ikubinfo/core/services/register.service';
 import { throwError, Subject } from 'rxjs';
@@ -8,7 +8,6 @@ import { Role } from '@ikubinfo/core/models/role';
 import { User } from '@ikubinfo/core/models/user';
 import { Register } from '@ikubinfo/core/models/register';
 import { RoleEnum } from '@ikubinfo/core/models/role.enum';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -17,32 +16,52 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  usernameCtrl: FormControl;
+  passwordCtrl: FormControl;
+  birthdateCtrl: FormControl;
+  addressCtrl: FormControl;
+  emailCtrl:FormControl;
 
   registerForm: FormGroup;
   role:Role;
   registerUser: Register;
+  static isOldEnough(control: AbstractControl):any {     
+    const birthDatePlus18 = new Date(control.value);   
+    birthDatePlus18.setFullYear(birthDatePlus18.getFullYear() + 18);   
+    return birthDatePlus18 < new Date() ? null : { tooYoung: true };
+   };
+
+  
   constructor(private router: Router,private fb: FormBuilder ,private registerService: RegisterService) { 
     this.registerUser = {
 
     }
   }
-
+  
+   
 
   ngOnInit() {
+    this.usernameCtrl=this.fb.control('', Validators.required,control => this.isUsernameAvailable(control));
+    this.passwordCtrl=this.fb.control('', Validators.required);
+    this.addressCtrl=this.fb.control('', Validators.required);
+    this.emailCtrl=this.fb.control('', Validators.required );
+    this.birthdateCtrl=this.fb.control('',Validators.required ,control => RegisterComponent.isOldEnough(control));
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+      username:  this.usernameCtrl,
+      password: this.passwordCtrl,
       role: {
             "id": RoleEnum.USER,
             "roleName": "USER",
             "roleDescription": "Shikon_postimet_dhe_propozon_kategori"
       },
-      birthdate: ['', Validators.required],
-      email: ['', Validators.required],
-      address: ['', Validators.required],
+      birthdate: this.birthdateCtrl,
+      email: this.emailCtrl,
+      address: this.addressCtrl,
       repeatPassword: ['', Validators.required]
     });
   }
+
+  
 
   register(): void {
     this.registerUser.username = this.registerForm.value.username;
@@ -53,8 +72,10 @@ export class RegisterComponent implements OnInit {
     this.registerUser.address = this.registerForm.value.address;
     this.registerUser.flag = true;
     this.registerService.register(this.registerUser).subscribe(res=>{
+     
       this.registerService.setData(res);
         this.router.navigate(['/suggestion']);
+      
     },
     err=>{
       if (err.status === 400){
@@ -62,5 +83,13 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
+   
+   isUsernameAvailable(control: AbstractControl): any {
+     const username= control.value;
+     return this.registerService.isUsernameAvailable(username)
+     .subscribe(available => available ? null : {alreadyUsed: true});
+   }
+
+   
 
 }

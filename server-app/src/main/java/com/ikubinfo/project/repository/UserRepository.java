@@ -1,3 +1,4 @@
+
 package com.ikubinfo.project.repository;
 
 import java.util.List;
@@ -5,9 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.NotAllowedException;
 
 import com.ikubinfo.project.entity.UserEntity;
-import com.ikubinfo.project.model.UserModel;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
 public class UserRepository {
@@ -22,26 +23,22 @@ public class UserRepository {
 	}
 	
 	public UserEntity getUser(String username,String password) {
+		
 		TypedQuery<UserEntity> query=entityManager.createQuery("Select u From UserEntity u where u.username=?1 AND u.password=?2 AND u.flag=:flag",UserEntity.class);
 		query.setParameter(1,username);
 		query.setParameter(2, password);
 		query.setParameter("flag", true);
 		UserEntity user=query.getSingleResult();
 		return user;
+		
 	
 	}
 	
 	public UserEntity getUserByUsername(String username) {
-		UserEntity user = null;
-		try {
-			TypedQuery<UserEntity> query=entityManager.createQuery("Select u From UserEntity u where u.username=?1 AND u.flag=:flag",UserEntity.class);
-			query.setParameter(1,username);
-			query.setParameter("flag", true);
-		    user=query.getSingleResult();		
-		} catch(NoResultException e) {
-			System.out.println(e.getMessage());
-		}
-
+		TypedQuery<UserEntity> query=entityManager.createQuery("Select u From UserEntity u where u.username=?1 AND u.flag=:flag",UserEntity.class);
+		query.setParameter(1,username);
+		query.setParameter("flag", true);
+		UserEntity user=query.getSingleResult();
 		return user;
 	}
 	
@@ -96,15 +93,15 @@ public class UserRepository {
 		return true;
 	}
 
-	public UserEntity register(UserEntity userEntity) throws Exception{
+	public UserEntity register(UserEntity userEntity) {
 		if (isUser(userEntity) == true) {
 	    entityManager.getTransaction().begin();
 	    entityManager.persist(userEntity);
 		entityManager.getTransaction().commit();
-		} else {
-			System.out.println(userEntity.getUsername());
-	throw new Exception();
-		}
 		return userEntity;
+		} else {
+	throw new NotAllowedException("Username is already taken.");
+		}
+	
 	}
 }

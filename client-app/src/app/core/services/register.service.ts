@@ -6,11 +6,13 @@ import { User } from '../models/user';
 import { Subject } from 'rxjs';
 import { RoleEnum } from '../models/role.enum';
 import { Register } from '../models/register';
+import { $ } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
+  
 registerUser: Register;
   onUserChanged: Subject<User>;
   
@@ -67,5 +69,8 @@ get role(): RoleEnum {
   return null;
 }
 
+isUsernameAvailable(username: string) {
+    return this.apiService.get('register/'+username);
+}
 
 }

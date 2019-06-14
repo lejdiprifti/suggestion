@@ -1,9 +1,9 @@
 package com.ikubinfo.project.resource;
 
-import javax.persistence.NoResultException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.Path; 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -25,10 +25,9 @@ public class LoginResource {
 
 	@POST
 	public Response login(LoginRequest request) {
-		try {
+		
 		return Response.ok(loginService.login(request)).build();
-		}catch(Exception e) {
-			return Response.status(400).build();
-		}
+		
+		
 	}
 }

@@ -27,10 +27,6 @@ public class LoginService {
 	private UserConverter userConverter = new UserConverter();
 	private UserRepository userRepository = new UserRepository();
 	public LoginResponse login(LoginRequest request) {
-
-		// TODO call to UserRepository getting the user
-		// not copy paste this;
-	
 		UserModel loggedInUser = userConverter.toModel(userRepository.getUser(request.getUsername(), request.getPassword()));
 		LoginResponse response = new LoginResponse();
 		response.setJwt(getToken(loggedInUser));

@@ -1,5 +1,8 @@
 package com.ikubinfo.project.entity;
+
 import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -16,17 +19,18 @@ public class UserEntity {
 	private String username;
 	@Column(name = "password")
 	private String password;
-	@ManyToOne(cascade = { CascadeType.MERGE})
-	@JoinColumn(name="role_id" , nullable = false)
+	@ManyToOne(cascade = { CascadeType.MERGE })
+	@JoinColumn(name = "role_id", nullable = false)
 	private RoleEntity role;
-	@Column (name="birthdate")
+	@Column(name = "birthdate")
 	private Date birthdate;
-	@Column (name="email")
+	@Column(name = "email")
 	private String email;
-	@Column (name="address")
+	@Column(name = "address")
 	private String address;
-	@Column(name="flag")
+	@Column(name = "flag")
 	private boolean flag;
+
 
 	public UserEntity() {
 
@@ -63,7 +67,7 @@ public class UserEntity {
 	public void setRole(RoleEntity role) {
 		this.role = role;
 	}
-	
+
 	public Date getBirthdate() {
 		return birthdate;
 	}
@@ -104,11 +108,7 @@ public class UserEntity {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role
-				+ ", birthdate=" + birthdate + ", email=" + email + ", address=" + address + ", flag=" + flag
-				+ "]";
+				+ ", birthdate=" + birthdate + ", email=" + email + ", address=" + address + ", flag=" + flag + "]";
 	}
 
-	
-
-	
 }
