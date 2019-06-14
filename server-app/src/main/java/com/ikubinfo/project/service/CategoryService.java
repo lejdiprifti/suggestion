@@ -28,12 +28,12 @@ public class CategoryService {
        return categoryConverter.toModel(categoryRepository.getCategories());
 	}
 	
-	public CategoryModel update(CategoryEntity category ,String categoryName) {
-		return categoryConverter.toModel(categoryRepository.update(category,categoryName));
+	public CategoryModel update(CategoryEntity category ,int categoryId) {
+		return categoryConverter.toModel(categoryRepository.update(category,categoryId));
 	}
 	
-	public CategoryModel delete(String categoryName) {
-		return categoryConverter.toModel(categoryRepository.delete(categoryName));
+	public CategoryModel delete(int categoryId) {
+		return categoryConverter.toModel(categoryRepository.delete(categoryId));
 	}
 	
 	public CategoryModel insert(CategoryEntity categoryEntity) throws Exception {

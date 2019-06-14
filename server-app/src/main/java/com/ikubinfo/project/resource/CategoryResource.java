@@ -55,9 +55,9 @@ public class CategoryResource  extends BaseResource {
 		}
 		
 		@PUT
-		@Path("/{categoryName}")
-		public Response update(CategoryEntity category , @PathParam("categoryName") String categoryName) {
-			return Response.ok(categoryService.update(category,categoryName)).build();
+		@Path("/{categoryId}")
+		public Response update(CategoryEntity category , @PathParam("categoryId") int categoryId) {
+			return Response.ok(categoryService.update(category,categoryId)).build();
 		}
 		
 		@POST
@@ -71,9 +71,9 @@ public class CategoryResource  extends BaseResource {
 		}
 		
 		@DELETE
-		@Path("/{categoryName}")
-		public Response delete(@PathParam("categoryName") String categoryName) {
-			categoryService.delete(categoryName);
+		@Path("/{categoryId}")
+		public Response delete(@PathParam("categoryId") int categoryId) {
+			categoryService.delete(categoryId);
 			return Response.noContent().build();
 		}
 

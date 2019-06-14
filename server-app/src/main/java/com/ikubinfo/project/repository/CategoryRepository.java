@@ -43,9 +43,9 @@ public class CategoryRepository {
 	
 
 	
-	public CategoryEntity update(CategoryEntity category, String categoryName) {
-		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryName LIKE ?1", CategoryEntity.class);
-		query.setParameter(1, categoryName);
+	public CategoryEntity update(CategoryEntity category, int categoryId) {
+		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryName=?1", CategoryEntity.class);
+		query.setParameter(1, categoryId);
 		CategoryEntity foundCategory=query.getSingleResult();
 		if (category.getCategoryName()!=null) {
 			foundCategory.setCategoryName(category.getCategoryName());
@@ -74,9 +74,9 @@ public class CategoryRepository {
 		
 	}
 	
-	public CategoryEntity delete(String categoryName) {
-		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c From CategoryEntity c where c.categoryName LIKE ?1", CategoryEntity.class);
-		query.setParameter(1, categoryName);
+	public CategoryEntity delete(int categoryId) {
+		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1", CategoryEntity.class);
+		query.setParameter(1, categoryId);
 		CategoryEntity foundCategory=query.getSingleResult();
 		entityManager.getTransaction().begin();
 
