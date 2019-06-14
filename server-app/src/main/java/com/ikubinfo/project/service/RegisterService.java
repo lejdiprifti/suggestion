@@ -16,7 +16,7 @@ public class RegisterService {
 		this.userRepository = new UserRepository();
 	}
 
-	public UserEntity register(RegisterRequest registerModel) throws Exception {
+	public UserEntity register(RegisterRequest registerModel) {
 
 		UserEntity user = userRepository.register(registerConverter.toEntity(registerModel));
 		return user;

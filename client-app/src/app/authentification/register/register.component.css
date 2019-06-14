@@ -44,6 +44,7 @@
   font-size: 18px;
   line-height: 40px;
   padding: 0 25px;
+  margin: 10px;
 }
 .login-page .rounded-btn:hover,
 .login-page .rounded-btn:focus,

@@ -32,9 +32,10 @@ public abstract class BaseResource {
 	}
 	
 	public String getUsernameFromToken() {
-		System.out.println(httpHeaders.getHeaderString(HttpHeaders.AUTHORIZATION));
-		String token = httpHeaders.getHeaderString(HttpHeaders.AUTHORIZATION).substring(Constants.BEARER.length())
+		
+		String token = httpHeaders.getHeaderString(HttpHeaders.AUTHORIZATION).substring(Constants.BEARER.length()+1)
 				.trim();
+		
 		return (String) Jwts.parser().setSigningKey(Constants.JWT_KEY).parseClaimsJws(token).getBody().get("username");
 	}
 }

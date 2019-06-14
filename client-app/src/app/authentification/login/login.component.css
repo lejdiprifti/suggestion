@@ -44,12 +44,13 @@
   font-size: 18px;
   line-height: 40px;
   padding: 0 25px;
+  margin: 10px;
 }
 .login-page .rounded-btn:hover,
 .login-page .rounded-btn:focus,
 .login-page .rounded-btn:active,
 .login-page .rounded-btn:visited {
-  color: rgba(255, 255, 255, 1);
+  color: rgb(235, 235, 235);
   border: 2px solid rgba(255, 255, 255, 1);
   outline: none;
 }
@@ -86,4 +87,9 @@
   -webkit-border-radius: 50%;
   border-radius: 50%;
   border: 2px solid #fff;
+}
+
+.error-text{
+  color: red;
+  font-size: 14px;
 }
