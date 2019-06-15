@@ -85,13 +85,12 @@ static passwordMatch(group: FormGroup):any{
       "",
       [
         Validators.required,
-      
       ]
     ]
   },
   {validator: RegisterComponent.passwordMatch});
 
-  this.registerForm = this.fb.group({passwordForm: this.passwordForm});
+
   }
 
   register(): void {

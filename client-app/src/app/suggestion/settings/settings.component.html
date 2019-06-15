@@ -1,0 +1,52 @@
+<h2>Change data</h2>
+<form role="form" [formGroup]="settingsForm">
+  <div class="form-content">
+    <!--Username -->
+    <div class="form-group">
+      <input type="text" formControlName="username" class="form-control input-underline input-lg"
+        placeholder="Username" />
+    </div>
+
+    <!--Birthdate -->
+    <div class="form-group">
+      <input type="date" formControlName="birthdate" class="form-control input-underline input-lg"
+        placeholder="Birthdate" />
+      <div class="required" *ngIf="
+      settingsForm.get('birthdate').dirty &&
+      settingsForm.get('birthdate').hasError('tooYoung')
+        ">
+        *You must be over 18 years old.
+      </div>
+    </div>
+    <!--Address -->
+    <div class="form-group">
+      <input type="text" formControlName="address" class="form-control input-underline input-lg"
+        placeholder="Address" />
+    </div>
+    <!--Email -->
+    <div class="form-group">
+      <input type="text" formControlName="email" class="form-control input-underline input-lg"
+        placeholder="Email" />
+   
+      <div class="required" *ngIf="
+      settingsForm.get('email').dirty &&
+      settingsForm.get('email').hasError('pattern')
+        ">
+        *Invalid email
+      </div>
+    </div>
+    <!--Password -->
+    <div class="form-group">
+      <input type="password" formControlName="password" class="form-control input-underline input-lg"
+        placeholder="Password" />
+      <div class="required" *ngIf="
+      settingsForm.get('password').dirty && settingsForm.get('password').hasError('pattern')">
+        Password must contain at least one number and one uppercase and
+        lowercase letter, and at least 8 or more characters.
+      </div>
+   </div>
+   </div>
+   <button [disabled]="settingsForm.invalid" (click)="update()" class="btn rounded-btn">
+    Confirm
+  </button>
+  </form>

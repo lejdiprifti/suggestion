@@ -22,7 +22,7 @@ import com.ikubinfo.project.util.Paths;
 @Path(Paths.USERS)
 public class UserResource extends BaseResource  {
 	private UserService userService;
-	
+	 
 	public UserResource() {
 		this.userService= new UserService();
 	}
@@ -43,9 +43,8 @@ public class UserResource extends BaseResource  {
 	}
 	
 	@PUT
-	@Path("/{username}")
-	public Response update(UserEntity user , @PathParam("username") String username) {
-		return Response.ok(userService.update(user,username)).build();
+	public Response update(UserEntity user) {
+		return Response.ok(userService.update(user,getUsernameFromToken())).build();
 	}
 	
 	@DELETE

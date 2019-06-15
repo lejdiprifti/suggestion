@@ -7,127 +7,84 @@
         <div class="form-content">
           <!--Username -->
           <div class="form-group">
-            <input type="text" formControlName="username" class="form-control input-underline input-lg" placeholder="Username" />
-            <div class="required" *ngIf="registerForm.get('username').dirty && registerForm.get('username').hasError('required')" >
+            <input type="text" formControlName="username" class="form-control input-underline input-lg"
+              placeholder="Username" />
+            <div class="required"
+              *ngIf="registerForm.get('username').dirty && registerForm.get('username').hasError('required')">
               *Username is required.
             </div>
-           
           </div>
-<!--Birthdate -->
+
+          <!--Birthdate -->
           <div class="form-group">
-            <input
-              type="date"
-              formControlName="birthdate"
-              class="form-control input-underline input-lg"
-              placeholder="Birthdate"
-            />
-            <div
-              class="required"
-              *ngIf="
+            <input type="date" formControlName="birthdate" class="form-control input-underline input-lg"
+              placeholder="Birthdate" />
+            <div class="required" *ngIf="
                 registerForm.get('birthdate').dirty &&
                 registerForm.get('birthdate').hasError('required')
-              "
-            >
+              ">
               *Birthdate is required.
             </div>
-            <div
-              class="required"
-              *ngIf="
+            <div class="required" *ngIf="
                 registerForm.get('birthdate').dirty &&
                 registerForm.get('birthdate').hasError('tooYoung')
-              "
-            >
+              ">
               *You must be over 18 years old.
             </div>
           </div>
           <!--Address -->
           <div class="form-group">
-            <input
-              type="text"
-              formControlName="address"
-              class="form-control input-underline input-lg"
-              placeholder="Address"
-            />
-            <div
-              class="required"
-              *ngIf="
+            <input type="text" formControlName="address" class="form-control input-underline input-lg"
+              placeholder="Address" />
+            <div class="required" *ngIf="
                 registerForm.get('address').dirty &&
                 registerForm.get('address').hasError('required')
-              "
-            >
+              ">
               *Address is required.
             </div>
           </div>
           <!--Email -->
           <div class="form-group">
-            <input
-              type="text"
-              formControlName="email"
-              class="form-control input-underline input-lg"
-              placeholder="Email"
-            />
-            <div
-              class="required"
-              *ngIf="
+            <input type="text" formControlName="email" class="form-control input-underline input-lg"
+              placeholder="Email" />
+            <div class="required" *ngIf="
                 registerForm.get('email').dirty &&
                 registerForm.get('email').hasError('required')
-              "
-            >
+              ">
               *Email is required.
             </div>
-            <div
-              class="required"
-              *ngIf="
+            <div class="required" *ngIf="
                 registerForm.get('email').dirty &&
                 registerForm.get('email').hasError('pattern')
-              "
-            >
+              ">
               *Invalid email
             </div>
           </div>
           <!--Password -->
-          <div [formGroupName]="passwordForm">
           <div class="form-group">
-            <input
-              type="password"
-              formControlName="password"
-              class="form-control input-underline input-lg"
-              placeholder="Password"
-            />
-            <div
-              class="required"
-              *ngIf="
-                registerForm.get('password').dirty &&
-                registerForm.get('password').hasError('pattern')
-              "
-            >
+            <input type="password" formControlName="password" class="form-control input-underline input-lg"
+              placeholder="Password" />
+            <div class="required" *ngIf="
+                registerForm.get('password').dirty && registerForm.get('password').hasError('pattern')">
               Password must contain at least one number and one uppercase and
               lowercase letter, and at least 8 or more characters.
             </div>
-          </div>
-        </div>
+         </div>
           <div class="form-group">
-            <input
-              type="password"
-              formControlName="repeatPassword"
-              class="form-control input-underline input-lg"
-              placeholder="Repeat Password"
-            />
-            <div class="required" *ngIf="registerForm.get('repeatPassword').dirty && registerForm.get('repeatPassword').hasError('required')">
+            <input type="password" formControlName="repeatPassword" class="form-control input-underline input-lg"
+              placeholder="Repeat Password" />
+            <div class="required"
+              *ngIf="registerForm.get('repeatPassword').dirty && registerForm.get('repeatPassword').hasError('required')">
               *Confirm your password.
             </div>
           </div>
-          <div class="required" *ngIf="passwordForm.dirty && passwordForm.hasError('matchingError')">*Your password does not match.</div>
-        </div>
-        <button [disabled]="registerForm.invalid"
-          (click)="register()"
-          class="btn rounded-btn"
-        >
-          Register
-        </button>
-        <button class="btn rounded-btn" [routerLink]="['/login']">
-          Log in
-        </button>
+          </div>
+          <button [disabled]="registerForm.invalid" (click)="register()" class="btn rounded-btn">
+            Register
+          </button>
+          <button class="btn rounded-btn" [routerLink]="['/login']">
+            Log in
+          </button>
       </form>
     </div>
   </div>
