@@ -7,10 +7,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.NotAllowedException;
+import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.converter.UserConverter;
 import com.ikubinfo.project.entity.CategoryEntity;
+import com.ikubinfo.project.entity.State;
 import com.ikubinfo.project.entity.Subscriptions;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.LoginResponse;
@@ -26,38 +29,47 @@ public class CategoryRepository extends BaseResource {
 	}
 
 	public List<CategoryEntity> getCategories() {
-		return entityManager.createQuery("Select c From CategoryEntity c", CategoryEntity.class).getResultList();
+		return entityManager.createQuery("Select c From CategoryEntity c where c.state=?1 and c.flag=:flag", CategoryEntity.class).setParameter(1, State.CREATED).setParameter("flag", true).getResultList();
 	}
 
 	public CategoryEntity getCategoryByName(String categoryName) {
 		CategoryEntity category = null;
 		try {
 			TypedQuery<CategoryEntity> query = entityManager
-					.createQuery("Select c From CategoryEntity c where c.categoryName=?1", CategoryEntity.class);
+					.createQuery("Select c From CategoryEntity c where c.categoryName=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
 			query.setParameter(1, categoryName);
-
+			query.setParameter(2, State.CREATED);
+			query.setParameter("flag", true);
 			category = query.getSingleResult();
+			return category;
 		} catch (NoResultException e) {
-			System.out.println(e.getMessage());
+			throw new NotFoundException();
 		}
-		return category;
+		
 	}
 
 	public CategoryEntity getCategoryById(int categoryId) {
+		try {
 		TypedQuery<CategoryEntity> query = entityManager
-				.createQuery("Select c From CategoryEntity c where c.categoryId=?1", CategoryEntity.class);
+				.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
 		query.setParameter(1, categoryId);
-
+		query.setParameter(2, State.CREATED);
+		query.setParameter(3, true);
 		CategoryEntity category = query.getSingleResult();
 		return category;
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
 	}
 
 
 	
 	public CategoryEntity update(CategoryEntity category, int categoryId) {
-
-		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1", CategoryEntity.class);
+		try {
+		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
 		query.setParameter(1, categoryId);
+		query.setParameter(2, State.CREATED);
+		query.setParameter("flag", true);
 		CategoryEntity foundCategory=query.getSingleResult();
 		if (category.getCategoryName()!=null) {
 			foundCategory.setCategoryName(category.getCategoryName());
@@ -65,50 +77,47 @@ public class CategoryRepository extends BaseResource {
 		if (category.getCategoryDescription() != null) {
 			foundCategory.setCategoryDescription(category.getCategoryDescription());
 		}
-		if (category.getCategoryState() != 0) {
-			foundCategory.setCategoryState(category.getCategoryState());
-		}
 		if (category.getAcceptedDate() != null) {
 			foundCategory.setAcceptedDate(category.getAcceptedDate());
 		}
-		if (category.getAcceptedUser() != null) {
-			foundCategory.setAcceptedUser(category.getAcceptedUser());
-		}
-		if (category.getUser() != null) {
-			foundCategory.setUser(category.getUser());
-		}
 		entityManager.getTransaction().begin();
 		entityManager.merge(foundCategory);
 		entityManager.getTransaction().commit();
 
 		return foundCategory;
-
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
 	}
 
 	
 	
-	public CategoryEntity delete(int categoryId) {
-		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1", CategoryEntity.class);
-
+	public void delete(int categoryId) {
+		try {
+		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
+		query.setParameter(2, State.CREATED);
 		query.setParameter(1, categoryId);
+		query.setParameter("flag", true);
 		CategoryEntity foundCategory=query.getSingleResult();
 		entityManager.getTransaction().begin();
-
+		foundCategory.setFlag(false);
 		entityManager.merge(foundCategory);
 		entityManager.getTransaction().commit();
-
-		return foundCategory;
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
 	}
 
-	public CategoryEntity insert(CategoryEntity category) throws Exception {
+	public CategoryEntity insert(CategoryEntity category) {
 		if (getCategoryByName(category.getCategoryName()) == null) {
 			entityManager.getTransaction().begin();
 			entityManager.persist(category);
 			entityManager.getTransaction().commit();
+			return category;
 		} else {
-			throw new Exception();
+			throw new NotAllowedException("Category exists.");
 		}
-		return category;
+		
 	}
 
 	public String subscribe(CategoryEntity category) {

@@ -7,6 +7,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.security.SecuredWithJwtToken;
 import com.ikubinfo.project.util.Constants;
 
@@ -24,11 +25,11 @@ public abstract class BaseResource {
 		return Response.ok(entity).build();
 	}
 
-	public String getRoleFromToken() {
+	public RoleEntity getRoleFromToken() {
 		String token = httpHeaders.getHeaderString(HttpHeaders.AUTHORIZATION).substring(Constants.BEARER.length())
 				.trim();
 
-		return (String) Jwts.parser().setSigningKey(Constants.JWT_KEY).parseClaimsJws(token).getBody().get("role");
+		return (RoleEntity) Jwts.parser().setSigningKey(Constants.JWT_KEY).parseClaimsJws(token).getBody().get("role");
 	}
 	
 	public String getUsernameFromToken() {

@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.ikubinfo.project.entity.State;
 import com.ikubinfo.project.entity.UserEntity;
 
 public class CategoryModel {
@@ -17,7 +18,7 @@ public class CategoryModel {
 	private String categoryName;
 	private String categoryDescription;
 	private UserEntity user;
-	private int categoryState;
+	private State categoryState;
 	private UserEntity acceptedUser;
 	private Date acceptedDate;
 	
@@ -51,10 +52,10 @@ public class CategoryModel {
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
-	public int getCategoryState() {
+	public State getCategoryState() {
 		return categoryState;
 	}
-	public void setCategoryState(int categoryState) {
+	public void setCategoryState(State categoryState) {
 		this.categoryState = categoryState;
 	}
 	public UserEntity getAcceptedUser() {
