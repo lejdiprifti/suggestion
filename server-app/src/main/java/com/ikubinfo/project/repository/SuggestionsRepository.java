@@ -6,6 +6,7 @@ import java.util.List;
 import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
@@ -14,6 +15,7 @@ import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.entity.CategoryEntity;
 import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.entity.State;
+import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
 public class SuggestionsRepository extends BaseResource {
@@ -141,5 +143,15 @@ public class SuggestionsRepository extends BaseResource {
 		}catch(NoResultException e) {
 			throw new NotFoundException();
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CategoryModel> getAcceptedCategories() {
+			Query query= entityManager.createNativeQuery("Select * from category c where c.user_id=(Select p.user_id from perdorues p where "
+					+ "p.user_id=?1) and c.state=?2 and c.flag=:flag");
+			query.setParameter(1, userRepository.getUserByUsername(getUsernameFromToken()).getId());
+			query.setParameter(2, State.CREATED);
+			query.setParameter("flag", true);
+			return query.getResultList();
 	}
 }
