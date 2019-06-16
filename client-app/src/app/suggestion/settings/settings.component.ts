@@ -5,6 +5,7 @@ import { RegisterComponent } from '@ikubinfo/authentification/register/register.
 import { SettingsService } from '@ikubinfo/core/services/settings.service';
 import { Register } from '@ikubinfo/core/models/register';
 import { ApiService } from '@ikubinfo/core/utilities/api.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'ikubinfo-settings',
@@ -71,6 +72,15 @@ update(): void {
     this.settingsService.update(this.updateUser).subscribe(res=>{
       alert("Data changed");
         this.router.navigate(["/suggestion"]);
+    },
+    err=>{
+      err.message("Username is taken.");
+      this.router.navigate(["/suggestion/settings"]);
     });
+}
+delete(): any{
+  this.settingsService.deleteAccount().subscribe(res=>{
+    this.router.navigate(["/login"]);
+  });
 }
 }

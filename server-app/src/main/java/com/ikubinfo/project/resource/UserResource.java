@@ -48,9 +48,8 @@ public class UserResource extends BaseResource  {
 	}
 	
 	@DELETE
-	@Path("/{username}")
-	public Response delete(@PathParam("username") String username) {
-		userService.delete(username);
+	public Response delete() {
+		userService.delete(getUsernameFromToken());
 		return Response.noContent().build();
 	}
 }

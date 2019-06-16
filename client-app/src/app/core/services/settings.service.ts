@@ -17,6 +17,9 @@ export class SettingsService {
     return this.apiService.put('users',registerUser);
   }
   
+  deleteAccount(){
+    return this.apiService.delete('users');
+  }
 
 
 }

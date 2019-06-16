@@ -77,7 +77,11 @@ public class UserRepository {
 			foundUser.setAddress(user.getAddress());
 		}
 		if (user.getUsername() != null) {
+			if (isUser(user)==true) {
+				throw new NotAllowedException("Username taken");
+			}else {
 			foundUser.setUsername(user.getUsername());
+			}
 		}
 		entityManager.getTransaction().begin();
 		entityManager.merge(foundUser);
@@ -111,11 +115,13 @@ public class UserRepository {
 	public boolean isUser(UserEntity userEntity) {
 		TypedQuery<UserEntity> query=entityManager.createQuery("From UserEntity where username=?1", UserEntity.class);
 		query.setParameter(1, userEntity.getUsername());
-		if (query.equals(null)) {
+		UserEntity user=query.getSingleResult();
+		if (user.getUsername().equals(userEntity.getUsername())) {
 			return false;
 		}
 		return true;
 	}
+	
 
 	public UserEntity register(UserEntity userEntity){
 		if (isUser(userEntity) == true) {

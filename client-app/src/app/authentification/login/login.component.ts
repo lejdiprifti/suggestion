@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   this.router.navigate(['/suggestion']);
  },
  err=>{
-    return throwError('Invalid username or password');
+    
  });
 }
 
