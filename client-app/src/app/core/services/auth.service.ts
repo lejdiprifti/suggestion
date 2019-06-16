@@ -9,7 +9,6 @@ import { isNullOrUndefined } from 'util';
 import { User } from '@ikubinfo/core/models/user';
 import { RoleEnum } from '@ikubinfo/core/models/role.enum';
 import { Login } from '@ikubinfo/core/models/login';
-import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ApiService } from '../utilities/api.service';
 
@@ -26,9 +25,8 @@ export class AuthService {
         this.loadData();
     }
     
-    login(loginContext: Login): Observable<any> {
-     return this.apiService.post('login',loginContext);
-    
+    login(loginContext: Login): Observable<Login> {
+     return this.apiService.post<Login>('login',loginContext);
     }
 
 

@@ -6,7 +6,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.NotAllowedException;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
+import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
@@ -22,23 +27,36 @@ public class UserRepository {
 	}
 	
 	public UserEntity getUser(String username,String password) {
-		
+		try {
+		RoleEntity role=new RoleEntity();
+		role.setId(2);
 		TypedQuery<UserEntity> query=entityManager.createQuery("Select u From UserEntity u where u.username=?1 AND u.password=?2 AND u.flag=:flag",UserEntity.class);
 		query.setParameter(1,username);
 		query.setParameter(2, password);
 		query.setParameter("flag", true);
 		UserEntity user=query.getSingleResult();
+		if (user.getRole().getId()==role.getId()) {
 		return user;
+		}else {
+			throw new NoResultException();
+		}
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
 		
 	
 	}
 	
 	public UserEntity getUserByUsername(String username) {
+		try {
 		TypedQuery<UserEntity> query=entityManager.createQuery("Select u From UserEntity u where u.username=?1 AND u.flag=:flag",UserEntity.class);
 		query.setParameter(1,username);
 		query.setParameter("flag", true);
 		UserEntity user=query.getSingleResult();
 		return user;
+		} catch (NoResultException e) {
+			throw new NotFoundException();
+		}
 	}
 	
 	public UserEntity update(UserEntity user, String username) {
@@ -59,7 +77,11 @@ public class UserRepository {
 			foundUser.setAddress(user.getAddress());
 		}
 		if (user.getUsername() != null) {
+			if (isUser(user)==true) {
+				throw new NotAllowedException("Username taken");
+			}else {
 			foundUser.setUsername(user.getUsername());
+			}
 		}
 		entityManager.getTransaction().begin();
 		entityManager.merge(foundUser);
@@ -71,6 +93,7 @@ public class UserRepository {
 	}
 	
 	public UserEntity delete(String username) {
+		try {
 		TypedQuery<UserEntity> query=entityManager.createQuery("Select u From UserEntity u where u.username LIKE ?1 AND u.flag=:flag", UserEntity.class);
 		query.setParameter(1, username);
 		query.setParameter("flag", true);
@@ -81,26 +104,35 @@ public class UserRepository {
 		entityManager.getTransaction().commit();
 
 		return foundUser;
+		} catch (NoResultException e) {
+			throw new NotFoundException();
+		}
+		catch(IllegalStateException e) {
+			throw new NotAllowedException("Not Allowed");
+		}
 	}
 	
 	public boolean isUser(UserEntity userEntity) {
 		TypedQuery<UserEntity> query=entityManager.createQuery("From UserEntity where username=?1", UserEntity.class);
 		query.setParameter(1, userEntity.getUsername());
-		if (query.equals(null)) {
+		UserEntity user=query.getSingleResult();
+		if (user.getUsername().equals(userEntity.getUsername())) {
 			return false;
 		}
 		return true;
 	}
+	
 
-	public UserEntity register(UserEntity userEntity) throws Exception{
+	public UserEntity register(UserEntity userEntity){
 		if (isUser(userEntity) == true) {
 	    entityManager.getTransaction().begin();
 	    entityManager.persist(userEntity);
 		entityManager.getTransaction().commit();
-		} else {
-			System.out.println(userEntity.getUsername());
-	throw new Exception();
-		}
+		
 		return userEntity;
+		} else {
+			throw new NotAllowedException("Username is taken");
+		}
+		
 	}
 }

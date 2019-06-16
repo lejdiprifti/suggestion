@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RegisterComponent } from '@ikubinfo/authentification/register/register.component';
 import { ApiService } from '../utilities/api.service';
 import { User } from '../models/user';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { RoleEnum } from '../models/role.enum';
 import { Register } from '../models/register';
-import { $ } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -69,8 +66,8 @@ get role(): RoleEnum {
   return null;
 }
 
-isUsernameAvailable(username: string) {
-    return this.apiService.get('register/'+username);
+getUserByUsername(username: string): Observable<any> {
+    return this.apiService.get<User>('users/'+username);
 }
 
 }

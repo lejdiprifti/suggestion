@@ -22,20 +22,21 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: ['', [Validators.required , Validators.minLength(4)]],
+      password: ['', [Validators.required , Validators.minLength(4)]]
     });
   }
 
   login(): void {
  this.authService.login(this.loginForm.value).subscribe(
  (res: any)=>{
+   console.log(res);
   this.authService.setData(res);
   this.router.navigate(['/suggestion']);
  },
  err=>{
-    return throwError('Invalid username or password');
- }
- );
+    
+ });
 }
+
 }

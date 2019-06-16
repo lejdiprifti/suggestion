@@ -7,6 +7,11 @@ export const menuItems: Array<MenuItem> = [{
     icon: 'fa-dashboard',
     label: 'Dashboard',
     allowedRoles: [RoleEnum.ADMIN, RoleEnum.USER]
+},{
+    url: '/suggestion/settings',
+    icon: 'fa-settings',
+    label: 'Settings',
+    allowedRoles: [RoleEnum.ADMIN, RoleEnum.USER]
 }, {
     url: '/suggestion/posts',
     icon: 'fa-table',

@@ -1,5 +1,6 @@
 package com.ikubinfo.project.resource;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.persistence.NoResultException;
@@ -29,25 +30,11 @@ public class RegisterResource {
 	}
 
 	@POST
-	public Response register(RegisterRequest registerRequest) throws Exception {
-		
-		try {
-			return Response.ok(registerService.register(registerRequest)).build();
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return Response.ok(400).build();
-		}
+	public Response register(RegisterRequest registerRequest) throws URISyntaxException {
+		registerService.register(registerRequest);
+		return Response.created(new URI("/users/"+registerRequest.getUsername())).build();
 
 	}
 	
-	@GET
-	@Path("/{username}")
-	public Response getUserByUsername(@PathParam("username") String username) {
-		try {
-		return Response.ok(userService.getUserByUsername(username)).build();
-		}catch (NoResultException e) {
-			return Response.noContent().build();
-		}
-	}
+
 }

@@ -6,6 +6,7 @@ import { DashboardComponent } from '@ikubinfo/suggestion/dashboard/dashboard.com
 import { PostComponent } from '@ikubinfo/suggestion/post/post.component';
 import { PostsComponent } from '@ikubinfo/suggestion/posts/posts.component';
 import { FullComponent } from '@ikubinfo/layout/full/full.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const suggestionRoutes: Routes = [
     {
@@ -13,6 +14,7 @@ const suggestionRoutes: Routes = [
         component: FullComponent,
         children: [
             { path: 'dashboard', component: DashboardComponent },
+            { path: 'settings', component: SettingsComponent},
             { path: 'posts', component: PostsComponent, canActivate: [AdminGuard] },
             { path: 'post', component: PostComponent, canActivate: [AdminGuard] },
             { path: 'post/:id', component: PostComponent, canActivate: [AdminGuard] },
