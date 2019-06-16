@@ -82,14 +82,14 @@ public class CategoryResource  extends BaseResource {
 		
 		@PUT
 		@Path("/subscribe/{id}")
-		public Response subscribe(UserModel user,@PathParam("id") final int id) {
+		public Response subscribe(@PathParam("id") final int id) {
 			return Response.ok(categoryRepository.subscribe(categoryRepository.getCategoryById(id))).build();
 			
 		}
 		
 		@PUT
 		@Path("/unsubscribe/{id}")
-		public Response unsubscribe(UserModel user,@PathParam("id") final int id) {
+		public Response unsubscribe(@PathParam("id") final int id) {
 			
 			return Response.ok(categoryRepository.unsubscribe(id)).build();
 		}

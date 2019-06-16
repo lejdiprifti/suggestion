@@ -8,4 +8,15 @@ export class CategoryService {
 
   constructor(private apiService: ApiService) { }
 
+getAllCategories() {
+ return this.apiService.get('categories');
+}
+
+subscribe(id: number){
+  return this.apiService.put('categories/subscribe/'+id);
+}
+
+getSubscribedCategories(){
+  
+}
 }

@@ -12,27 +12,27 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "subscriptions")
-public class Subscriptions {
+@Table (name="postsliked")
+public class PostsLiked {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name="user_id")
 	private UserEntity user;
-
-	@ManyToOne
-	@JoinColumn(name = "category_id")
-	private CategoryEntity category;
 	
-	@Column(name = "date")
+	@ManyToOne
+	@JoinColumn(name="post_id")
+	private PostEntity post;
+	
+	@Column (name="date")
 	private Date date;
-
-	@Column(name = "flag")
+	
+	@Column (name="flag")
 	private boolean flag;
-
-	public Subscriptions() {
-
+	
+	public PostsLiked() {
+		
 	}
 
 	public int getId() {
@@ -51,20 +51,12 @@ public class Subscriptions {
 		this.user = user;
 	}
 
-	public CategoryEntity getCategory() {
-		return category;
+	public PostEntity getPost() {
+		return post;
 	}
 
-	public void setCategory(CategoryEntity category) {
-		this.category = category;
-	}
-
-	public boolean isFlag() {
-		return flag;
-	}
-
-	public void setFlag(boolean flag) {
-		this.flag = flag;
+	public void setPost(PostEntity post) {
+		this.post = post;
 	}
 
 	public Date getDate() {
@@ -75,12 +67,19 @@ public class Subscriptions {
 		this.date = date;
 	}
 
-	@Override
-	public String toString() {
-		return "Subscriptions [id=" + id + ", user=" + user + ", category=" + category + ", date=" + date + ", flag="
-				+ flag + "]";
+	public boolean isFlag() {
+		return flag;
 	}
 
-	
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
 
+	@Override
+	public String toString() {
+		return "PostsLiked [id=" + id + ", user=" + user + ", post=" + post + ", date=" + date + ", flag=" + flag + "]";
+	}
+	
+	
+	
 }

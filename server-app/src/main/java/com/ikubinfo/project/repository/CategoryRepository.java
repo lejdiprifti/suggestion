@@ -1,5 +1,6 @@
 package com.ikubinfo.project.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -51,21 +52,14 @@ public class CategoryRepository extends BaseResource {
 		return category;
 	}
 
-<<<<<<< HEAD
+
 	
 	public CategoryEntity update(CategoryEntity category, int categoryId) {
-		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryName=?1", CategoryEntity.class);
+
+		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1", CategoryEntity.class);
 		query.setParameter(1, categoryId);
 		CategoryEntity foundCategory=query.getSingleResult();
 		if (category.getCategoryName()!=null) {
-=======
-	public CategoryEntity update(CategoryEntity category, String categoryName) {
-		TypedQuery<CategoryEntity> query = entityManager
-				.createQuery("Select c From CategoryEntity c where c.categoryName LIKE ?1", CategoryEntity.class);
-		query.setParameter(1, categoryName);
-		CategoryEntity foundCategory = query.getSingleResult();
-		if (category.getCategoryName() != null) {
->>>>>>> f96f3beb592fe229d055b84de65e0bad02f8f37f
 			foundCategory.setCategoryName(category.getCategoryName());
 		}
 		if (category.getCategoryDescription() != null) {
@@ -90,20 +84,15 @@ public class CategoryRepository extends BaseResource {
 		return foundCategory;
 
 	}
-<<<<<<< HEAD
+
+	
 	
 	public CategoryEntity delete(int categoryId) {
 		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1", CategoryEntity.class);
+
 		query.setParameter(1, categoryId);
 		CategoryEntity foundCategory=query.getSingleResult();
-=======
 
-	public CategoryEntity delete(String categoryName) {
-		TypedQuery<CategoryEntity> query = entityManager
-				.createQuery("Select c From CategoryEntity c where c.categoryName LIKE ?1", CategoryEntity.class);
-		query.setParameter(1, categoryName);
-		CategoryEntity foundCategory = query.getSingleResult();
->>>>>>> f96f3beb592fe229d055b84de65e0bad02f8f37f
 		entityManager.getTransaction().begin();
 
 		entityManager.merge(foundCategory);
@@ -123,12 +112,14 @@ public class CategoryRepository extends BaseResource {
 		return category;
 	}
 
-	public String subscribe(CategoryEntity category) {
+	public CategoryEntity subscribe(CategoryEntity category) {
 		if (isSubscribed(getUsernameFromToken(),category)==false) {
 		UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
 		Subscriptions subscriptions=new Subscriptions();
 		subscriptions.setUser(user);
 		subscriptions.setCategory(category);
+
+		subscriptions.setDate(new Date());
 		subscriptions.setFlag(true);
 		entityManager.getTransaction().begin();
 		entityManager.persist(subscriptions);
@@ -137,17 +128,18 @@ public class CategoryRepository extends BaseResource {
 		}else {
 			UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
 			entityManager.getTransaction().begin();
-			Query query=entityManager.createNativeQuery("Update Subscriptions SET flag=:newFlag where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c"
+			Query query=entityManager.createNativeQuery("Update Subscriptions SET flag=:newFlag and date=:date where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c"
 					+ " where"
 					+ " c.category_id=:category_id) AND flag=:flag ) ");
 			query.setParameter("newFlag", true);
 			query.setParameter("flag", false);
 			query.setParameter("user_id",user.getId());
 			query.setParameter("category_id", category.getCategoryId());
+			query.setParameter("date", new Date());
 			query.executeUpdate();
 			entityManager.getTransaction().commit();
 		}
-		return "Subscribed successfully";
+		return getCategoryById(category.getCategoryId());
 	}
 	
 	public boolean isSubscribed(String username,CategoryEntity category) {
@@ -164,7 +156,7 @@ public class CategoryRepository extends BaseResource {
 	}
 	
 	
-	public String unsubscribe(int id) {
+	public CategoryEntity unsubscribe(int id) {
 		UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
 		entityManager.getTransaction().begin();
 		Query query=entityManager.createNativeQuery("Update Subscriptions SET flag=:newFlag where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c where" + 
@@ -174,6 +166,7 @@ public class CategoryRepository extends BaseResource {
 		query.setParameter("category_id", id);
 		query.executeUpdate();
 		entityManager.getTransaction().commit();
-		return "Unsubscribed successfully";
+		return getCategoryById(id);
 	}
+	
 }

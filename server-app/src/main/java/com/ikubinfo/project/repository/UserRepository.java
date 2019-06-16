@@ -7,11 +7,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.NotAllowedException;
+
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 import com.ikubinfo.project.entity.RoleEntity;
+
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
@@ -123,16 +125,19 @@ public class UserRepository {
 	}
 	
 
-	public UserEntity register(UserEntity userEntity){
+
+	public UserEntity register(UserEntity userEntity) {
 		if (isUser(userEntity) == true) {
 	    entityManager.getTransaction().begin();
 	    entityManager.persist(userEntity);
 		entityManager.getTransaction().commit();
-		
+
 		return userEntity;
+
 		} else {
 			throw new NotAllowedException("Username is taken");
 		}
-		
+
+
 	}
 }

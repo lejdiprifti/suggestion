@@ -1,16 +1,15 @@
 <div class="row">
-  <div class="col col-xl-6 col-lg-12">
-    <ikubinfo-panel header="Data 1">
+            
+  <div class="col col-xl-6 col-lg-12" *ngFor="let category of categories">
+    <ikubinfo-panel header="Category">
       <div panel-content>
-        <h1>Content here</h1>
+        <h1>{{ category.categoryName }}</h1>
+        <p>{{ category.categoryDescription }}</p>
+        <button (click)="subscribe(category.categoryId)">Subscribe</button>
       </div>
     </ikubinfo-panel>
-  </div>
-  <div class="col col-xl-6 col-lg-12">
-    <ikubinfo-panel header="Data 2">
-      <div panel-content>
-        <h1>Content here</h1>
-      </div>
-    </ikubinfo-panel>
-  </div>
+  </div> 
+
+
 </div>
+
