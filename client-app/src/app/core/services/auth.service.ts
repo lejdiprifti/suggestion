@@ -25,10 +25,7 @@ export class AuthService {
         this.onUserChanged = new Subject<User>();
         this.loadData();
     }
-
-  
-    //TO-DO: Mock Login => Need to be implemented with the real api calls
-
+    
     login(loginContext: Login): Observable<any> {
      return this.apiService.post('login',loginContext);
     

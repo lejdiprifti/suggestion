@@ -14,6 +14,8 @@ import javax.ws.rs.core.Response;
 
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.entity.CategoryEntity;
+import com.ikubinfo.project.model.UserModel;
+import com.ikubinfo.project.repository.CategoryRepository;
 import com.ikubinfo.project.service.CategoryService;
 import com.ikubinfo.project.util.Paths;
 
@@ -24,9 +26,10 @@ import com.ikubinfo.project.util.Paths;
 public class CategoryResource  extends BaseResource {
 
 		private CategoryService categoryService;
-		
+		private CategoryRepository categoryRepository;
 		public CategoryResource() {
 			this.categoryService= new CategoryService();
+			this.categoryRepository=new CategoryRepository();
 		}
 		
 		@GET
@@ -75,6 +78,20 @@ public class CategoryResource  extends BaseResource {
 		public Response delete(@PathParam("categoryId") int categoryId) {
 			categoryService.delete(categoryId);
 			return Response.noContent().build();
+		}
+		
+		@PUT
+		@Path("/subscribe/{id}")
+		public Response subscribe(UserModel user,@PathParam("id") final int id) {
+			return Response.ok(categoryRepository.subscribe(categoryRepository.getCategoryById(id))).build();
+			
+		}
+		
+		@PUT
+		@Path("/unsubscribe/{id}")
+		public Response unsubscribe(UserModel user,@PathParam("id") final int id) {
+			
+			return Response.ok(categoryRepository.unsubscribe(id)).build();
 		}
 
 

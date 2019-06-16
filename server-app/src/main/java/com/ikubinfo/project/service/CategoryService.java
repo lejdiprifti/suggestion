@@ -39,5 +39,7 @@ public class CategoryService {
 	public CategoryModel insert(CategoryEntity categoryEntity) throws Exception {
 		return categoryConverter.toModel(categoryRepository.insert(categoryEntity));
 	}
+
+	
 }
 
