@@ -7,6 +7,8 @@ public class Paths {
 	public static final String USERS = "/users";
 	public static final String CATEGORIES = "/categories";
 	public static final String POSTS = "/posts";
+	public static final String SUGGESTIONS="/suggestions";
+	public static final String MESSAGES="/messages";
 
 	private Paths() {
 		super();

@@ -1,3 +1,4 @@
+
 package com.ikubinfo.project.service;
 
 import java.util.List;
@@ -32,9 +33,6 @@ public class CategoryService {
 		return categoryConverter.toModel(categoryRepository.update(category,categoryId));
 	}
 	
-	public CategoryModel delete(int categoryId) {
-		return categoryConverter.toModel(categoryRepository.delete(categoryId));
-	}
 	
 	public CategoryModel insert(CategoryEntity categoryEntity) {
 		return categoryConverter.toModel(categoryRepository.insert(categoryEntity));
@@ -42,4 +40,5 @@ public class CategoryService {
 
 	
 }
+
 
