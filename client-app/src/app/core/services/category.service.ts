@@ -17,6 +17,10 @@ subscribe(id: number){
 }
 
 getSubscribedCategories(){
-  
+  return this.apiService.get('categories/subscribed');
+}
+
+unsubscribe(id: number){
+  return this.apiService.put('categories/unsubscribe/'+id);
 }
 }

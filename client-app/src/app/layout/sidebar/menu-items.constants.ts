@@ -8,16 +8,16 @@ export const menuItems: Array<MenuItem> = [{
     label: 'Dashboard',
     allowedRoles: [RoleEnum.ADMIN, RoleEnum.USER]
 },{
+    url: '/suggestion/subscriptions',
+    icon: 'fa-subscriptions',
+    label: 'Subscriptions',
+    allowedRoles: [RoleEnum.USER]
+},{
     url: '/suggestion/settings',
     icon: 'fa-settings',
     label: 'Settings',
     allowedRoles: [RoleEnum.ADMIN, RoleEnum.USER]
 },{
-    url: '/suggestion/subscriptions',
-    icon: 'fa-subscriptions',
-    label: 'Subscriptions',
-    allowedRoles: [RoleEnum.USER]
-}, {
     url: '/suggestion/posts',
     icon: 'fa-table',
     label: 'Manage posts',

@@ -7,6 +7,8 @@ import { PostComponent } from '@ikubinfo/suggestion/post/post.component';
 import { PostsComponent } from '@ikubinfo/suggestion/posts/posts.component';
 import { FullComponent } from '@ikubinfo/layout/full/full.component';
 import { SettingsComponent } from './settings/settings.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { UserGuard } from '@ikubinfo/core/guards/user-guard';
 
 const suggestionRoutes: Routes = [
     {
@@ -15,6 +17,7 @@ const suggestionRoutes: Routes = [
         children: [
             { path: 'dashboard', component: DashboardComponent },
             { path: 'settings', component: SettingsComponent},
+            { path: 'subscriptions', component: SubscriptionsComponent , canActivate: [UserGuard]},
             { path: 'posts', component: PostsComponent, canActivate: [AdminGuard] },
             { path: 'post', component: PostComponent, canActivate: [AdminGuard] },
             { path: 'post/:id', component: PostComponent, canActivate: [AdminGuard] },

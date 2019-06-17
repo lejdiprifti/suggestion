@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { RegisterComponent } from '@ikubinfo/authentification/register/register.component';
 import { SettingsService } from '@ikubinfo/core/services/settings.service';
 import { Register } from '@ikubinfo/core/models/register';
-import { ApiService } from '@ikubinfo/core/utilities/api.service';
-import { catchError } from 'rxjs/operators';
+
 
 @Component({
   selector: 'ikubinfo-settings',

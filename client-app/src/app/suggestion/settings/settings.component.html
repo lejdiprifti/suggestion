@@ -12,8 +12,7 @@
       <input type="date" formControlName="birthdate" class="form-control input-underline input-lg"
         placeholder="Birthdate" />
       <div *ngIf="
-      settingsForm.get('birthdate').dirty &&
-      settingsForm.get('birthdate').hasError('tooYoung')
+      settingsForm.get('birthdate').dirty && settingsForm.get('birthdate').hasError('tooYoung')
         ">
         *You must be over 18 years old.
       </div>
@@ -25,9 +24,8 @@
     </div>
     <!--Email -->
     <div class="form-group">
-      <input type="text" formControlName="email" class="form-control input-underline input-lg"
-        placeholder="Email" />
-   
+      <input type="text" formControlName="email" class="form-control input-underline input-lg" placeholder="Email" />
+
       <div *ngIf="
       settingsForm.get('email').dirty &&
       settingsForm.get('email').hasError('pattern')
@@ -44,10 +42,10 @@
         Password must contain at least one number and one uppercase and
         lowercase letter, and at least 8 or more characters.
       </div>
-   </div>
-   </div>
-   <button [disabled]="settingsForm.invalid" (click)="update()" class="save-button">
+    </div>
+  </div>
+  <button [disabled]="settingsForm.invalid" (click)="update()" class="save-button">
     Save
   </button>
   <button (click)="delete()" class="delete-button">Delete Account</button>
-  </form>
+</form>

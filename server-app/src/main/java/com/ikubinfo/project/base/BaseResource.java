@@ -32,7 +32,7 @@ public abstract class BaseResource {
 	}
 	
 	public String getUsernameFromToken() {
-		String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImxlamRpIiwicm9sZSI6eyJpZCI6Miwicm9sZU5hbWUiOiJVU0VSIiwicm9sZURlc2NyaXB0aW9uIjoiU2hpa29uX3Bvc3RpbWV0X2RoZV9wcm9wb3pvbl9rYXRlZ29yaSJ9LCJleHAiOjE1NjA3MDgzNzIsImp0aSI6ImE3ODg4NzdmLTA0MzAtNDBhMC1iYjczLTM0ZTRiMWNmMmNlNiIsImlhdCI6MTU2MDcwMTE3MiwiaXNzIjoiaWt1YmluZm8ifQ.2ORvqGkKts-zQYB2yBDHZG7iJxv1Wheh4MmNTIs9EAQ";
+		String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImxlamRpIiwicm9sZSI6eyJpZCI6Miwicm9sZU5hbWUiOiJVU0VSIiwicm9sZURlc2NyaXB0aW9uIjoiU2hpa29uX3Bvc3RpbWV0X2RoZV9wcm9wb3pvbl9rYXRlZ29yaSJ9LCJleHAiOjE1NjA3MzU1MDAsImp0aSI6IjYxMmJhMTI2LTAwNWItNDY3Yi1iNGUyLTFjN2ViOWI1MTFiYiIsImlhdCI6MTU2MDcyODMwMCwiaXNzIjoiaWt1YmluZm8ifQ.XRCQ26a-lY3rABUpLzpUj9f51UHaw7Y11-oPRQUlrIc";
 		
 
 		return (String) Jwts.parser().setSigningKey(Constants.JWT_KEY).parseClaimsJws(token).getBody().get("username");

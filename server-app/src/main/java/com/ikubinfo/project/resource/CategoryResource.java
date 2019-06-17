@@ -90,9 +90,13 @@ public class CategoryResource  extends BaseResource {
 		@PUT
 		@Path("/unsubscribe/{id}")
 		public Response unsubscribe(@PathParam("id") final int id) {
-			
 			return Response.ok(categoryRepository.unsubscribe(id)).build();
 		}
 
-
+		@GET
+		@Path("/subscribed")
+		public Response getSubscribedCategories() {
+			return Response.ok(categoryRepository.getSubscribedCategories()).build();
+		}
+		
 }

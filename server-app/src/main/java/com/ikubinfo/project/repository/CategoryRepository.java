@@ -13,6 +13,7 @@ import com.ikubinfo.project.converter.UserConverter;
 import com.ikubinfo.project.entity.CategoryEntity;
 import com.ikubinfo.project.entity.Subscriptions;
 import com.ikubinfo.project.entity.UserEntity;
+import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.model.LoginResponse;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
@@ -126,13 +127,12 @@ public class CategoryRepository extends BaseResource {
 		entityManager.getTransaction().commit();
 		
 		}else {
-			UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
+			UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());	
 			entityManager.getTransaction().begin();
 			Query query=entityManager.createNativeQuery("Update Subscriptions SET flag=:newFlag and date=:date where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c"
 					+ " where"
-					+ " c.category_id=:category_id) AND flag=:flag ) ");
+					+ " c.category_id=:category_id)) ");
 			query.setParameter("newFlag", true);
-			query.setParameter("flag", false);
 			query.setParameter("user_id",user.getId());
 			query.setParameter("category_id", category.getCategoryId());
 			query.setParameter("date", new Date());
@@ -152,7 +152,7 @@ public class CategoryRepository extends BaseResource {
 		return true;
 		}catch(NoResultException e) {
 			return false;
-		}
+		} 
 	}
 	
 	
@@ -169,4 +169,11 @@ public class CategoryRepository extends BaseResource {
 		return getCategoryById(id);
 	}
 	
+	public List<CategoryModel> getSubscribedCategories() {
+		UserEntity user=userRepository.getUserByUsername(getUsernameFromToken());
+		Query query=entityManager.createNativeQuery("Select * from category c where c.category_id in (Select category_id from subscriptions where user_id=?1 and flag=?2)");
+		query.setParameter(2, true);
+		query.setParameter(1, user.getId());
+		return query.getResultList();
+	}
 }

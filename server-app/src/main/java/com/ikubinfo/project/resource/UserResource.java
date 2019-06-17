@@ -30,7 +30,7 @@ public class UserResource extends BaseResource  {
 	@GET
 	public Response getUsers() {
 		return Response.ok(userService.getUsers()).build();
-	}
+	} 
 	
 	@GET
 	@Path("/{username}")
