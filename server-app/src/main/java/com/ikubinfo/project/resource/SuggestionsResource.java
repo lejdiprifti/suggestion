@@ -55,13 +55,13 @@ public class SuggestionsResource {
 	}
 	
 	@PUT
-	@Path("/{id}")
+	@Path("/accept/{id}")
 	public Response accept(@PathParam("id") final int id) {
 		return Response.ok(categoryConverter.toModel(suggestionsRepository.accept(id))).build();
 	}
 	
 	@PUT
-	@Path("/{id}")
+	@Path("/decline/{id}")
 	public Response decline(@PathParam("id") final int id) {
 		return Response.ok(categoryConverter.toModel(suggestionsRepository.decline(id))).build();
 	}

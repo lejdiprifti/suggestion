@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '@ikubinfo/core/services/auth.service';
 import { throwError } from 'rxjs';
+import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private logger: LoggerService
   ) { }
 
   ngOnInit() {
@@ -34,9 +36,9 @@ export class LoginComponent implements OnInit {
   this.authService.setData(res);
   this.router.navigate(['/suggestion']);
  },
- err=>{
-    
- });
+ err => {
+  this.logger.error('Error', 'An error accured');
+});
 }
 
 }

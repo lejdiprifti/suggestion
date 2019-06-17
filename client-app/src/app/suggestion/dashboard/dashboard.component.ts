@@ -26,7 +26,6 @@ export class DashboardComponent implements OnInit {
 
  subscribe(id: number){
    this.categoryService.subscribe(id).subscribe(res=>{
-     this.router.navigate(['/suggestion/dashboard']);
    });
  }
 }

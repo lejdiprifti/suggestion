@@ -33,8 +33,7 @@ public abstract class BaseResource {
 	}
 	
 	public String getUsernameFromToken() {
-		String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImxlamRpIiwicm9sZSI6eyJpZCI6Miwicm9sZU5hbWUiOiJVU0VSIiwicm9sZURlc2NyaXB0aW9uIjoiU2hpa29uX3Bvc3RpbWV0X2RoZV9wcm9wb3pvbl9rYXRlZ29yaSJ9LCJleHAiOjE1NjA3MzU1MDAsImp0aSI6IjYxMmJhMTI2LTAwNWItNDY3Yi1iNGUyLTFjN2ViOWI1MTFiYiIsImlhdCI6MTU2MDcyODMwMCwiaXNzIjoiaWt1YmluZm8ifQ.XRCQ26a-lY3rABUpLzpUj9f51UHaw7Y11-oPRQUlrIc";
-		
+		String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImxlamRpIiwicm9sZSI6eyJpZCI6Miwicm9sZU5hbWUiOiJVU0VSIiwicm9sZURlc2NyaXB0aW9uIjoiU2hpa29uX3Bvc3RpbWV0X2RoZV9wcm9wb3pvbl9rYXRlZ29yaSJ9LCJleHAiOjE1NjA3ODk2NDYsImp0aSI6IjkwMTIxNTZiLTJiN2ItNGJjNC04ZDQ1LTk1ZmQ3MzA2ZWMwZiIsImlhdCI6MTU2MDc4MjQ0NiwiaXNzIjoiaWt1YmluZm8ifQ.uV0gUTh_TA42JmviTc4brth18EOvO1S4tnqAqCHRsjI";
 
 		return (String) Jwts.parser().setSigningKey(Constants.JWT_KEY).parseClaimsJws(token).getBody().get("username");
 	}

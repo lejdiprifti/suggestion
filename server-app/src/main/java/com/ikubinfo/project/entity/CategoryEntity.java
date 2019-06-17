@@ -37,7 +37,7 @@ public class CategoryEntity {
 	private UserEntity user;
 
 	@Column(name = "category_state")
-	private State categoryState;
+	private State state;
 
 	@ManyToOne
 	@JoinColumn(name = "accepted_user")
@@ -46,7 +46,7 @@ public class CategoryEntity {
 	@Column(name = "accepted_date")
 	private Date acceptedDate;
 	
-	@Column (name="flag")
+	@Column(name="flag")
 	private boolean flag;
 	
 	public CategoryEntity() {
@@ -86,11 +86,11 @@ public class CategoryEntity {
 	}
 
 	public State getCategoryState() {
-		return categoryState;
+		return state;
 	}
 
 	public void setCategoryState(State categoryState) {
-		this.categoryState = categoryState;
+		this.state = categoryState;
 	}
 
 	public UserEntity getAcceptedUser() {
@@ -120,7 +120,7 @@ public class CategoryEntity {
 	@Override
 	public String toString() {
 		return "CategoryEntity [categoryId=" + categoryId + ", categoryName=" + categoryName + ", categoryDescription="
-				+ categoryDescription + ", user=" + user + ", categoryState=" + categoryState + ", acceptedUser="
+				+ categoryDescription + ", user=" + user + ", categoryState=" + state + ", acceptedUser="
 				+ acceptedUser + ", acceptedDate=" + acceptedDate + "]";
 	}
 

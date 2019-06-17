@@ -30,18 +30,13 @@ public class UserRepository {
 	
 	public UserEntity getUser(String username,String password) {
 		try {
-		RoleEntity role=new RoleEntity();
-		role.setId(2);
 		TypedQuery<UserEntity> query=entityManager.createQuery("Select u From UserEntity u where u.username=?1 AND u.password=?2 AND u.flag=:flag",UserEntity.class);
 		query.setParameter(1,username);
 		query.setParameter(2, password);
 		query.setParameter("flag", true);
 		UserEntity user=query.getSingleResult();
-		if (user.getRole().getId()==role.getId()) {
+		
 		return user;
-		}else {
-			throw new NoResultException();
-		}
 		}catch(NoResultException e) {
 			throw new NotFoundException();
 		}

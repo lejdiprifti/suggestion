@@ -22,7 +22,7 @@ export class SubscriptionsComponent implements OnInit {
   }
   unsubscribe(id:number){
     this.categoryService.unsubscribe(id).subscribe(res=>{
-      this.router.navigate(['/suggestion/subscriptions']);
+      this.router.navigate(['suggestion/subscriptions']);
     });
   }
 
