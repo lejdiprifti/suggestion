@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.base.BaseResource;
@@ -34,10 +35,9 @@ public class PostRepository extends BaseResource {
 		try {
 		TypedQuery<PostEntity> query=entityManager.createQuery("Select c From PostEntity c where c.postName=?1",PostEntity.class);
 		query.setParameter(1,postName);
-
 		post=query.getSingleResult();
 		} catch(NoResultException e) {
-			System.out.println(e.getMessage());
+			throw new NotFoundException();
 		}
 		return post;
 	}
@@ -85,6 +85,7 @@ public class PostRepository extends BaseResource {
 	}
 	
 	public PostEntity delete(int postId) {
+		try {
 		TypedQuery<PostEntity> query=entityManager.createQuery("Select c From PostEntity c where c.postId=?1", PostEntity.class);
 		query.setParameter(1, postId);
 		PostEntity foundPost=query.getSingleResult();
@@ -94,15 +95,18 @@ public class PostRepository extends BaseResource {
 		entityManager.getTransaction().commit();
 
 		return foundPost;
+		}catch (NoResultException e) {
+			throw new NotFoundException();
+		}
 	}
 
-	public PostEntity insert(PostEntity post) throws Exception {
-		if (getPostByName(post.getPostName())==null) {
+	public PostEntity insert(PostEntity post){
+		if (getPostByName(post.getPostName()).equals(null)) {
 			entityManager.getTransaction().begin();
 			entityManager.persist(post);
 			entityManager.getTransaction().commit();
 		} else {
-			throw new Exception();
+			throw new NotAllowedException("Already exists.");
 		}
 		return post;
 	}

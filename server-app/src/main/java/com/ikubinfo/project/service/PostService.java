@@ -37,7 +37,7 @@ public class PostService {
 		return postConverter.toModel(postRepository.delete(postId));
 	}
 	
-	public PostModel insert(PostEntity postEntity) throws Exception {
+	public PostModel insert(PostEntity postEntity) {
 		return postConverter.toModel(postRepository.insert(postEntity));
 	}
 

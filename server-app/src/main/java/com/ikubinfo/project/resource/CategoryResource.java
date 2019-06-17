@@ -40,11 +40,10 @@ public class CategoryResource  extends BaseResource {
 		@GET
 		@Path("/{categoryName}")
 		public Response getCategoryName(@PathParam("categoryName") String categoryName) {
-			try {
+		
 			return Response.ok(categoryService.getCategoryByName(categoryName)).build();
-			}catch (NoResultException e) {
-				return Response.noContent().build();
-			}
+
+			
 		}
 		
 		@GET
@@ -65,12 +64,8 @@ public class CategoryResource  extends BaseResource {
 		
 		@POST
 		public Response insert(CategoryEntity category) {
-			try {
 				return Response.ok(categoryService.insert(category)).build();
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				return Response.serverError().build();
-			}
+			
 		}
 		
 		@DELETE

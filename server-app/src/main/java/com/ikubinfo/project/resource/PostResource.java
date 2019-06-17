@@ -39,21 +39,15 @@ public class PostResource extends BaseResource{
 	@GET
 	@Path("/{postName}")
 	public Response getPostName(@PathParam("postName") String postName) {
-		try {
 		return Response.ok(postService.getPostByName(postName)).build();
-		}catch (NoResultException e) {
-			return Response.noContent().build();
-		}
+	
 	}
 	
 	@GET
 	@Path("/id/{postId}")
 	public Response getPostById(@PathParam("postId") int postId) {
-		try {
 		return Response.ok(postService.getPostById(postId)).build();
-		}catch (NoResultException e) {
-			return Response.noContent().build();
-		}
+	
 	}
 	
 	@PUT
@@ -64,12 +58,8 @@ public class PostResource extends BaseResource{
 	
 	@POST
 	public Response insert(PostEntity post) {
-		try {
+	
 			return Response.ok(postService.insert(post)).build();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return Response.serverError().build();
-		}
 	}
 	
 	@DELETE

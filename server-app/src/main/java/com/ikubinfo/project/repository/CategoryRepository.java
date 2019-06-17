@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.NotAllowedException;
+import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.converter.UserConverter;
@@ -39,18 +41,22 @@ public class CategoryRepository extends BaseResource {
 
 			category = query.getSingleResult();
 		} catch (NoResultException e) {
-			System.out.println(e.getMessage());
+			throw new NotFoundException();
 		}
 		return category;
 	}
 
 	public CategoryEntity getCategoryById(int categoryId) {
+		try {
 		TypedQuery<CategoryEntity> query = entityManager
 				.createQuery("Select c From CategoryEntity c where c.categoryId=?1", CategoryEntity.class);
 		query.setParameter(1, categoryId);
 
 		CategoryEntity category = query.getSingleResult();
 		return category;
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
 	}
 
 
@@ -89,6 +95,7 @@ public class CategoryRepository extends BaseResource {
 	
 	
 	public CategoryEntity delete(int categoryId) {
+		try {
 		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1", CategoryEntity.class);
 
 		query.setParameter(1, categoryId);
@@ -100,15 +107,18 @@ public class CategoryRepository extends BaseResource {
 		entityManager.getTransaction().commit();
 
 		return foundCategory;
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
 	}
 
-	public CategoryEntity insert(CategoryEntity category) throws Exception {
-		if (getCategoryByName(category.getCategoryName()) == null) {
+	public CategoryEntity insert(CategoryEntity category) {
+		if (getCategoryByName(category.getCategoryName()).equals(null)) {
 			entityManager.getTransaction().begin();
 			entityManager.persist(category);
 			entityManager.getTransaction().commit();
 		} else {
-			throw new Exception();
+			throw new NotAllowedException("Already exists.");
 		}
 		return category;
 	}
