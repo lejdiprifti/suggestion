@@ -30,26 +30,44 @@ public class SuggestionsRepository extends BaseResource {
 	}
 	
 	public List<CategoryEntity> getSuggestions(){
-		return entityManager.createQuery("Select CategoryEntity where state=?1",CategoryEntity.class).setParameter(1, State.PROPOSED).getResultList();
+		return entityManager.createQuery("Select c from CategoryEntity c where c.state=?1",CategoryEntity.class).setParameter(1, State.PROPOSED).getResultList();
 	}
 	
 	public CategoryEntity getSuggestionById(final int id) {
 		try {
-		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select CategoryEntity where categoryId=?1 and state=?2",CategoryEntity.class);
+		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=?3",CategoryEntity.class);
 		query.setParameter(1, id);
 		query.setParameter(2, State.PROPOSED);
+		query.setParameter(3, true);
 		return query.getSingleResult();
 		}catch(NoResultException e) {
 			throw new NotFoundException();
 		}
 	}
 	
+	public CategoryEntity isSuggestion(String name) {
+		try {
+			TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c from CategoryEntity c where c.categoryName=?1 and c.flag=?2", CategoryEntity.class);
+			query.setParameter(1, name);
+			query.setParameter(2, true);
+			return query.getSingleResult();
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
+	}
+	
 	public CategoryEntity insert(CategoryEntity suggestion) {
+		try {
+			isSuggestion(suggestion.getCategoryName());
+			throw new NotAllowedException("Suggestion or category exists.");
+		}catch (NotFoundException e) {
 		entityManager.getTransaction().begin();
 		entityManager.persist(suggestion);
 		entityManager.getTransaction().commit();
 		return suggestion;
+		}
 	}
+	
 	
 	public CategoryEntity update(CategoryEntity category, int categoryId) {
 		try {
@@ -59,20 +77,18 @@ public class SuggestionsRepository extends BaseResource {
 		query.setParameter("flag", true);
 		CategoryEntity foundCategory=query.getSingleResult();
 		if (category.getCategoryName()!=null) {
+			try {
+				isSuggestion(category.getCategoryName());
+				throw new NotAllowedException("Suggestion name exists");
+			}catch(NotFoundException e) {
 			foundCategory.setCategoryName(category.getCategoryName());
+			}
 		}
 		if (category.getCategoryDescription() != null) {
 			foundCategory.setCategoryDescription(category.getCategoryDescription());
 		}
-		if (category.getAcceptedDate() != null) {
-			foundCategory.setAcceptedDate(category.getAcceptedDate());
-		}
-		if (category.getAcceptedUser() != null) {
-			foundCategory.setAcceptedUser(category.getAcceptedUser());
-		}
-		if (category.getUser() != null) {
-			foundCategory.setUser(category.getUser());
-		}
+		
+		foundCategory.setUser(userRepository.getUserByUsername(getUsernameFromToken()));
 		entityManager.getTransaction().begin();
 		entityManager.merge(foundCategory);
 		entityManager.getTransaction().commit();
@@ -85,7 +101,7 @@ public class SuggestionsRepository extends BaseResource {
 	
 	public void delete(final int id) {
 		try {
-		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
+		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
 		query.setParameter(1, id);
 		query.setParameter(2, State.PROPOSED);
 		query.setParameter("flag", true);
@@ -101,11 +117,11 @@ public class SuggestionsRepository extends BaseResource {
 	
 	public CategoryEntity accept(final int id ) {
 		try {
-			if (getRoleFromToken().getId()==1) {
-			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select CategoryEntity c where c.categoryId=?1 and c.flag=:flag", CategoryEntity.class);
+			if (getRoleFromToken().get("id").equals(1)) {
+			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=?3", CategoryEntity.class);
 			query.setParameter(1, id);
 			query.setParameter(2, State.PROPOSED);
-			query.setParameter("flag", true);
+			query.setParameter(3, true);
 			CategoryEntity suggestion=query.getSingleResult();
 			suggestion.setCategoryState(State.CREATED);
 			suggestion.setAcceptedDate(new Date());
@@ -124,11 +140,11 @@ public class SuggestionsRepository extends BaseResource {
 	
 	public CategoryEntity decline(final int id) {
 		try {
-			if (getRoleFromToken().getId()==1) {
-			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select CategoryEntity c where c.categoryId=?1 and c.flag=:flag", CategoryEntity.class);
+			if (getRoleFromToken().get("id").equals(1)) {
+			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=?3", CategoryEntity.class);
 			query.setParameter(1, id);
 			query.setParameter(2, State.PROPOSED);
-			query.setParameter("flag", true);
+			query.setParameter(3, true);
 			CategoryEntity suggestion=query.getSingleResult();
 			suggestion.setCategoryState(State.DECLINED);
 			suggestion.setAcceptedDate(new Date());

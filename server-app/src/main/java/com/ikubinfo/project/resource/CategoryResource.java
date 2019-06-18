@@ -1,6 +1,5 @@
 package com.ikubinfo.project.resource;
 
-import javax.persistence.NoResultException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -59,8 +58,6 @@ public class CategoryResource  extends BaseResource {
 		@POST
 		public Response insert(CategoryEntity category) {
 				return Response.ok(categoryService.insert(category)).build();
-			
-
 		}
 		
 		@DELETE
@@ -89,4 +86,9 @@ public class CategoryResource  extends BaseResource {
 			return Response.ok(categoryRepository.getSubscribedCategories()).build();
 		}
 		
+		@GET
+		@Path("/{id}/posts")
+		public Response getPostsofCategory(@PathParam("id") final int id) {
+			return Response.ok(categoryRepository.getPostsOfCategory(id)).build();
+		}
 }

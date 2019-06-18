@@ -16,6 +16,7 @@ import com.ikubinfo.project.entity.PostEntity;
 import com.ikubinfo.project.entity.PostsLiked;
 import com.ikubinfo.project.entity.Subscriptions;
 import com.ikubinfo.project.entity.UserEntity;
+import com.ikubinfo.project.model.PostModel;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
 public class PostRepository extends BaseResource {
@@ -34,9 +35,10 @@ public class PostRepository extends BaseResource {
 	public PostEntity getPostByName(String postName) {
 		PostEntity post = null;
 		try {
-			TypedQuery<PostEntity> query = entityManager.createQuery("Select c From PostEntity c where c.postName=?1",
+			TypedQuery<PostEntity> query = entityManager.createQuery("Select c From PostEntity c where c.postName=?1 and c.flag=?2",
 					PostEntity.class);
 			query.setParameter(1, postName);
+			query.setParameter(2, true);
 			post = query.getSingleResult();
 		} catch (NoResultException e) {
 			throw new NotFoundException();
@@ -46,10 +48,10 @@ public class PostRepository extends BaseResource {
 
 	public PostEntity getPostById(int postId) {
 		try {
-			TypedQuery<PostEntity> query = entityManager.createQuery("Select c From PostEntity c where c.postId=?1",
+			TypedQuery<PostEntity> query = entityManager.createQuery("Select c From PostEntity c where c.postId=?1 and c.flag=?2",
 					PostEntity.class);
 			query.setParameter(1, postId);
-
+			query.setParameter(2, true);
 			PostEntity post = query.getSingleResult();
 			return post;
 		} catch (NoResultException e) {
@@ -57,13 +59,34 @@ public class PostRepository extends BaseResource {
 		}
 	}
 
+	public boolean isPost(String username, final int categoryId) {
+		try {
+			Query query= entityManager.createNativeQuery("Select p from posts p where p.post_name=?1 and p.category_id=?2 and p.flag=?3");
+			query.setParameter(1, username);
+			query.setParameter(2, categoryId);
+			query.setParameter(3, true);
+			query.getSingleResult();
+			return true;
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
+	}
+	
+
 	public PostEntity update(PostEntity post, int postId) {
-		TypedQuery<PostEntity> query = entityManager.createQuery("Select c From PostEntity c where c.postId LIKE ?1",
+		try {
+		TypedQuery<PostEntity> query = entityManager.createQuery("Select c From PostEntity c where c.postId=?1 and c.flag=?2",
 				PostEntity.class);
 		query.setParameter(1, postId);
+		query.setParameter(2, true);
 		PostEntity foundPost = query.getSingleResult();
 		if (post.getPostName() != null) {
+			try {
+				isPost(post.getPostName(),post.getCategory().getCategoryId());
+				throw new NotAllowedException("Post exists.");
+			}catch(NotFoundException e) {
 			foundPost.setPostName(post.getPostName());
+			}
 		}
 		if (post.getPostDescription() != null) {
 			foundPost.setPostDescription(post.getPostDescription());
@@ -72,7 +95,7 @@ public class PostRepository extends BaseResource {
 			foundPost.setCategory(post.getCategory());
 		}
 		if (post.getAddedDate() != null) {
-			foundPost.setAddedDate(post.getAddedDate());
+			foundPost.setAddedDate(new Date());
 		}
 		if (post.getUser() != null) {
 			foundPost.setUser(post.getUser());
@@ -82,7 +105,9 @@ public class PostRepository extends BaseResource {
 		entityManager.getTransaction().commit();
 
 		return foundPost;
-
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
 	}
 
 	public PostEntity delete(int postId) {
@@ -104,18 +129,18 @@ public class PostRepository extends BaseResource {
 
 	public PostEntity insert(PostEntity post) {
 		try {
-			getPostByName(post.getPostName());
+			isPost(post.getPostName(),post.getCategory().getCategoryId());
 			throw new NotAllowedException("Already exists.");
 		} catch (NotFoundException e) {
 			entityManager.getTransaction().begin();
 			entityManager.persist(post);
 			entityManager.getTransaction().commit();
-
+			return post;
 		}
-		return post;
+		
 	}
 
-	public String like(PostEntity post) {
+	public PostEntity like(PostEntity post) {
 		if (isLiked(getUsernameFromToken(), post) == false) {
 			UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
 			PostsLiked postsliked = new PostsLiked();
@@ -140,7 +165,7 @@ public class PostRepository extends BaseResource {
 			query.executeUpdate();
 			entityManager.getTransaction().commit();
 		}
-		return "Liked successfully";
+		return post;
 	}
 
 	public boolean isLiked(String username, PostEntity post) {
@@ -157,7 +182,7 @@ public class PostRepository extends BaseResource {
 		}
 	}
 
-	public String unlike(PostEntity post) {
+	public PostEntity unlike(PostEntity post) {
 		UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
 		entityManager.getTransaction().begin();
 		Query query = entityManager.createNativeQuery(
@@ -168,7 +193,7 @@ public class PostRepository extends BaseResource {
 		query.setParameter("post_id", post.getPostId());
 		query.executeUpdate();
 		entityManager.getTransaction().commit();
-		return "Unliked successfully";
+		return post;
 
 	}
 

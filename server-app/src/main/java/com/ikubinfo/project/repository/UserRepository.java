@@ -57,7 +57,7 @@ public class UserRepository {
 	}
 	
 	public UserEntity update(UserEntity user, String username) {
-		TypedQuery<UserEntity> query = entityManager.createQuery("Select u From UserEntity u where u.username LIKE ?1 AND u.flag=:flag", UserEntity.class);
+		TypedQuery<UserEntity> query = entityManager.createQuery("Select u From UserEntity u where u.username=?1 AND u.flag=:flag", UserEntity.class);
 		query.setParameter(1, username);
 		query.setParameter("flag", true);
 		UserEntity foundUser=query.getSingleResult();
@@ -74,17 +74,16 @@ public class UserRepository {
 			foundUser.setAddress(user.getAddress());
 		}
 		if (user.getUsername() != null) {
-			if (isUser(user)==true) {
+			try {
+				isUser(user);
 				throw new NotAllowedException("Username taken");
-			}else {
+			}catch(NotFoundException e) {
 			foundUser.setUsername(user.getUsername());
 			}
 		}
 		entityManager.getTransaction().begin();
 		entityManager.merge(foundUser);
 		entityManager.getTransaction().commit();
-	
-		
 		return foundUser;
 		
 	}
@@ -110,27 +109,28 @@ public class UserRepository {
 	}
 	
 	public boolean isUser(UserEntity userEntity) {
+		try {
 		TypedQuery<UserEntity> query=entityManager.createQuery("From UserEntity where username=?1", UserEntity.class);
 		query.setParameter(1, userEntity.getUsername());
 		UserEntity user=query.getSingleResult();
-		if (user.getUsername().equals(userEntity.getUsername())) {
-			return false;
-		}
 		return true;
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
 	}
 	
 
 
 	public UserEntity register(UserEntity userEntity) {
-		if (isUser(userEntity) == true) {
-	    entityManager.getTransaction().begin();
-	    entityManager.persist(userEntity);
-		entityManager.getTransaction().commit();
-
-		return userEntity;
-
-		} else {
+		try {
+			isUser(userEntity);
 			throw new NotAllowedException("Username is taken");
+		} catch (NotFoundException e) {
+			entityManager.getTransaction().begin();
+		    entityManager.persist(userEntity);
+			entityManager.getTransaction().commit();
+
+			return userEntity;
 		}
 
 

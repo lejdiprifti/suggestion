@@ -13,6 +13,7 @@ import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.entity.CategoryEntity;
+import com.ikubinfo.project.entity.PostEntity;
 import com.ikubinfo.project.entity.State;
 import com.ikubinfo.project.entity.Subscriptions;
 import com.ikubinfo.project.entity.UserEntity;
@@ -128,6 +129,7 @@ try {
 		
 	}
 
+	
 	public CategoryEntity subscribe(int id) {
 		if (isSubscribed(getUsernameFromToken(),getCategoryById(id))==false) {
 		UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
@@ -190,5 +192,16 @@ try {
 		query.setParameter(2, true);
 		query.setParameter(1, user.getId());
 		return query.getResultList();
+	}
+	
+	public List<PostEntity> getPostsOfCategory(final int id){
+		if (isSubscribed(getUsernameFromToken(), getCategoryById(id))) {
+		Query query = entityManager.createNativeQuery("Select * from post p where p.category_id = ?1 and flag=?2");
+		query.setParameter(2, true);
+		query.setParameter(1, id);
+		return query.getResultList();
+		}	else {
+			throw new NotAllowedException("You are not subscribed.");
+		}
 	}
 }
