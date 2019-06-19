@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SubscriptionsComponent implements OnInit {
   subscriptions: Object;
-  constructor(private categoryService: CategoryService, private router: Router) { 
+  constructor(private categoryService: CategoryService, private router: Router ) { 
     this.subscriptions=[];
   }
   
@@ -23,7 +23,8 @@ export class SubscriptionsComponent implements OnInit {
   unsubscribe(id:number){
     this.categoryService.unsubscribe(id).subscribe(res=>{
       this.router.navigate(['suggestion/subscriptions']);
-    });
+    }); 
   }
 
+ 
 }

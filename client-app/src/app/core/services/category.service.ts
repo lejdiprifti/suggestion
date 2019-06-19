@@ -23,4 +23,8 @@ getSubscribedCategories(){
 unsubscribe(id: number){
   return this.apiService.put('categories/unsubscribe/'+id);
 }
+
+getPostsOfCategory(id:number){
+  return this.apiService.put('categories/'+id+'posts');
+}
 }
