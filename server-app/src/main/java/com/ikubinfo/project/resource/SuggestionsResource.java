@@ -30,9 +30,7 @@ public class SuggestionsResource extends BaseResource {
 
 	@GET
 	public Response getSuggestions() {
-		RoleEntity role=getRoleFromToken();
-		System.out.println(role);
-		return Response.ok(categoryConverter.toModel(suggestionsRepository.getSuggestions())).build();
+		return Response.ok(suggestionsRepository.getSuggestions()).build();
 	}
 
 	@GET
@@ -54,16 +52,17 @@ public class SuggestionsResource extends BaseResource {
 		return Response.noContent().build();
 	}
 
-/*	@PUT
+	@PUT
 	@Path("/accept/{id}")
 	public Response accept(@PathParam("id") final int id) {
-		return Response.ok(categoryConverter.toModel(suggestionsRepository.accept(id))).build();
+		return Response.ok(categoryConverter.toModel(suggestionsRepository.accept(getUsernameFromToken(),id))).build();
 	}
-*/
-/*	@PUT
+
+	@PUT
 	@Path("/decline/{id}")
 	public Response decline(@PathParam("id") final int id) {
-		return Response.ok(categoryConverter.toModel(suggestionsRepository.decline(id))).build();
-	}*/
+		return Response.ok(categoryConverter.toModel(suggestionsRepository.decline(getUsernameFromToken(),id))).build();
+	
 
+}
 }

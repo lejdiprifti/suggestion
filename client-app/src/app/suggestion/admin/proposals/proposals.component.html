@@ -1,0 +1,13 @@
+<div class="row">
+            
+  <div class="col col-xl-6 col-lg-12" *ngFor="let proposal of proposals">
+    <ikubinfo-panel header="Proposal">
+      <div panel-content>
+        <h1>{{ proposal.categoryName }}</h1>
+        <p>{{ proposal.categoryDescription }}</p>
+        <button (click)="accept(proposal.categoryId)">Accept</button>
+        <button (click)="decline(proposal.categoryId)">Decline</button>
+      </div>
+    </ikubinfo-panel>
+  </div> 
+</div>

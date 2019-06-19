@@ -13,6 +13,12 @@ export const menuItems: Array<MenuItem> = [{
     label: 'Subscriptions',
     allowedRoles: [RoleEnum.USER]
 },{
+    url: '/suggestion/proposals',
+    icon: 'fa-text',
+    label: 'Proposals',
+    allowedRoles: [RoleEnum.ADMIN]
+},
+{
     url: '/suggestion/settings',
     icon: 'fa-settings',
     label: 'Settings',
