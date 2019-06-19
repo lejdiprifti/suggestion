@@ -39,6 +39,10 @@ public class RoleEntity {
 	public void setRoleDescription(String roleDescription) {
 		this.roleDescription = roleDescription;
 	}
+	@Override
+	public String toString() {
+		return "RoleEntity [id=" + id + ", roleName=" + roleName + ", roleDescription=" + roleDescription + "]";
+	}
 	
 	
 	

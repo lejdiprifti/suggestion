@@ -19,7 +19,7 @@ import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.PostModel;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
-public class PostRepository extends BaseResource {
+public class PostRepository {
 	private EntityManager entityManager;
 	private UserRepository userRepository;
 
@@ -140,9 +140,9 @@ public class PostRepository extends BaseResource {
 		
 	}
 
-	public PostEntity like(PostEntity post) {
-		if (isLiked(getUsernameFromToken(), post) == false) {
-			UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
+	public PostEntity like(String username,PostEntity post) {
+		if (isLiked(username, post) == false) {
+			UserEntity user = userRepository.getUserByUsername(username);
 			PostsLiked postsliked = new PostsLiked();
 			postsliked.setUser(user);
 			postsliked.setPost(post);
@@ -153,7 +153,7 @@ public class PostRepository extends BaseResource {
 			entityManager.getTransaction().commit();
 
 		} else {
-			UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
+			UserEntity user = userRepository.getUserByUsername(username);
 			entityManager.getTransaction().begin();
 			Query query = entityManager.createNativeQuery(
 					"Update postsliked SET flag=:newFlag where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and post_id=(select p.post_id from post p"
@@ -173,7 +173,7 @@ public class PostRepository extends BaseResource {
 			Query query = entityManager.createNativeQuery(
 					"Select from postsliked where user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and post_id=(select p.post_id from post p where "
 							+ " post_id=:post_id)");
-			query.setParameter("user_id", userRepository.getUserByUsername(getUsernameFromToken()).getId());
+			query.setParameter("user_id", userRepository.getUserByUsername(username).getId());
 			query.setParameter("post_id", post.getPostId());
 			query.getSingleResult();
 			return true;
@@ -182,8 +182,8 @@ public class PostRepository extends BaseResource {
 		}
 	}
 
-	public PostEntity unlike(PostEntity post) {
-		UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
+	public PostEntity unlike(String username,PostEntity post) {
+		UserEntity user = userRepository.getUserByUsername(username);
 		entityManager.getTransaction().begin();
 		Query query = entityManager.createNativeQuery(
 				"Update postsliked SET flag=:newFlag where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and post_id=(select p.post_id from post p where"

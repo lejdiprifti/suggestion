@@ -18,7 +18,7 @@ import com.ikubinfo.project.entity.State;
 import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
-public class SuggestionsRepository extends BaseResource {
+public class SuggestionsRepository {
 	private EntityManager entityManager;
 	private CategoryRepository categoryRepository;
 	private UserRepository userRepository;
@@ -69,7 +69,7 @@ public class SuggestionsRepository extends BaseResource {
 	}
 	
 	
-	public CategoryEntity update(CategoryEntity category, int categoryId) {
+	public CategoryEntity update(CategoryEntity category, int categoryId,String username) {
 		try {
 		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
 		query.setParameter(1, categoryId);
@@ -88,7 +88,7 @@ public class SuggestionsRepository extends BaseResource {
 			foundCategory.setCategoryDescription(category.getCategoryDescription());
 		}
 		
-		foundCategory.setUser(userRepository.getUserByUsername(getUsernameFromToken()));
+		foundCategory.setUser(userRepository.getUserByUsername(username));
 		entityManager.getTransaction().begin();
 		entityManager.merge(foundCategory);
 		entityManager.getTransaction().commit();
@@ -114,10 +114,10 @@ public class SuggestionsRepository extends BaseResource {
 			throw new NotFoundException();
 		}
 	}
-	
-	public CategoryEntity accept(final int id ) {
+
+	public CategoryEntity accept(String username,final int id ) {
 		try {
-			if (getRoleFromToken().get("id").equals(1)) {
+			
 			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=?3", CategoryEntity.class);
 			query.setParameter(1, id);
 			query.setParameter(2, State.PROPOSED);
@@ -125,22 +125,20 @@ public class SuggestionsRepository extends BaseResource {
 			CategoryEntity suggestion=query.getSingleResult();
 			suggestion.setCategoryState(State.CREATED);
 			suggestion.setAcceptedDate(new Date());
-			suggestion.setAcceptedUser(userRepository.getUserByUsername(getUsernameFromToken()));
+			suggestion.setAcceptedUser(userRepository.getUserByUsername(username));
 			entityManager.getTransaction().begin();
 			entityManager.merge(suggestion);
 			entityManager.getTransaction().commit();
 			return suggestion;
-			}else {
-				throw new NotAllowedException("You are not an administrator.");
-			}
+			
 		}catch(NoResultException e) {
 			throw new NotFoundException();
 		}
 	}
 	
-	public CategoryEntity decline(final int id) {
+	public CategoryEntity decline(String username,final int id) {
 		try {
-			if (getRoleFromToken().get("id").equals(1)) {
+
 			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=?3", CategoryEntity.class);
 			query.setParameter(1, id);
 			query.setParameter(2, State.PROPOSED);
@@ -148,24 +146,22 @@ public class SuggestionsRepository extends BaseResource {
 			CategoryEntity suggestion=query.getSingleResult();
 			suggestion.setCategoryState(State.DECLINED);
 			suggestion.setAcceptedDate(new Date());
-			suggestion.setAcceptedUser(userRepository.getUserByUsername(getUsernameFromToken()));
+			suggestion.setAcceptedUser(userRepository.getUserByUsername(username));
 			entityManager.getTransaction().begin();
 			entityManager.merge(suggestion);
 			entityManager.getTransaction().commit();
 			return suggestion;
-			}else {
-				throw new NotAllowedException("You are not an administrator.");
-			}
+		
 		}catch(NoResultException e) {
 			throw new NotFoundException();
 		}
 	}
 	
 
-	public List<CategoryModel> getAcceptedCategories() {
+	public List<CategoryModel> getAcceptedCategories(String username) {
 			Query query= entityManager.createNativeQuery("Select * from category c where c.user_id=(Select p.user_id from perdorues p where "
 					+ "p.user_id=?1) and c.state=?2 and c.flag=:flag");
-			query.setParameter(1, userRepository.getUserByUsername(getUsernameFromToken()).getId());
+			query.setParameter(1, userRepository.getUserByUsername(username).getId());
 			query.setParameter(2, State.CREATED);
 			query.setParameter("flag", true);
 			return query.getResultList();

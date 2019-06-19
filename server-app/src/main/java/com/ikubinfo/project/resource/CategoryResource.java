@@ -70,25 +70,26 @@ public class CategoryResource  extends BaseResource {
 		@PUT
 		@Path("/subscribe/{id}")
 		public Response subscribe(@PathParam("id") final int id) {
-			return Response.ok(categoryRepository.subscribe(id)).build();
+			System.out.println(getUsernameFromToken());
+			return Response.ok(categoryRepository.subscribe(getUsernameFromToken(),id)).build();
 			
 		}
 		
 		@PUT
 		@Path("/unsubscribe/{id}")
 		public Response unsubscribe(@PathParam("id") final int id) {
-			return Response.ok(categoryRepository.unsubscribe(id)).build();
+			return Response.ok(categoryRepository.unsubscribe(getUsernameFromToken(),id)).build();
 		}
 
 		@GET
 		@Path("/subscribed")
 		public Response getSubscribedCategories() {
-			return Response.ok(categoryRepository.getSubscribedCategories()).build();
+			return Response.ok(categoryRepository.getSubscribedCategories(getUsernameFromToken())).build();
 		}
 		
 		@GET
 		@Path("/{id}/posts")
 		public Response getPostsofCategory(@PathParam("id") final int id) {
-			return Response.ok(categoryRepository.getPostsOfCategory(id)).build();
+			return Response.ok(categoryRepository.getPostsOfCategory(getUsernameFromToken(),id)).build();
 		}
 }

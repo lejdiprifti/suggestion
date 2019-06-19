@@ -19,8 +19,7 @@ import com.ikubinfo.project.service.PostService;
 import com.ikubinfo.project.service.PostService;
 import com.ikubinfo.project.util.Paths;
 
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
+
 @Path(Paths.POSTS)
 public class PostResource extends BaseResource{
 	
@@ -72,13 +71,13 @@ public class PostResource extends BaseResource{
 	@PUT
 	@Path("/like/{id}")
 	public Response like(@PathParam("id") final int id) {
-		return Response.ok(postRepository.like(postRepository.getPostById(id))).build();
+		return Response.ok(postRepository.like(getUsernameFromToken(),postRepository.getPostById(id))).build();
 	}
 	
 	@PUT
 	@Path("/unlike/{id}")
 	public Response unlike(@PathParam("id") final int id) {
-		return Response.ok(postRepository.unlike(postRepository.getPostById(id))).build();
+		return Response.ok(postRepository.unlike(getUsernameFromToken(),postRepository.getPostById(id))).build();
 	}
 	
 }

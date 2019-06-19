@@ -20,7 +20,7 @@ import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
-public class CategoryRepository extends BaseResource {
+public class CategoryRepository  {
 	private EntityManager entityManager;
 	private UserRepository userRepository;
 
@@ -130,9 +130,9 @@ try {
 	}
 
 	
-	public CategoryEntity subscribe(int id) {
-		if (isSubscribed(getUsernameFromToken(),getCategoryById(id))==false) {
-		UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
+	public CategoryEntity subscribe(String username,int id) {
+		if (isSubscribed(username,getCategoryById(id))==false) {
+		UserEntity user = userRepository.getUserByUsername(username);
 		Subscriptions subscriptions=new Subscriptions();
 		subscriptions.setUser(user);
 		subscriptions.setCategory(getCategoryById(id));
@@ -144,7 +144,7 @@ try {
 		entityManager.getTransaction().commit();
 		
 		}else {
-			UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());	
+			UserEntity user = userRepository.getUserByUsername(username);	
 			entityManager.getTransaction().begin();
 			Query query=entityManager.createNativeQuery("Update Subscriptions SET flag=:newFlag , date=:date where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c"
 					+ " where"
@@ -163,7 +163,7 @@ try {
 		try {
 		Query query=entityManager.createNativeQuery("Select from Subscriptions where user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c where "
 				+ " c.category_id=:category_id)");
-		query.setParameter("user_id", userRepository.getUserByUsername(getUsernameFromToken()).getId());
+		query.setParameter("user_id", userRepository.getUserByUsername(username).getId());
 		query.setParameter("category_id", category.getCategoryId());
 		query.getSingleResult();
 		return true;
@@ -173,8 +173,8 @@ try {
 	}
 	
 	
-	public CategoryEntity unsubscribe(int id) {
-		UserEntity user = userRepository.getUserByUsername(getUsernameFromToken());
+	public CategoryEntity unsubscribe(String username,int id) {
+		UserEntity user = userRepository.getUserByUsername(username);
 		entityManager.getTransaction().begin();
 		Query query=entityManager.createNativeQuery("Update Subscriptions SET flag=:newFlag where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c where" + 
 			 " c.category_id=:category_id) )");
@@ -186,16 +186,16 @@ try {
 		return getCategoryById(id);
 	}
 	
-	public List<CategoryModel> getSubscribedCategories() {
-		UserEntity user=userRepository.getUserByUsername(getUsernameFromToken());
+	public List<CategoryModel> getSubscribedCategories(String username) {
+		UserEntity user=userRepository.getUserByUsername(username);
 		Query query=entityManager.createNativeQuery("Select * from category c where c.category_id in (Select category_id from subscriptions where user_id=?1 and flag=?2)");
 		query.setParameter(2, true);
 		query.setParameter(1, user.getId());
 		return query.getResultList();
 	}
 	
-	public List<PostEntity> getPostsOfCategory(final int id){
-		if (isSubscribed(getUsernameFromToken(), getCategoryById(id))) {
+	public List<PostEntity> getPostsOfCategory(String username,final int id){
+		if (isSubscribed(username, getCategoryById(id))) {
 		Query query = entityManager.createNativeQuery("Select * from post p where p.category_id = ?1 and flag=?2");
 		query.setParameter(2, true);
 		query.setParameter(1, id);
