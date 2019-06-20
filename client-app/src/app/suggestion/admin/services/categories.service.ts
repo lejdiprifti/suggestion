@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@ikubinfo/core/utilities/api.service';
+import { Category } from '@ikubinfo/core/models/category';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class CategoriesService {
   getCategoryById(id: number){
     return this.apiService.get('categories/id/'+id);
   }
-  edit(id: number , category: any){
-    return this.apiService.put('categories/'+id , category);
+  edit(id: number , category: Category){
+    return this.apiService.put('categories/'+id ,category);
   }
 
   delete(id: number){

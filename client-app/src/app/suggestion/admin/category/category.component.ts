@@ -17,7 +17,7 @@ export class CategoryComponent implements OnInit {
   constructor(private categoriesService: CategoriesService,private logger: LoggerService,private fb: FormBuilder,private router: Router) { }
 
   ngOnInit() {
-    
+    this.loadData();
     this.categoryForm=this.fb.group({
       title: [''] ,
       description: [''],
@@ -32,11 +32,11 @@ export class CategoryComponent implements OnInit {
       this.fillForm(this.category);
     }
 
- loadData(id: number){
-    return this.categoriesService.getCategoryById(id).subscribe(res=>{
+ loadData(){
+    return this.categoriesService.getCategoryById(this.categoriesService.getId()).subscribe(res=>{
       this.category=res;
-      this.id=id;
-      console.log(this.category);
+      this.categoryForm.get('title').setValue(this.category.categoryName);
+    this.categoryForm.get('description').setValue(this.category.categoryDescription);
     });
   }
 
@@ -44,6 +44,7 @@ export class CategoryComponent implements OnInit {
     console.log(this.categoriesService.getId());
     this.category.categoryName=this.categoryForm.value.title;
     this.category.categoryDescription=this.categoryForm.value.description;
+    console.log(this.category);
     return this.categoriesService.edit(this.categoriesService.getId(),this.category).subscribe(res=>{
       this.router.navigate(['suggestion/categories']);
       this.logger.success("Success", "Data saved");

@@ -74,8 +74,7 @@ public class CategoryRepository  {
 		CategoryEntity foundCategory=query.getSingleResult();
 		if (category.getCategoryName()!=null) {
 			try {
-				isCategory(category);
-				throw new NotAllowedException("Category exists.");
+				isCategory(category,categoryId);	
 			}catch(NotFoundException e) {
 			foundCategory.setCategoryName(category.getCategoryName());
 			}
@@ -94,16 +93,20 @@ public class CategoryRepository  {
 		}
 	}
 
-	public boolean isCategory(CategoryEntity category) {
+	public boolean isCategory(CategoryEntity category,int id) {
 		try {
-			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryName=?1",CategoryEntity.class);
+			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryName=?1 and c.categoryId != ?2",CategoryEntity.class);
 			query.setParameter(1, category.getCategoryName());
+			query.setParameter(2, id);
 			query.getSingleResult();
-			return true;
+			throw new NotAllowedException("Category exists");
 		}catch(NoResultException e) {
 			throw new NotFoundException();
 		}
 	}
+	
+	
+
 
 
 	public void delete(int categoryId) {
