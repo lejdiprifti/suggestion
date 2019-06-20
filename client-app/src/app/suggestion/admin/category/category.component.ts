@@ -11,7 +11,6 @@ import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-   id: number;
    categoryForm: FormGroup
   category: Category;
   constructor(private categoriesService: CategoriesService,private logger: LoggerService,private fb: FormBuilder,private router: Router) { }
@@ -57,5 +56,6 @@ export class CategoryComponent implements OnInit {
     this.categoryForm.get('title').setValue(data.categoryName);
     this.categoryForm.get('description').setValue(data.categoryDescription);
   }
- 
+  
+  
 }

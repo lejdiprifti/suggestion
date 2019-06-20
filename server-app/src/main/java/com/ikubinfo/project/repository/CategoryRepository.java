@@ -127,7 +127,7 @@ public class CategoryRepository  {
 		}
 	}
 
-	public CategoryEntity insert(CategoryEntity category) {
+	public CategoryEntity insert(CategoryEntity category,UserEntity user) {
 
 try {
 	getCategoryByName(category.getCategoryName());
@@ -136,6 +136,11 @@ try {
 }catch(NotFoundException e) {
 
 	entityManager.getTransaction().begin();
+	category.setAcceptedDate(new Date());
+	category.setAcceptedUser(user);
+	category.setFlag(true);
+	category.setCategoryState(State.CREATED);
+	category.setUser(user);
 	entityManager.persist(category);
 	entityManager.getTransaction().commit();
 	return category;

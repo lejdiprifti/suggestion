@@ -13,11 +13,12 @@ import { SubscriptionsComponent } from './subscriptions/subscriptions.component'
 import { ProposalsComponent } from './admin/proposals/proposals.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { CategoryComponent } from './admin/category/category.component';
+import { AddCategoryComponent } from './admin/add-category/add-category.component';
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule,ReactiveFormsModule],
     exports: [],
-    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent,CategoriesComponent,ProposalsComponent, CategoryComponent],
+    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent,CategoriesComponent,ProposalsComponent, CategoryComponent, AddCategoryComponent],
     providers: [CategoryComponent]
 })
 export class SuggestionModule { }

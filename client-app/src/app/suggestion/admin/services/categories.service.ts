@@ -23,6 +23,11 @@ export class CategoriesService {
   delete(id: number){
     return this.apiService.delete('categories/'+id);
   }
+
+  add(category: Category){
+    return this.apiService.post('categories',category);
+  }
+  
 setId(id:number){
   this.id=id;
 }

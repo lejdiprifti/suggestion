@@ -38,4 +38,8 @@ export class CategoriesComponent implements OnInit {
       this.getAllCategories();
     })
   }
+
+  add(){
+    this.router.navigate(['suggestion/category/add']);
+  }
 }

@@ -1,12 +1,8 @@
 package com.ikubinfo.project.entity;
 
 import java.util.Date;
-import java.util.Set;
-
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "perdorues")

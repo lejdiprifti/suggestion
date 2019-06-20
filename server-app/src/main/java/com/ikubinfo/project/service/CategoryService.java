@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ikubinfo.project.converter.CategoryConverter;
 import com.ikubinfo.project.entity.CategoryEntity;
+import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.repository.CategoryRepository;
 
@@ -34,8 +35,8 @@ public class CategoryService {
 	}
 	
 	
-	public CategoryModel insert(CategoryEntity categoryEntity) {
-		return categoryConverter.toModel(categoryRepository.insert(categoryEntity));
+	public CategoryModel insert(CategoryEntity categoryEntity,UserEntity user) {
+		return categoryConverter.toModel(categoryRepository.insert(categoryEntity,user));
 	}
 
 	

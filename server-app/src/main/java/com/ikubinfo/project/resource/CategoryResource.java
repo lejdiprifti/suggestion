@@ -15,6 +15,7 @@ import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.entity.CategoryEntity;
 import com.ikubinfo.project.model.UserModel;
 import com.ikubinfo.project.repository.CategoryRepository;
+import com.ikubinfo.project.repository.UserRepository;
 import com.ikubinfo.project.service.CategoryService;
 import com.ikubinfo.project.util.Paths;
 
@@ -26,9 +27,11 @@ public class CategoryResource  extends BaseResource {
 
 		private CategoryService categoryService;
 		private CategoryRepository categoryRepository;
+		private UserRepository userRepository;
 		public CategoryResource() {
 			this.categoryService= new CategoryService();
 			this.categoryRepository=new CategoryRepository();
+			this.userRepository=new UserRepository();
 		}
 		
 		@GET
@@ -57,7 +60,7 @@ public class CategoryResource  extends BaseResource {
 		
 		@POST
 		public Response insert(CategoryEntity category) {
-				return Response.ok(categoryService.insert(category)).build();
+				return Response.ok(categoryService.insert(category,userRepository.getUserByUsername(getUsernameFromToken()))).build();
 		}
 		
 		@DELETE
