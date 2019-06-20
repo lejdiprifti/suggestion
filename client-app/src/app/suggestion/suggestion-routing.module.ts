@@ -10,6 +10,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { UserGuard } from '@ikubinfo/core/guards/user-guard';
 import { ProposalsComponent } from './admin/proposals/proposals.component';
+import { CategoriesComponent } from './admin/categories/categories.component';
+import { CategoryComponent } from './admin/category/category.component';
 
 
 const suggestionRoutes: Routes = [
@@ -17,8 +19,10 @@ const suggestionRoutes: Routes = [
         path: '',
         component: FullComponent,
         children: [
-            { path: 'dashboard', component: DashboardComponent },
+            { path: 'dashboard', component: DashboardComponent , canActivate:[UserGuard]},
+            { path: 'categories', component: CategoriesComponent, canActivate: [AdminGuard]},
             { path: 'settings', component: SettingsComponent},
+            { path: 'category', component: CategoryComponent, canActivate: [AdminGuard]},
             { path: 'subscriptions', component: SubscriptionsComponent , canActivate: [UserGuard]},
             { path: 'posts', component: PostsComponent, canActivate: [AdminGuard] },
             { path: 'proposals', component: ProposalsComponent, canActivate: [AdminGuard]},

@@ -73,14 +73,17 @@ public class CategoryRepository  {
 		query.setParameter("flag", true);
 		CategoryEntity foundCategory=query.getSingleResult();
 		if (category.getCategoryName()!=null) {
+			try {
+				isCategory(category);
+				throw new NotAllowedException("Category exists.");
+			}catch(NotFoundException e) {
 			foundCategory.setCategoryName(category.getCategoryName());
+			}
 		}
 		if (category.getCategoryDescription() != null) {
 			foundCategory.setCategoryDescription(category.getCategoryDescription());
 		}
-		if (category.getAcceptedDate() != null) {
-			foundCategory.setAcceptedDate(category.getAcceptedDate());
-		}
+		
 		entityManager.getTransaction().begin();
 		entityManager.merge(foundCategory);
 		entityManager.getTransaction().commit();
@@ -91,7 +94,16 @@ public class CategoryRepository  {
 		}
 	}
 
-	
+	public boolean isCategory(CategoryEntity category) {
+		try {
+			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryName=?1",CategoryEntity.class);
+			query.setParameter(1, category.getCategoryName());
+			query.getSingleResult();
+			return true;
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
+	}
 
 
 	public void delete(int categoryId) {

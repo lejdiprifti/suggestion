@@ -40,7 +40,7 @@ export class ProposalsComponent implements OnInit {
   decline(id: number){
     this.proposalsService.decline(id).subscribe(res=>{
       this.getProposals();
-      this.logger.success("Success", "To be deleted...");
+      this.logger.info("Deleted", "To be deleted...");
     });
    
   }

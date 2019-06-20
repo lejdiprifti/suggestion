@@ -7,15 +7,17 @@ import { PostsComponent } from '@ikubinfo/suggestion/posts/posts.component';
 import { DashboardComponent } from '@ikubinfo/suggestion/dashboard/dashboard.component';
 import { SuggestionRoutingModule } from '@ikubinfo/suggestion/suggestion-routing.module';
 import { LayoutModule } from '@ikubinfo/layout/layout.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SettingsComponent } from './settings/settings.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { ProposalsComponent } from './admin/proposals/proposals.component';
+import { CategoriesComponent } from './admin/categories/categories.component';
+import { CategoryComponent } from './admin/category/category.component';
 
 @NgModule({
-    imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule],
+    imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule,ReactiveFormsModule],
     exports: [],
-    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent,ProposalsComponent],
-    providers: []
+    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent,CategoriesComponent,ProposalsComponent, CategoryComponent],
+    providers: [CategoryComponent]
 })
 export class SuggestionModule { }

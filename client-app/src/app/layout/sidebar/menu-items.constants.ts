@@ -6,12 +6,17 @@ export const menuItems: Array<MenuItem> = [{
     url: '/suggestion/dashboard',
     icon: 'fa-dashboard',
     label: 'Dashboard',
-    allowedRoles: [RoleEnum.ADMIN, RoleEnum.USER]
+    allowedRoles: [RoleEnum.USER]
 },{
     url: '/suggestion/subscriptions',
     icon: 'fa-subscriptions',
     label: 'Subscriptions',
     allowedRoles: [RoleEnum.USER]
+},{
+    url: '/suggestion/categories',
+    icon: 'fa-dashboard',
+    label: 'Manage categories',
+    allowedRoles: [RoleEnum.ADMIN]
 },{
     url: '/suggestion/proposals',
     icon: 'fa-text',

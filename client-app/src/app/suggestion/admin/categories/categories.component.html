@@ -1,0 +1,13 @@
+<div class="row">
+            
+  <div class="col col-xl-6 col-lg-12" *ngFor="let category of categories">
+    <ikubinfo-panel header="Category">
+      <div panel-content>
+        <h1>{{ category.categoryName }}</h1>
+        <p>{{ category.categoryDescription }}</p>
+        <button (click)="edit(category.categoryId)">Edit</button>
+        <button (click)="delete(category.categoryId)">Delete</button>
+      </div>
+    </ikubinfo-panel>
+  </div> 
+</div>

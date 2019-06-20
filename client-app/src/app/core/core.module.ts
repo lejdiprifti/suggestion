@@ -11,6 +11,7 @@ import { ApiService } from '@ikubinfo/core/utilities/api.service';
 import { AuthGuard } from '@ikubinfo/core/guards/auth-guard';
 import { TokenInterceptor } from '@ikubinfo/core/interceptors/token-interceptor';
 import { ProposalsService } from '@ikubinfo/suggestion/admin/services/proposals.service';
+import { CategoriesService } from '@ikubinfo/suggestion/admin/services/categories.service';
 
 
 
@@ -20,7 +21,7 @@ import { ProposalsService } from '@ikubinfo/suggestion/admin/services/proposals.
     HttpClientModule
   ],
   declarations: [],
-  providers: [AuthService,ProposalsService, PostService, LoggerService, ApiService, AuthGuard,
+  providers: [AuthService,ProposalsService, PostService, LoggerService, ApiService, AuthGuard,CategoriesService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
