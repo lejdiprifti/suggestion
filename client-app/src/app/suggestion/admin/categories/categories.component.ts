@@ -4,6 +4,7 @@ import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { CategoriesService } from '../services/categories.service';
 import { CategoryComponent } from '../category/category.component';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 
 export class CategoriesComponent implements OnInit {
   categories: Object;
-  constructor(private categoriesService: CategoriesService,private router: Router,
+  constructor(private confirmationService: ConfirmationService, private categoriesService: CategoriesService,private router: Router,
      private logger: LoggerService, private categoryComponent: CategoryComponent) { }
 
   ngOnInit() {
@@ -33,10 +34,20 @@ export class CategoriesComponent implements OnInit {
   }
 
   delete(id: number){
-    return this.categoriesService.delete(id).subscribe(res=>{
-      this.logger.info("Deleted","Category deleted successfully.");
-      this.getAllCategories();
-    })
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this category?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        return this.categoriesService.delete(id).subscribe(res=>{
+          this.logger.info("Deleted","Category deleted successfully.");
+          this.getAllCategories();
+        },
+        err => {
+          this.logger.error('Error', 'An error accured');
+        });
+      }
+    });
   }
 
   add(){

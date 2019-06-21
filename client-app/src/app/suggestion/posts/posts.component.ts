@@ -20,7 +20,6 @@ export class PostsComponent implements OnInit {
   cols: any[];
 
   selectedPost: Post;
-
   constructor(private postService: PostService, private router: Router, private active: ActivatedRoute,
     private confirmationService: ConfirmationService, private logger: LoggerService) { }
 
@@ -31,10 +30,11 @@ export class PostsComponent implements OnInit {
       { label: 'Edit', icon: 'pi pi-pencil', command: (event) => this.viewPost(this.selectedPost) },
       { label: 'Delete', icon: 'pi pi-times', command: (event) => this.deletePost(this.selectedPost) }
     ];
-
+    
     this.cols = [
       { field: 'postName', header: 'Title' },
-      { field: 'postDescription', header: 'Body' }
+      { field: 'postDescription', header: 'Body' },
+
     ];
   }
 
@@ -49,7 +49,6 @@ export class PostsComponent implements OnInit {
   loadPosts(): void {
     this.postService.getAllPosts().subscribe(items => {
       this.posts = items;
-      
     },
     err => {
       this.logger.error('Error', 'An error accured');

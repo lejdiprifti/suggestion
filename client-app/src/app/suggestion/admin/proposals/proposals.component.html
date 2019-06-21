@@ -5,8 +5,8 @@
       <div panel-content>
         <h1>{{ proposal.categoryName }}</h1>
         <p>{{ proposal.categoryDescription }}</p>
-        <button (click)="accept(proposal.categoryId)">Accept</button>
-        <button (click)="decline(proposal.categoryId)">Decline</button>
+        <button class="btn btn-success" (click)="accept(proposal.categoryId)">Accept</button>
+        <button class="btn btn-danger" (click)="decline(proposal.categoryId)">Decline</button>
       </div>
     </ikubinfo-panel>
   </div> 

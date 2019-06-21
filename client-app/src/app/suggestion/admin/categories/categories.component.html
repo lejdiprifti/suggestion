@@ -5,8 +5,8 @@
       <div panel-content>
         <h1>{{ category.categoryName }}</h1>
         <p>{{ category.categoryDescription }}</p>
-        <button (click)="edit(category.categoryId)">Edit</button>
-        <button (click)="delete(category.categoryId)">Delete</button>
+        <button class="btn btn-info" (click)="edit(category.categoryId)">Edit</button>
+        <button class="btn btn-danger" (click)="delete(category.categoryId)">Delete</button>
       </div>
     </ikubinfo-panel>
   </div> 

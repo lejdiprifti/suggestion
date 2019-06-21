@@ -9,11 +9,9 @@
     </div>
     <!--Birthdate -->
     <div class="form-group">
-      <input type="date" formControlName="birthdate" class="form-control input-underline input-lg"
+      <input type="date" formControlName="birthdate" class="form-control input-underline input-lg "
         placeholder="Birthdate" />
-      <div *ngIf="
-      settingsForm.get('birthdate').dirty && settingsForm.get('birthdate').hasError('tooYoung')
-        ">
+      <div *ngIf="settingsForm.get('birthdate').dirty && settingsForm.get('birthdate').hasError('tooYoung')">
         *You must be over 18 years old.
       </div>
     </div>
@@ -44,8 +42,8 @@
       </div>
     </div>
   </div>
-  <button [disabled]="settingsForm.invalid" (click)="update()" class="save-button">
+  <button [disabled]="settingsForm.invalid" (click)="update()" class="btn btn-success">
     Save
   </button>
-  <button (click)="delete()" class="delete-button">Delete Account</button>
+  <button (click)="delete()" class="btn btn-danger">Delete Account</button>
 </form>

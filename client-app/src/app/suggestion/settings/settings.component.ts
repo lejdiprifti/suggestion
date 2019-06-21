@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { RegisterComponent } from '@ikubinfo/authentification/register/register.component';
 import { SettingsService } from '@ikubinfo/core/services/settings.service';
 import { Register } from '@ikubinfo/core/models/register';
+import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
+import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 
 @Component({
@@ -15,7 +17,7 @@ export class SettingsComponent implements OnInit {
  settingsForm: FormGroup;
  updateUser: Register;
  
-  constructor(private router: Router , private fb:FormBuilder,private settingsService: SettingsService) { 
+  constructor(private confirmationService: ConfirmationService, private logger: LoggerService,private router: Router , private fb:FormBuilder,private settingsService: SettingsService) { 
     this.updateUser={
 
     }
@@ -36,7 +38,7 @@ export class SettingsComponent implements OnInit {
         Validators.pattern("(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}")
       ]
     ],
-      birthdate: ["",
+      birthdate: ['',
     [
       RegisterComponent.isOldEnough
     ]
@@ -68,18 +70,38 @@ update(): void {
     if (this.settingsForm.value.address !== ""){
       this.updateUser.address=this.settingsForm.value.address;
     }
-    this.settingsService.update(this.updateUser).subscribe(res=>{
-      alert("Data changed");
-        this.router.navigate(["/suggestion"]);
-    },
-    err=>{
-      err.message("Username is taken.");
-      this.router.navigate(["/suggestion/settings"]);
+    this.confirmationService.confirm({
+      message: 'Do you want to save your data?',
+      header: 'Save Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.settingsService.update(this.updateUser).subscribe(res=>{
+          this.logger.success("Success", "Data saved successfully!")
+          this.router.navigate(["/suggestion"]);
+      },
+      err=>{
+        this.logger.error("Error","Username is taken.");
+        this.router.navigate(["/suggestion/settings"]);
+      });
+      }
     });
+    
 }
 delete(): any{
-  this.settingsService.deleteAccount().subscribe(res=>{
-    this.router.navigate(["/login"]);
+  this.confirmationService.confirm({
+    message: 'Do you want to delete your account?',
+    header: 'Delete Confirmation',
+    icon: 'pi pi-info-circle',
+    accept: () => {
+      this.settingsService.deleteAccount().subscribe(res=>{
+        this.logger.info("Info", "Account was deleted.");
+        this.router.navigate(["/login"]);
+      },
+      err => {
+        this.logger.error('Error', 'An error accured');
+      });
+    }
   });
+
 }
 }
