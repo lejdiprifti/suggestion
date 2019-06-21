@@ -90,12 +90,8 @@ public class UserEntity {
 		return flag;
 	}
 
-	public boolean isDelete() {
-		return flag;
-	}
-
-	public void setFlag(boolean delete) {
-		this.flag = delete;
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 
 	@Override

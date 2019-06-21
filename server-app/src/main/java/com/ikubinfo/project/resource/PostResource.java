@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.entity.PostEntity;
 import com.ikubinfo.project.repository.PostRepository;
+import com.ikubinfo.project.repository.UserRepository;
 import com.ikubinfo.project.entity.PostEntity;
 import com.ikubinfo.project.service.PostService;
 import com.ikubinfo.project.service.PostService;
@@ -25,9 +26,11 @@ public class PostResource extends BaseResource{
 	
 	private PostService postService;
 	private PostRepository postRepository;
+	private UserRepository userRepository;
 	public PostResource() {
 		this.postService= new PostService();
 		this.postRepository=new PostRepository();
+		this.userRepository= new UserRepository();
 	}
 	
 	@GET
@@ -58,7 +61,8 @@ public class PostResource extends BaseResource{
 	@POST
 	public Response insert(PostEntity post) {
 	
-			return Response.ok(postService.insert(post)).build();
+			
+			return Response.ok(postService.insert(post,userRepository.getUserByUsername(getUsernameFromToken()))).build();
 	}
 	
 	@DELETE

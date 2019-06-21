@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ikubinfo.project.converter.PostConverter;
 import com.ikubinfo.project.entity.PostEntity;
+import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.PostModel;
 import com.ikubinfo.project.repository.PostRepository;
 
@@ -37,8 +38,8 @@ public class PostService {
 		return postConverter.toModel(postRepository.delete(postId));
 	}
 	
-	public PostModel insert(PostEntity postEntity) {
-		return postConverter.toModel(postRepository.insert(postEntity));
+	public PostModel insert(PostEntity postEntity,UserEntity user) {
+		return postConverter.toModel(postRepository.insert(postEntity, user));
 	}
 
 }

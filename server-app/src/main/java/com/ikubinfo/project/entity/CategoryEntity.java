@@ -1,21 +1,18 @@
 package com.ikubinfo.project.entity;
 
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "category")
@@ -34,10 +31,10 @@ public class CategoryEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private UserEntity user;
+	private UserEntity proposedUser;
 
 	@Column(name = "category_state")
-	private State state;
+	private State categoryState;
 
 	@ManyToOne
 	@JoinColumn(name = "accepted_user")
@@ -77,20 +74,21 @@ public class CategoryEntity {
 		this.categoryDescription = categoryDescription;
 	}
 
-	public UserEntity getUser() {
-		return user;
+	public UserEntity getProposedUser() {
+		return proposedUser;
 	}
 
-	public void setUser(UserEntity user) {
-		this.user = user;
+	public void setProposedUser(UserEntity proposedUser) {
+		this.proposedUser = proposedUser;
 	}
+
 
 	public State getCategoryState() {
-		return state;
+		return categoryState;
 	}
 
 	public void setCategoryState(State categoryState) {
-		this.state = categoryState;
+		this.categoryState = categoryState;
 	}
 
 	public UserEntity getAcceptedUser() {
@@ -120,8 +118,10 @@ public class CategoryEntity {
 	@Override
 	public String toString() {
 		return "CategoryEntity [categoryId=" + categoryId + ", categoryName=" + categoryName + ", categoryDescription="
-				+ categoryDescription + ", user=" + user + ", categoryState=" + state + ", acceptedUser="
-				+ acceptedUser + ", acceptedDate=" + acceptedDate + "]";
+				+ categoryDescription + ", proposedUser=" + proposedUser + ", state=" + categoryState + ", acceptedUser="
+				+ acceptedUser + ", acceptedDate=" + acceptedDate + ", flag=" + flag + "]";
 	}
+
+	
 
 }

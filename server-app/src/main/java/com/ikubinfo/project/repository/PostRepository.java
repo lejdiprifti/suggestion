@@ -22,10 +22,12 @@ import com.ikubinfo.project.util.PersistenceSingleton;
 public class PostRepository {
 	private EntityManager entityManager;
 	private UserRepository userRepository;
+	private CategoryRepository categoryRepository;
 
 	public PostRepository() {
 		this.entityManager = PersistenceSingleton.INSTANCE.getEntityManagerFactory().createEntityManager();
 		this.userRepository = new UserRepository();
+		this.categoryRepository=new CategoryRepository();
 	}
 
 	public List<PostEntity> getPosts() {
@@ -59,14 +61,15 @@ public class PostRepository {
 		}
 	}
 
-	public boolean isPost(String username, final int categoryId) {
+	public PostEntity isPost(String name, final int categoryId) {
 		try {
-			Query query= entityManager.createNativeQuery("Select p from posts p where p.post_name=?1 and p.category_id=?2 and p.flag=?3");
-			query.setParameter(1, username);
-			query.setParameter(2, categoryId);
-			query.setParameter(3, true);
-			query.getSingleResult();
-			return true;
+			TypedQuery<PostEntity> query= entityManager.createQuery("Select p from PostEntity p where p.postName=?1 and p.flag=?2", PostEntity.class);
+			query.setParameter(1, name);
+			query.setParameter(2, true);
+			if (query.getSingleResult().getCategory().equals(categoryRepository.getCategoryById(categoryId))){
+				throw new NotAllowedException("Post exists");
+			}
+			return query.getSingleResult();
 		}catch(NoResultException e) {
 			throw new NotFoundException();
 		}
@@ -83,7 +86,6 @@ public class PostRepository {
 		if (post.getPostName() != null) {
 			try {
 				isPost(post.getPostName(),post.getCategory().getCategoryId());
-				throw new NotAllowedException("Post exists.");
 			}catch(NotFoundException e) {
 			foundPost.setPostName(post.getPostName());
 			}
@@ -127,12 +129,15 @@ public class PostRepository {
 		}
 	}
 
-	public PostEntity insert(PostEntity post) {
+	public PostEntity insert(PostEntity post, UserEntity user) {
 		try {
 			isPost(post.getPostName(),post.getCategory().getCategoryId());
 			throw new NotAllowedException("Already exists.");
 		} catch (NotFoundException e) {
 			entityManager.getTransaction().begin();
+			post.setAddedDate(new Date());
+			post.setUser(user);
+			post.setFlag(true);
 			entityManager.persist(post);
 			entityManager.getTransaction().commit();
 			return post;
@@ -196,5 +201,13 @@ public class PostRepository {
 		return post;
 
 	}
-
+	
+	public void deletePostByCategory(final int id) {
+		entityManager.getTransaction().begin();
+		Query query =entityManager.createNativeQuery("Update post SET flag=:newFlag where category_id = (select c.category_id from category c where c.category_id=:categoryId)");
+		query.setParameter("newFlag", false);
+		query.setParameter("categoryId", id);
+		query.executeUpdate();
+		entityManager.getTransaction().commit();
+	}
 }

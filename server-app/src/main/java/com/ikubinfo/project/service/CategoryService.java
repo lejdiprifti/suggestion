@@ -8,14 +8,16 @@ import com.ikubinfo.project.entity.CategoryEntity;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.repository.CategoryRepository;
+import com.ikubinfo.project.repository.PostRepository;
 
 public class CategoryService {
 	private CategoryRepository categoryRepository;
 	private CategoryConverter categoryConverter;
-
+	private PostRepository postRepository;
 	public CategoryService() {
 		categoryRepository = new CategoryRepository();
 		categoryConverter = new CategoryConverter();
+		postRepository= new PostRepository();
 	}
 
 	public CategoryModel getCategoryByName(String categoryName) {
@@ -34,7 +36,10 @@ public class CategoryService {
 		return categoryConverter.toModel(categoryRepository.update(category,categoryId));
 	}
 	
-	
+	public void delete(final int id) {
+		postRepository.deletePostByCategory(id);
+		categoryRepository.delete(id);
+	}
 	public CategoryModel insert(CategoryEntity categoryEntity,UserEntity user) {
 		return categoryConverter.toModel(categoryRepository.insert(categoryEntity,user));
 	}

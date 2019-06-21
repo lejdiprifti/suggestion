@@ -17,7 +17,7 @@ public class CategoryConverter implements BaseConverter<CategoryModel, CategoryE
 		model.setCategoryState(entity.getCategoryState());
 		model.setAcceptedUser(entity.getAcceptedUser());
 		model.setAcceptedDate(entity.getAcceptedDate());
-		model.setUser(entity.getUser());
+		model.setProposedUser(entity.getProposedUser());
 		return model;
 	}
 
@@ -31,7 +31,7 @@ public class CategoryConverter implements BaseConverter<CategoryModel, CategoryE
 		entity.setAcceptedUser(model.getAcceptedUser());
 		entity.setCategoryState(model.getCategoryState());
 		entity.setCategoryDescription(model.getCategoryDescription());
-		entity.setUser(model.getUser());
+		entity.setProposedUser(model.getProposedUser());
 		return entity;
 	}
 	

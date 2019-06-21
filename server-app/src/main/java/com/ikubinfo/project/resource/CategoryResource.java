@@ -66,7 +66,7 @@ public class CategoryResource  extends BaseResource {
 		@DELETE
 		@Path("/{categoryId}")
 		public Response delete(@PathParam("categoryId") int categoryId) {
-			categoryRepository.delete(categoryId);
+			categoryService.delete(categoryId);
 			return Response.noContent().build();
 		}
 		
