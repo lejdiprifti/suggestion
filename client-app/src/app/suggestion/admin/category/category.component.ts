@@ -44,10 +44,11 @@ export class CategoryComponent implements OnInit {
     this.category.categoryName=this.categoryForm.value.title;
     this.category.categoryDescription=this.categoryForm.value.description;
     console.log(this.category);
-    return this.categoriesService.edit(this.categoriesService.getId(),this.category).subscribe(res=>{
+    this.categoriesService.edit(this.categoriesService.getId(),this.category).subscribe(res=>{
       this.router.navigate(['suggestion/categories']);
       this.logger.success("Success", "Data saved");
     }, err=>{
+      console.log(this.category);
       this.logger.error("Error", "Category name exists.");
     });
   }

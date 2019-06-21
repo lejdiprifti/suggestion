@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '@ikubinfo/core/models/category';
 import { CategoriesService } from '../services/categories.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
@@ -19,8 +19,8 @@ export class AddCategoryComponent implements OnInit {
   ngOnInit() {
     this.category={};
     this.categoryForm=this.fb.group({
-      title: [''] ,
-      description: [''],
+      title: ['' , Validators.required] ,
+      description: ['' , Validators.required],
     });
   }
 

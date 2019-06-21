@@ -29,7 +29,7 @@ public class PostRepository {
 	}
 
 	public List<PostEntity> getPosts() {
-		return entityManager.createQuery("Select c From PostEntity c", PostEntity.class).getResultList();
+		return entityManager.createQuery("Select c From PostEntity c where c.flag=?1", PostEntity.class).setParameter(1, true).getResultList();
 	}
 
 	public PostEntity getPostByName(String postName) {
@@ -117,7 +117,7 @@ public class PostRepository {
 			query.setParameter(1, postId);
 			PostEntity foundPost = query.getSingleResult();
 			entityManager.getTransaction().begin();
-
+			foundPost.setFlag(false);
 			entityManager.merge(foundPost);
 			entityManager.getTransaction().commit();
 

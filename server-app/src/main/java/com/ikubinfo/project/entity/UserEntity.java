@@ -3,7 +3,6 @@ package com.ikubinfo.project.entity;
 import java.util.Date;
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "perdorues")
 public class UserEntity {
@@ -26,7 +25,6 @@ public class UserEntity {
 	private String address;
 	@Column(name = "flag")
 	private boolean flag;
-
 
 	public UserEntity() {
 
@@ -99,7 +97,6 @@ public class UserEntity {
 	public void setFlag(boolean delete) {
 		this.flag = delete;
 	}
-
 
 	@Override
 	public String toString() {

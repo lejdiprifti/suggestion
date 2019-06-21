@@ -50,7 +50,7 @@ public class PostResource extends BaseResource{
 	}
 	
 	@PUT
-	@Path("/{postName}")
+	@Path("/{postId}")
 	public Response update(PostEntity post , @PathParam("postId") int postId) {
 		return Response.ok(postService.update(post,postId)).build();
 	}
@@ -63,7 +63,7 @@ public class PostResource extends BaseResource{
 	
 	@DELETE
 	@Path("/{postId}")
-	public Response delete(@PathParam("postId") int postId) {
+	public Response delete(@PathParam("postId") final int postId) {
 		postService.delete(postId);
 		return Response.noContent().build();
 	}

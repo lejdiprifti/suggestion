@@ -6,13 +6,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 
 
+
 @Component({
   selector: 'ikubinfo-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-
+  
   posts: Array<Post>;
   items: MenuItem[];
 
@@ -32,13 +33,13 @@ export class PostsComponent implements OnInit {
     ];
 
     this.cols = [
-      { field: 'title', header: 'Title' },
-      { field: 'body', header: 'Body' }
+      { field: 'postName', header: 'Title' },
+      { field: 'postDescription', header: 'Body' }
     ];
   }
 
   viewPost(post: Post) {
-    this.router.navigate(['post', post.id], { relativeTo: this.active.parent });
+    this.router.navigate(['post', post.postId], { relativeTo: this.active.parent });
   }
 
   addPost() {
@@ -46,9 +47,11 @@ export class PostsComponent implements OnInit {
   }
 
   loadPosts(): void {
-    this.postService.allAsync().toPromise().then(items => {
+    this.postService.getAllPosts().subscribe(items => {
       this.posts = items;
-    }).catch(_ => {
+      
+    },
+    err => {
       this.logger.error('Error', 'An error accured');
     });
 
@@ -60,10 +63,11 @@ export class PostsComponent implements OnInit {
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.postService.deleteAsync(post.id).toPromise().then(_ => {
+        return this.postService.deletePost(post.postId).subscribe(res => {
           this.logger.info('Confirmed', 'Record deleted');
           this.loadPosts();
-        }).catch(_ => {
+        },
+        err => {
           this.logger.error('Error', 'An error accured');
         });
       }
