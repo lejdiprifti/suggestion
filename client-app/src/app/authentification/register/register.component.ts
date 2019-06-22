@@ -96,11 +96,6 @@ static passwordMatch(group: FormGroup):any{
   register(): void {
     this.registerUser.username = this.registerForm.value.username;
     this.registerUser.password = this.passwordForm.value.password;
-    this.registerUser.role = {
-      id: RoleEnum.USER,
-      roleName: "USER",
-      roleDescription: "Shikon_postimet_dhe_propozon_kategori"
-    } as any;
     this.registerUser.birthdate = this.registerForm.value.birthdate;
     this.registerUser.email = this.registerForm.value.email;
     this.registerUser.address = this.registerForm.value.address;

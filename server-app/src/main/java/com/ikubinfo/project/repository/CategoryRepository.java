@@ -196,7 +196,7 @@ try {
 	
 	public List<PostEntity> getPostsOfCategory(String username,final int id){
 		if (isSubscribed(username, getCategoryById(id))) {
-		Query query = entityManager.createNativeQuery("Select * from post p where p.category_id = ?1 and flag=?2");
+		Query query = entityManager.createNativeQuery("Select * from post p where p.category_id = ?1 and p.flag=?2");
 		query.setParameter(2, true);
 		query.setParameter(1, id);
 		return query.getResultList();

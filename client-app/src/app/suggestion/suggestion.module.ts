@@ -10,11 +10,12 @@ import { LayoutModule } from '@ikubinfo/layout/layout.module';
 import { FormsModule } from '@angular/forms';
 import { SettingsComponent } from './settings/settings.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { PostsOfCategoryComponent } from './posts-of-category/posts-of-category.component';
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule],
     exports: [],
-    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent],
+    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent, PostsOfCategoryComponent],
     providers: []
 })
 export class SuggestionModule { }

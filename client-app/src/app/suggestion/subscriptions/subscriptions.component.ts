@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '@ikubinfo/core/services/category.service';
 import { Router } from '@angular/router';
+import { PostsOfCategoryComponent } from '../posts-of-category/posts-of-category.component';
 
 
 @Component({
@@ -15,10 +16,14 @@ export class SubscriptionsComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.loadSubscribedCategories();
+  }
+
+  loadSubscribedCategories(){
     this.categoryService.getSubscribedCategories().subscribe(data=>{
-        this.subscriptions=data;
-        console.log(this.subscriptions);
-    });
+      this.subscriptions=data;
+      console.log(this.subscriptions);
+  });
   }
   unsubscribe(id:number){
     this.categoryService.unsubscribe(id).subscribe(res=>{
@@ -26,5 +31,7 @@ export class SubscriptionsComponent implements OnInit {
     }); 
   }
 
- 
+  viewPosts(id:number){
+    this.router.navigate(['suggestion/categories/'+id+'/posts']);
+  }
 }

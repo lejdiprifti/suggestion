@@ -1,11 +1,11 @@
 <div class="row">
             
-  <div class="col col-xl-6 col-lg-12" *ngFor="let category of subscriptions">
+  <div class="col col-xl-6 col-lg-12" *ngFor="let category of subscriptions"  (click)="viewPosts(category[0])">
     <ikubinfo-panel header="Category">
       <div panel-content>
         <h1>{{ category[3] }}</h1>
         <p>{{ category[2] }}</p>
-        <button (click)="unsubscribe(category[0])">Unsubscribe</button>
+        <button class="btn btn-danger" (click)="unsubscribe(category[0])">Unsubscribe</button>
       </div>
     </ikubinfo-panel>
   </div> 
