@@ -1,7 +1,7 @@
-.row{
+.panel{
     transition: transform .2s; 
 }
 
-.row:hover{
-    transform: scale(1.02);
+.panel:hover{
+    transform: scale(1.03);
 }
