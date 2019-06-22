@@ -2,7 +2,7 @@
 <div class="row">        
   <div class="col col-xl-6 col-lg-12" *ngFor="let category of categories">
     <ikubinfo-panel header="Category">
-      <div panel-content>
+      <div panel-content class="panel">
         <h1>{{ category.categoryName }}</h1>
         <p>{{ category.categoryDescription }}</p>
         <button class="btn btn-info" (click)="edit(category.categoryId)">Edit</button>
