@@ -12,11 +12,11 @@ export class UserGuard implements CanActivate, CanActivateChild {
     constructor(private authService: AuthService ,private registerService : RegisterService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):boolean {
-        return (this.authService.role === RoleEnum.USER || this.registerService.role === RoleEnum.USER);
+        return (this.authService.role === RoleEnum.USER);
     }
 
     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        return (this.authService.role === RoleEnum.USER || this.registerService.role === RoleEnum.USER);
+        return (this.authService.role === RoleEnum.USER);
         
     }
     

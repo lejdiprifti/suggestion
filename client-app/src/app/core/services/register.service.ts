@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../utilities/api.service';
 import { User } from '../models/user';
 import { Subject, Observable } from 'rxjs';
-import { RoleEnum } from '../models/role.enum';
+
 import { Register } from '../models/register';
 
 @Injectable({
@@ -14,17 +14,13 @@ registerUser: Register;
   onUserChanged: Subject<User>;
   
   constructor(private apiService: ApiService) { 
-    this.onUserChanged=new Subject<User>();
-    this.loadData();
+
   }
   
   register(registerUser: Register){
     return this.apiService.post('register', registerUser);
   }
 
-  logout(): void {
-    this.setData(null);
-}
 
 
 
@@ -43,28 +39,8 @@ setData(registerUser: Register) {
     
 }
 
-get isLoggedIn(): any {
-    this.loadData();
-    return sessionStorage.getItem("userData");
-}
 
-private loadData() {
-
-    if (sessionStorage.getItem("userData")) {
-        this.registerUser = JSON.parse(sessionStorage.getItem("userData"));
-    }
-    else {
-        this.registerUser = null;
-    }
-
-}
  
-get role(): RoleEnum {
-  if (this.isLoggedIn && this.registerUser.role) {
-      return this.registerUser.role.id;
-  }
-  return null;
-}
 
 getUserByUsername(username: string): Observable<any> {
     return this.apiService.get<User>('users/'+username);

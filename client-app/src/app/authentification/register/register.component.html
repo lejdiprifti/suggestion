@@ -79,6 +79,7 @@
                 *Confirm your password.
               </div>
             </div>
+            <div class="required" *ngIf="passwordForm.hasError('matchingError')">*Passwords do not match.</div>
             </div>
           </div>
  

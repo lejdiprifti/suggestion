@@ -14,7 +14,7 @@ export class AuthGuard implements CanLoad {
     constructor(private authService: AuthService, private router: Router , private registerService: RegisterService) { }
 
     canLoad(route: Route): boolean {
-        if (this.authService.isLoggedIn || this.registerService.isLoggedIn) {
+        if (this.authService.isLoggedIn) {
             return true;
         }
         else {

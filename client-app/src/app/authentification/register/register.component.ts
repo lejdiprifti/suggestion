@@ -15,6 +15,7 @@ import { Role } from "@ikubinfo/core/models/role";
 
 import { Register } from "@ikubinfo/core/models/register";
 import { RoleEnum } from "@ikubinfo/core/models/role.enum";
+import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 
 
 @Component({
@@ -42,7 +43,8 @@ static passwordMatch(group: FormGroup):any{
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private  registerService: RegisterService
+    private  registerService: RegisterService,
+    private logger: LoggerService
   ) 
   {
     this.registerUser = {};
@@ -93,7 +95,7 @@ static passwordMatch(group: FormGroup):any{
 
   register(): void {
     this.registerUser.username = this.registerForm.value.username;
-    this.registerUser.password = this.registerForm.value.password;
+    this.registerUser.password = this.passwordForm.value.password;
     this.registerUser.role = {
       id: RoleEnum.USER,
       roleName: "USER",
@@ -105,9 +107,10 @@ static passwordMatch(group: FormGroup):any{
     this.registerUser.flag = true;
     this.registerService.register(this.registerUser).toPromise().then(res => {
       this.registerService.setData(res);
+      this.logger.success("Success", "You registered successfully.")
       this.router.navigate(["/login"]);
     }).catch( err=>{
-      alert("Username is taken");
+      this.logger.error("Error","Username is already taken.");
       this.router.navigate(['/register']);
     });
   }
