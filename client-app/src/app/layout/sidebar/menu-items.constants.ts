@@ -30,6 +30,11 @@ export const menuItems: Array<MenuItem> = [{
     allowedRoles: [RoleEnum.ADMIN]
 
 },{
+    url: '/suggestion/users',
+    icon: 'fa fa-th-list',
+    label: 'Active users',
+    allowedRoles: [RoleEnum.ADMIN]
+},{
     url: '/suggestion/settings',
     icon: 'fa fa-fw fa-wrench',
     label: 'Settings',

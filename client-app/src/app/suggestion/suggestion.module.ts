@@ -14,11 +14,12 @@ import { ProposalsComponent } from './admin/proposals/proposals.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { CategoryComponent } from './admin/category/category.component';
 import { AddCategoryComponent } from './admin/add-category/add-category.component';
+import { CurrentUsersComponent } from './admin/current-users/current-users.component';
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule,ReactiveFormsModule],
     exports: [],
-    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent,CategoriesComponent,ProposalsComponent, CategoryComponent, AddCategoryComponent],
+    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent,CategoriesComponent,ProposalsComponent, CategoryComponent, AddCategoryComponent, CurrentUsersComponent],
     providers: [CategoryComponent]
 })
 export class SuggestionModule { }

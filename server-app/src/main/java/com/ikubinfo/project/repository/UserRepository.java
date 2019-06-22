@@ -25,7 +25,7 @@ public class UserRepository {
 	}
 	
 	public List<UserEntity> getUsers(){
-		return entityManager.createQuery("Select u From UserEntity u",UserEntity.class).getResultList();
+		return entityManager.createQuery("Select u From UserEntity u and u.flag=?1",UserEntity.class).setParameter(1, true).getResultList();
 	}
 	
 	public UserEntity getUser(String username,String password) {

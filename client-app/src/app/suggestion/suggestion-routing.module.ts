@@ -13,6 +13,7 @@ import { ProposalsComponent } from './admin/proposals/proposals.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { CategoryComponent } from './admin/category/category.component';
 import { AddCategoryComponent } from './admin/add-category/add-category.component';
+import { CurrentUsersComponent } from './admin/current-users/current-users.component';
 
 
 const suggestionRoutes: Routes = [
@@ -23,6 +24,7 @@ const suggestionRoutes: Routes = [
             { path: 'dashboard', component: DashboardComponent , canActivate:[UserGuard]},
             { path: 'categories', component: CategoriesComponent, canActivate: [AdminGuard]},
             { path: 'settings', component: SettingsComponent},
+            { path: 'users', component: CurrentUsersComponent, canActivate: [AdminGuard]},
             { path: 'category/add', component: AddCategoryComponent, canActivate: [AdminGuard]},
             { path: 'category', component: CategoryComponent, canActivate: [AdminGuard]},
             { path: 'subscriptions', component: SubscriptionsComponent , canActivate: [UserGuard]},
