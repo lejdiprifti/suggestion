@@ -69,10 +69,10 @@ update(): void {
     if (this.settingsForm.value.username !== ""){
       this.updateUser.username=this.settingsForm.value.username;
     }
-    if (this.settingsForm.value.password !== ""){
+    if (this.passwordForm.value.password !== ""){
       this.updateUser.password=this.passwordForm.value.password;
     }
-    if (this.settingsForm.value.birthdate !== ""){
+    if (this.settingsForm.value.birthdate !== null){
       this.updateUser.birthdate=this.settingsForm.value.birthdate;
     }
     if (this.settingsForm.value.email !== ""){

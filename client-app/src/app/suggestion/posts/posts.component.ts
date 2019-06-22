@@ -34,7 +34,6 @@ export class PostsComponent implements OnInit {
     this.cols = [
       { field: 'postName', header: 'Title' },
       { field: 'postDescription', header: 'Body' },
-
     ];
   }
 

@@ -34,6 +34,7 @@ export class PostComponent implements OnInit {
           this.post = data;
           this.postForm.get('title').setValue(this.post.postName);
           this.postForm.get('description').setValue(this.post.postDescription);
+          this.postForm.get('category').setValue(this.post.category.categoryId);
         },
         err => {
           this.logger.error('Error', 'An error accured');
@@ -56,7 +57,7 @@ export class PostComponent implements OnInit {
   fillForm(data: Post = {}): void {
     this.postForm.get('title').setValue(data.postName);
     this.postForm.get('description').setValue(data.postDescription);
-    
+    this.postForm.get('category').setValue(data.category.categoryId);
   }
 
   getData(): Post {
@@ -101,7 +102,7 @@ export class PostComponent implements OnInit {
     })
   }
 
-  changeCity(e) {
+  changeCategory(e) {
     this.category.categoryName = e.target.value, {
     onlySelf: true
     }
