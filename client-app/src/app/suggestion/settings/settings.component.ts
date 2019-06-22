@@ -16,7 +16,7 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 export class SettingsComponent implements OnInit {
  settingsForm: FormGroup;
  updateUser: Register;
- 
+ passwordForm: FormGroup;
   constructor(private confirmationService: ConfirmationService, private logger: LoggerService,private router: Router , private fb:FormBuilder,private settingsService: SettingsService) { 
     this.updateUser={
 
@@ -25,6 +25,22 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.passwordForm=this.fb.group({
+      password: [
+        "",
+        [
+          Validators.pattern("(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}")
+        ]
+      ],
+      repeatPassword: [
+        "",
+        [
+          
+        ]
+      ]
+    },
+    {validators: RegisterComponent.passwordMatch});
+
     this.settingsForm=this.fb.group({
       username: [
         "",
@@ -32,12 +48,6 @@ export class SettingsComponent implements OnInit {
           Validators.minLength(4)
         ]
       ],
-      password: [
-      "",
-      [
-        Validators.pattern("(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}")
-      ]
-    ],
       birthdate: ['',
     [
       RegisterComponent.isOldEnough
@@ -51,7 +61,8 @@ export class SettingsComponent implements OnInit {
     ],
     address: [
       "",
-    ]
+    ],
+    passwordForm: this.passwordForm
     });
   }
 update(): void {
@@ -59,7 +70,7 @@ update(): void {
       this.updateUser.username=this.settingsForm.value.username;
     }
     if (this.settingsForm.value.password !== ""){
-      this.updateUser.password=this.settingsForm.value.password;
+      this.updateUser.password=this.passwordForm.value.password;
     }
     if (this.settingsForm.value.birthdate !== ""){
       this.updateUser.birthdate=this.settingsForm.value.birthdate;

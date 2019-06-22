@@ -61,11 +61,12 @@
             </div>
           </div>
           <!--Password -->
-          <div class="form-group">
+          <div [formGroup]="passwordForm"> 
+            <div class="form-group">
             <input type="password" formControlName="password" class="form-control input-underline input-lg"
               placeholder="Password" />
             <div class="required" *ngIf="
-                registerForm.get('password').dirty && registerForm.get('password').hasError('pattern')">
+            passwordForm.get('password').dirty && passwordForm.get('password').hasError('pattern')">
               Password must contain at least one number and one uppercase and
               lowercase letter, and at least 8 or more characters.
             </div>
@@ -73,11 +74,13 @@
           <div class="form-group">
             <input type="password" formControlName="repeatPassword" class="form-control input-underline input-lg"
               placeholder="Repeat Password" />
-            <div class="required"
-              *ngIf="registerForm.get('repeatPassword').dirty && registerForm.get('repeatPassword').hasError('required')">
-              *Confirm your password.
-            </div>
           </div>
+          <div class="required"
+              *ngIf="passwordForm.get('repeatPassword').dirty && passwordForm.hasError('matchingError')">
+              *Passwords do not match.
+            </div>
+        </div>
+         
           </div>
           <button [disabled]="registerForm.invalid" (click)="register()" class="btn rounded-btn">
             Register

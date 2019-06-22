@@ -30,7 +30,7 @@ const suggestionRoutes: Routes = [
             { path: 'proposals', component: ProposalsComponent, canActivate: [AdminGuard]},
             { path: 'post', component: PostComponent, canActivate: [AdminGuard] },
             { path: 'post/:id', component: PostComponent, canActivate: [AdminGuard] },
-            { path: '', redirectTo: 'categories', pathMatch: 'full' }
+            { path: '', redirectTo: 'categories', pathMatch: 'full' , canActivate:[AdminGuard]}
         ]
     }
 ];
