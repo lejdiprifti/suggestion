@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '@ikubinfo/core/services/category.service';
 import { Router } from '@angular/router';
-import { PostsOfCategoryComponent } from '../posts-of-category/posts-of-category.component';
+
 
 
 @Component({
