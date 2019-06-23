@@ -9,10 +9,10 @@ export const menuItems: Array<MenuItem> = [{
     allowedRoles: [RoleEnum.USER]
 },{
     url: '/suggestion/subscriptions',
-    icon: 'fa-subscriptions',
+    icon: 'fa fa-th-list',
     label: 'Subscriptions',
     allowedRoles: [RoleEnum.USER]
-},{
+},,{
     url: '/suggestion/categories',
     icon: 'fa-dashboard',
     label: 'Manage categories',
@@ -22,14 +22,12 @@ export const menuItems: Array<MenuItem> = [{
     icon: 'fa fa-th-list',
     label: 'Proposals',
     allowedRoles: [RoleEnum.ADMIN]
-},
-{
-    url: '/suggestion/posts',
+},{    url: '/suggestion/posts',
     icon: 'fa-table',
     label: 'Manage posts',
     allowedRoles: [RoleEnum.ADMIN]
 
-},{
+},,{
     url: '/suggestion/users',
     icon: 'fa fa-th-list',
     label: 'Active users',

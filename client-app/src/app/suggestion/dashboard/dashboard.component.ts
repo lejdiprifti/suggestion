@@ -18,14 +18,17 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService.getAllCategories().subscribe(res=>{
-      this.categories=res;
-      console.log(this.categories);
-    });
+    this.loadData();
   }
 
  subscribe(id: number){
    this.categoryService.subscribe(id).subscribe(res=>{
    });
+ }
+
+ loadData(){
+  this.categoryService.getAllCategories().subscribe(res=>{
+    this.categories=res;
+  });
  }
 }
