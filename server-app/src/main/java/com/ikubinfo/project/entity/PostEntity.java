@@ -36,7 +36,13 @@ public class PostEntity {
 	@ManyToOne
 	@JoinColumn(name= "category_id")
 	private CategoryEntity category;
-
+	
+	@Column(name="flag")
+	private boolean flag;
+	
+	public PostEntity() {
+		
+	}
 	public int getPostId() {
 		return postId;
 	}
@@ -71,7 +77,7 @@ public class PostEntity {
 
 	public UserEntity getUser() {
 		return user;
-	}
+	}    
 
 	public void setUser(UserEntity user) {
 		this.user = user;
@@ -85,10 +91,17 @@ public class PostEntity {
 		this.category = category;
 	}
 
+	public boolean isFlag() {
+		return flag;
+	}
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
 	@Override
 	public String toString() {
 		return "PostEntity [postId=" + postId + ", postName=" + postName + ", postDescription=" + postDescription
-				+ ", addedDate=" + addedDate + ", user=" + user + ", category=" + category + "]";
+				+ ", addedDate=" + addedDate + ", user=" + user + ", category=" + category + ", flag=" + flag + "]";
 	}
+	
 	
 }

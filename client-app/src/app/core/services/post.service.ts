@@ -11,7 +11,16 @@ export class PostService {
     constructor(private apiService: ApiService) {
 
     }
+    public hasLiked(id: number){
+        return this.apiService.get(this.url+'/'+id+'/liked');
+    }
+    public like(id: number){
+        return this.apiService.put(this.url+'/like/'+id);
+    }
 
+    public unlike(id: number){
+        return this.apiService.put(this.url+'/unlike/'+id);
+    }
     public allAsync = (): Observable<Array<Post>> => {
         return this.apiService.get<Array<Post>>(this.url);
     }

@@ -181,7 +181,21 @@ public class PostRepository {
 			return false;
 		}
 	}
-
+	
+	public Object hasLiked(String username, PostEntity post) {
+		try {
+			Query query = entityManager.createNativeQuery(
+					"Select from postsliked where user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and post_id=(select p.post_id from post p where "
+							+ " post_id=:post_id) and flag=:flag ");
+			query.setParameter("user_id", userRepository.getUserByUsername(username).getId());
+			query.setParameter("post_id", post.getPostId());
+			query.setParameter("flag", true);
+			return query.getSingleResult();
+			
+		} catch (NoResultException e) {
+			throw new NotFoundException();
+		}
+	}
 	public PostEntity unlike(String username,PostEntity post) {
 		UserEntity user = userRepository.getUserByUsername(username);
 		entityManager.getTransaction().begin();

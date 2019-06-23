@@ -80,4 +80,9 @@ public class PostResource extends BaseResource{
 		return Response.ok(postRepository.unlike(getUsernameFromToken(),postRepository.getPostById(id))).build();
 	}
 	
+	@GET
+	@Path("/{id}/liked")
+	public Response hasLiked(@PathParam("id") final int id) {
+		return Response.ok(postRepository.hasLiked(getUsernameFromToken(), postRepository.getPostById(id))).build();
+	}
 }

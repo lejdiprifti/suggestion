@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CategoryService } from '@ikubinfo/core/services/category.service';
 import { Router } from '@angular/router';
+import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 
 @Component({
   selector: 'ikubinfo-dashboard',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
   categories: any;
   text: string;
-  constructor(private categoryService: CategoryService, private router: Router) { 
+  constructor(private logger: LoggerService,private categoryService: CategoryService, private router: Router) { 
     this.categories=[];
     this.text='';
   }
@@ -24,6 +25,10 @@ export class DashboardComponent implements OnInit {
  subscribe(id: number){
    this.categoryService.subscribe(id).subscribe(res=>{
      this.loadData();
+     this.logger.success("Success","You subscribed successfully!");
+   },
+   err=>{
+     this.logger.error("Error","Something bad happened.");
    });
  }
 

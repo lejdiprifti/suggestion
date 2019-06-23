@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '@ikubinfo/core/services/category.service';
 import { ActivatedRoute } from '@angular/router';
+import { post } from 'selenium-webdriver/http';
+import { Post } from '@ikubinfo/core/models/post';
+import { PostService } from '@ikubinfo/core/services/post.service';
+import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 
 @Component({
   selector: 'ikubinfo-posts-of-category',
@@ -9,8 +13,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PostsOfCategoryComponent implements OnInit {
   
-  posts: Object;
-  constructor(private categoryService: CategoryService,private active: ActivatedRoute) { }
+  posts: any;
+  constructor(private logger: LoggerService,private categoryService: CategoryService,private postService: PostService,private active: ActivatedRoute) { }
 
   ngOnInit() {
     this.loadPosts();
@@ -20,9 +24,37 @@ export class PostsOfCategoryComponent implements OnInit {
     const id = this.active.snapshot.paramMap.get('id')
     this.categoryService.getPostsOfCategory(Number(id)).subscribe(res=>{
       this.posts=res;
+      this.posts.forEach((post) =>{
+        this.postService.hasLiked(post[0]).subscribe(res=>{
+          post.isLiked=true;
+        }, err=>{
+          post.isLiked=false;
+        });
+      })
     },
     err=>{
-    
+      this.logger.error("Error", "Something bad happened");
     });
   }
+
+  like(id: number){
+    this.postService.like(id).subscribe(res=>{
+      this.logger.success("Success","You liked the post!");
+      this.loadPosts();
+    }, 
+    err=>{
+      this.logger.error("Error","Something bad happened.");
+    });
+  }
+
+  unlike(id: number){
+    this.postService.unlike(id).subscribe(res=>{
+      this.logger.warning("Success","You disliked the post!");
+      this.loadPosts();
+    }, 
+    err=>{
+      this.logger.error("Error","Something bad happened.");
+    });
+  }
+  
 }
