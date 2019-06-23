@@ -92,4 +92,10 @@ public class CategoryResource  extends BaseResource {
 		public Response getPostsofCategory(@PathParam("id") final int id) {
 			return Response.ok(categoryRepository.getPostsOfCategory(getUsernameFromToken(),id)).build();
 		}
+		
+		@GET
+		@Path("/{id}/check")
+		public Response isSubscribed(@PathParam("id") final int id) {
+			return Response.ok(categoryRepository.isSubscribed(getUsernameFromToken(), categoryRepository.getCategoryById(id))).build();
+		}
 }

@@ -38,7 +38,6 @@ public class CategoryService {
 		return categoryConverter.toModel(categoryRepository.insert(categoryEntity));
 	}
 
-	
 }
 
 

@@ -131,42 +131,57 @@ try {
 
 	
 	public CategoryEntity subscribe(String username,int id) {
-		if (isSubscribed(username,getCategoryById(id))==false) {
-		UserEntity user = userRepository.getUserByUsername(username);
-		Subscriptions subscriptions=new Subscriptions();
-		subscriptions.setUser(user);
-		subscriptions.setCategory(getCategoryById(id));
-
-		subscriptions.setDate(new Date());
-		subscriptions.setFlag(true);
+		if (existsSubscription(username,getCategoryById(id))==true) {
+		UserEntity user = userRepository.getUserByUsername(username);	
 		entityManager.getTransaction().begin();
-		entityManager.persist(subscriptions);
+		Query query=entityManager.createNativeQuery("Update Subscriptions SET flag=:newFlag , date=:date where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c"
+				+ " where"
+				+ " c.category_id=:category_id)) ");
+		query.setParameter("newFlag", true);
+		query.setParameter("user_id",user.getId());
+		query.setParameter("category_id", id);
+		query.setParameter("date", new Timestamp(new Date().getTime()));
+		query.executeUpdate();
 		entityManager.getTransaction().commit();
 		
-		}else {
-			UserEntity user = userRepository.getUserByUsername(username);	
+		}else{	
+			UserEntity user = userRepository.getUserByUsername(username);
+			Subscriptions subscriptions=new Subscriptions();
+			subscriptions.setUser(user);
+			subscriptions.setCategory(getCategoryById(id));
+
+			subscriptions.setDate(new Date());
+			subscriptions.setFlag(true);
 			entityManager.getTransaction().begin();
-			Query query=entityManager.createNativeQuery("Update Subscriptions SET flag=:newFlag , date=:date where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c"
-					+ " where"
-					+ " c.category_id=:category_id)) ");
-			query.setParameter("newFlag", true);
-			query.setParameter("user_id",user.getId());
-			query.setParameter("category_id", id);
-			query.setParameter("date", new Timestamp(new Date().getTime()));
-			query.executeUpdate();
+			entityManager.persist(subscriptions);
 			entityManager.getTransaction().commit();
 		}
 		return getCategoryById(id);
 	}
 	
-	public boolean isSubscribed(String username,CategoryEntity category) {
+	public Object isSubscribed(String username,CategoryEntity category) {
+		try {
+		Query query=entityManager.createNativeQuery("Select from Subscriptions where user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c where "
+				+ " c.category_id=:category_id) and flag=:flag");
+		query.setParameter("user_id", userRepository.getUserByUsername(username).getId());
+		query.setParameter("category_id", category.getCategoryId());
+		query.setParameter("flag", true);
+		return query.getSingleResult();
+		 
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		} 
+	}
+	
+	public boolean existsSubscription(String username,CategoryEntity category) {
 		try {
 		Query query=entityManager.createNativeQuery("Select from Subscriptions where user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c where "
 				+ " c.category_id=:category_id)");
 		query.setParameter("user_id", userRepository.getUserByUsername(username).getId());
 		query.setParameter("category_id", category.getCategoryId());
-		query.getSingleResult();
+	    query.getSingleResult();
 		return true;
+		 
 		}catch(NoResultException e) {
 			return false;
 		} 
@@ -195,12 +210,12 @@ try {
 	}
 	
 	public List<PostEntity> getPostsOfCategory(String username,final int id){
-		if (isSubscribed(username, getCategoryById(id))) {
+		try { isSubscribed(username, getCategoryById(id));
 		Query query = entityManager.createNativeQuery("Select * from post p where p.category_id = ?1 and p.flag=?2");
 		query.setParameter(2, true);
 		query.setParameter(1, id);
 		return query.getResultList();
-		}	else {
+		}	catch(NotFoundException e) {
 			throw new NotAllowedException("You are not subscribed.");
 		}
 	}

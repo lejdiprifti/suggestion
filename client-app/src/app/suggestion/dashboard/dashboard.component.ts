@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CategoryService } from '@ikubinfo/core/services/category.service';
 import { Router } from '@angular/router';
 
@@ -10,22 +10,31 @@ import { Router } from '@angular/router';
 
 
 export class DashboardComponent implements OnInit {
-  categories: Object;
-
-
+  categories: any;
+  text: string;
   constructor(private categoryService: CategoryService, private router: Router) { 
     this.categories=[];
+    this.text='';
   }
 
   ngOnInit() {
-    this.categoryService.getAllCategories().subscribe(res=>{
-      this.categories=res;
-      console.log(this.categories);
-    });
+   this.loadData();
   }
 
  subscribe(id: number){
    this.categoryService.subscribe(id).subscribe(res=>{
+     this.loadData();
    });
  }
+
+loadData(){
+  this.categoryService.getAllCategories().subscribe(res=>{
+    this.categories=res;
+    this.categories.forEach((category) => {
+         this.categoryService.isSubscribed(category.categoryId).subscribe(res=>{
+           category.isSubscribed = true;
+         });
+      });
+  });
+}
 }

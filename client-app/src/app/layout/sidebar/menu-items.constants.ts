@@ -9,12 +9,12 @@ export const menuItems: Array<MenuItem> = [{
     allowedRoles: [RoleEnum.ADMIN, RoleEnum.USER]
 },{
     url: '/suggestion/subscriptions',
-    icon: 'fa-subscriptions',
+    icon: 'fa fa-th-list',
     label: 'Subscriptions',
     allowedRoles: [RoleEnum.USER]
 },{
     url: '/suggestion/settings',
-    icon: 'fa-settings',
+    icon: 'fa fa-fw fa-wrench',
     label: 'Settings',
     allowedRoles: [RoleEnum.ADMIN, RoleEnum.USER]
 },{

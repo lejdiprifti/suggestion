@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SubscriptionsComponent implements OnInit {
   subscriptions: Object;
+ 
   constructor(private categoryService: CategoryService, private router: Router ) { 
     this.subscriptions=[];
   }
@@ -34,4 +35,6 @@ export class SubscriptionsComponent implements OnInit {
   viewPosts(id:number){
     this.router.navigate(['suggestion/categories/'+id+'/posts']);
   }
+
+  
 }
