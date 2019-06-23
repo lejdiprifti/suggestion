@@ -13,4 +13,12 @@ export const menuItems: Array<MenuItem> = [{
     label: 'Manage posts',
     allowedRoles: [RoleEnum.ADMIN]
 
-}]
+},{
+    url: '/suggestion/suggestion-category',
+    icon: 'fa-table',
+    label: 'Suggestions',
+    allowedRoles: [RoleEnum.USER]
+
+}
+
+]

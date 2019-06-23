@@ -1,0 +1,30 @@
+<p-panel header="Title">
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h3>Category</h3>
+    </div>
+    <div class="col">
+      <h3>Description</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <input type="text" pInputText placeholder="Category" [(ngModel)]="category.categoryName">  
+    </div>
+    <div class="col">
+      <textarea pInputTextarea placeholder="Description" [(ngModel)]="category.categoryDescription"></textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+    </div>
+    <div class="col">
+    </div>
+    <div class="col">
+        <p-button label="Add" (click)="addData($event)"></p-button>
+        <p-button label="Clear" (click)="clearData($event)"></p-button>
+    </div>
+  </div>
+</div>
+</p-panel>

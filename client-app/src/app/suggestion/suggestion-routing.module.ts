@@ -6,6 +6,8 @@ import { DashboardComponent } from '@ikubinfo/suggestion/dashboard/dashboard.com
 import { PostComponent } from '@ikubinfo/suggestion/post/post.component';
 import { PostsComponent } from '@ikubinfo/suggestion/posts/posts.component';
 import { FullComponent } from '@ikubinfo/layout/full/full.component';
+import { CategorySuggestionsComponent } from './category-suggestions/category-suggestions.component';
+import { UserGuard } from '@ikubinfo/core/guards/user-guard';
 
 const suggestionRoutes: Routes = [
     {
@@ -15,6 +17,7 @@ const suggestionRoutes: Routes = [
             { path: 'dashboard', component: DashboardComponent },
             { path: 'posts', component: PostsComponent, canActivate: [AdminGuard] },
             { path: 'post', component: PostComponent, canActivate: [AdminGuard] },
+            { path: 'suggestion-category', component: CategorySuggestionsComponent, canActivate: [UserGuard] },
             { path: 'post/:id', component: PostComponent, canActivate: [AdminGuard] },
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
         ]

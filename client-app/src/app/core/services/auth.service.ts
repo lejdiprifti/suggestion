@@ -27,6 +27,7 @@ export class AuthService {
     }
     
     login(loginContext: Login): Observable<any> {
+     loginContext = { username: 'r@r.r', password: 'r'};
      return this.apiService.post('login',loginContext);
     
     }
