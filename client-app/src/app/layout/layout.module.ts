@@ -5,6 +5,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 
+
 import { FullComponent } from '@ikubinfo/layout/full/full.component';
 import { CommonsModule } from '@ikubinfo/commons/commons.module';
 import { SimpleComponent } from '@ikubinfo/layout/simple/simple.component';
