@@ -127,6 +127,9 @@ public class UserRepository {
 			throw new NotAllowedException("Username is taken");
 		} catch (NotFoundException e) {
 			entityManager.getTransaction().begin();
+			RoleEntity role=new RoleEntity();
+			role.setId(2);
+			userEntity.setRole(role);
 		    entityManager.persist(userEntity);
 			entityManager.getTransaction().commit();
 
