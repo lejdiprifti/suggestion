@@ -1,5 +1,7 @@
 package com.ikubinfo.project.base;
 
+import java.util.LinkedHashMap;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -25,15 +27,17 @@ public abstract class BaseResource {
 		return Response.ok(entity).build();
 	}
 
-	public RoleEntity getRoleFromToken() {
+	public  RoleEntity getRoleFromToken() {
+		
+
 		String token = httpHeaders.getHeaderString(HttpHeaders.AUTHORIZATION).substring(Constants.BEARER.length())
 				.trim();
-
-		return (RoleEntity) Jwts.parser().setSigningKey(Constants.JWT_KEY).parseClaimsJws(token).getBody().get("role");
+		return  (RoleEntity) Jwts.parser().setSigningKey(Constants.JWT_KEY).parseClaimsJws(token).getBody().get("role", RoleEntity.class);
 	}
 	
 	public String getUsernameFromToken() {
-		String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImxlamRpIiwicm9sZSI6eyJpZCI6Miwicm9sZU5hbWUiOiJVU0VSIiwicm9sZURlc2NyaXB0aW9uIjoiU2hpa29uX3Bvc3RpbWV0X2RoZV9wcm9wb3pvbl9rYXRlZ29yaSJ9LCJleHAiOjE1NjA3ODk2NDYsImp0aSI6IjkwMTIxNTZiLTJiN2ItNGJjNC04ZDQ1LTk1ZmQ3MzA2ZWMwZiIsImlhdCI6MTU2MDc4MjQ0NiwiaXNzIjoiaWt1YmluZm8ifQ.uV0gUTh_TA42JmviTc4brth18EOvO1S4tnqAqCHRsjI";
+		String token = httpHeaders.getHeaderString(HttpHeaders.AUTHORIZATION).substring(Constants.BEARER.length())
+				.trim();
 
 		return (String) Jwts.parser().setSigningKey(Constants.JWT_KEY).parseClaimsJws(token).getBody().get("username");
 	}

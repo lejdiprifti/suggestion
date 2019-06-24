@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '@ikubinfo/core/services/category.service';
 import { Category } from '@ikubinfo/core/models/category';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'ikubinfo-category-suggestions',
@@ -12,31 +13,42 @@ export class CategorySuggestionsComponent implements OnInit {
 
   
   category: Category;
-
+  suggestionForm: FormGroup;
   
-  constructor(private categoryService: CategoryService,private logger: LoggerService) { }
+  constructor(private fb: FormBuilder, private categoryService: CategoryService,private logger: LoggerService) { }
 
   ngOnInit() {
     this.initInputData();
   }
 
   initInputData() {
-    this.category = {
-      categoryName: '',
-      categoryDescription: ''
+    this.suggestionForm=this.fb.group({
+      categoryName: ['' , Validators.required],
+      categoryDescription:  ['' , Validators.required],
+    });   
     }
-  }
+
   clearData() {
     this.initInputData();
   }
-  async addData($event): Promise<void> {
-    try {
-    const category = await this.categoryService.createCategory(this.category);
-    this.logger.success("Add Success", "Category was added successfully");  
-  
-  } catch(e) {
-    this.logger.error("Error Happened", "Category was added successfully");
+
+  getData(){
+    return {
+      categoryName: this.suggestionForm.get('categoryName').value,
+      categoryDescription: this.suggestionForm.get('categoryDescription').value
+    }
   }
+
+  async addData($event): Promise<void> {
+ 
+   this.categoryService.suggestCategory(this.getData()).subscribe(res=>{
+     console.log(this.getData());
+     this.logger.success("Add Success", "Category was added successfully"); 
+   }, 
+   err=>{
+     this.logger.error("Error", "Category already exists.");
+   });
+    
    
   }
 

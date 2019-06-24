@@ -1,30 +1,14 @@
-<p-panel header="Title">
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <h3>Category</h3>
-    </div>
-    <div class="col">
-      <h3>Description</h3>
-    </div>
+<ikubinfo-panel header="Suggestion">
+  <div panel-content>
+    <form role="form" [formGroup]="suggestionForm">
+      <ikubinfo-input label="Title">
+        <input formControlName="categoryName" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label="Description">
+        <textarea formControlName="categoryDescription" type="text" class="form-control"> </textarea>
+      </ikubinfo-input>
+    </form>
+    <button type="submit" (click)="addData($event)" [disabled]="suggestionForm.invalid" class="btn btn-primary">Submit</button>
+    <button (click)="clearData($event)" class="btn btn-secondary">Reset</button>
   </div>
-  <div class="row">
-    <div class="col">
-      <input type="text" pInputText placeholder="Category" [(ngModel)]="category.categoryName">  
-    </div>
-    <div class="col">
-      <textarea pInputTextarea placeholder="Description" [(ngModel)]="category.categoryDescription"></textarea>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-    </div>
-    <div class="col">
-    </div>
-    <div class="col">
-        <p-button label="Add" (click)="addData($event)"></p-button>
-        <p-button label="Clear" (click)="clearData($event)"></p-button>
-    </div>
-  </div>
-</div>
-</p-panel>
+</ikubinfo-panel>

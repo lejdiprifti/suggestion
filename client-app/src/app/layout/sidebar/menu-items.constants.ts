@@ -21,9 +21,6 @@ export const menuItems: Array<MenuItem> = [{
 },
 {
     url: '/suggestion/view',
-},
-{
-    url: '/suggestion/viewPosts',
     icon: 'fa-table',
     label: 'Posts',
     allowedRoles: [ RoleEnum.USER]
@@ -34,7 +31,7 @@ export const menuItems: Array<MenuItem> = [{
     allowedRoles: [RoleEnum.ADMIN]
 
 },{
-    url: '/suggestion/suggestion-category',
+    url: '/suggestion/suggestions',
     icon: 'fa-table',
     label: 'Suggestions',
     allowedRoles: [RoleEnum.USER]

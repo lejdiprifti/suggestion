@@ -14,21 +14,24 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.converter.CategoryConverter;
 import com.ikubinfo.project.entity.CategoryEntity;
 import com.ikubinfo.project.repository.SuggestionsRepository;
+import com.ikubinfo.project.repository.UserRepository;
 import com.ikubinfo.project.service.CategoryService;
 import com.ikubinfo.project.util.Paths;
 
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
+
 @Path(Paths.SUGGESTIONS)
-public class SuggestionsResource {
+public class SuggestionsResource extends BaseResource {
 	private SuggestionsRepository suggestionsRepository;
 	private CategoryConverter categoryConverter;
+	private UserRepository userRepository;
 			public SuggestionsResource() {
 				this.suggestionsRepository=new SuggestionsRepository();
 				this.categoryConverter = new CategoryConverter();
+				this.userRepository= new UserRepository();
 			}
 	@GET
 	public Response getSuggestions() {
@@ -43,7 +46,7 @@ public class SuggestionsResource {
 	
 	@POST
 	public Response suggest(CategoryEntity suggestion) throws URISyntaxException {
-		suggestionsRepository.insert(suggestion);
+		suggestionsRepository.insert(suggestion,userRepository.getUserByUsername(getUsernameFromToken()));
 		return Response.created(new URI("/"+suggestion.getCategoryId())).build();
 	}
 	
