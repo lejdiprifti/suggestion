@@ -17,18 +17,22 @@ export const menuItems: Array<MenuItem> = [{
     icon: 'fa fa-fw fa-wrench',
     label: 'Settings',
     allowedRoles: [RoleEnum.ADMIN, RoleEnum.USER]
+},
+{
+    url: '/suggestion/viewposts',
+    icon: 'fa-table',
+    label: 'Posts',
+    allowedRoles: [ RoleEnum.USER]
 },{
     url: '/suggestion/posts',
     icon: 'fa-table',
     label: 'Manage posts',
     allowedRoles: [RoleEnum.ADMIN]
-
 },{
     url: '/suggestion/propose',
     icon: 'fa-table',
     label: 'Suggestions',
     allowedRoles: [RoleEnum.USER]
-
 }
 
 ]

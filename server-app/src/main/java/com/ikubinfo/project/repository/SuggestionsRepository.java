@@ -15,6 +15,7 @@ import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.entity.CategoryEntity;
 import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.entity.State;
+import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
@@ -45,23 +46,19 @@ public class SuggestionsRepository {
 		}
 	}
 	
-	public CategoryEntity isSuggestion(String name) {
-		try {
-			TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c from CategoryEntity c where c.categoryName=?1 and c.flag=?2", CategoryEntity.class);
-			query.setParameter(1, name);
-			query.setParameter(2, true);
-			return query.getSingleResult();
-		}catch(NoResultException e) {
-			throw new NotFoundException();
-		}
-	}
 	
-	public CategoryEntity insert(CategoryEntity suggestion) {
+	public CategoryEntity insert(CategoryEntity suggestion,UserEntity user) {
 		try {
-			isSuggestion(suggestion.getCategoryName());
-			throw new NotAllowedException("Suggestion or category exists.");
-		}catch (NotFoundException e) {
+			exists(suggestion);
+			throw new NotAllowedException("Category exists.");
+		}catch(NotFoundException e) {
+
 		entityManager.getTransaction().begin();
+		suggestion.setAcceptedDate(new Date());
+		suggestion.setFlag(true);
+		suggestion.setAcceptedUser(user);
+		suggestion.setCategoryState(State.PROPOSED);
+		suggestion.setUser(user);
 		entityManager.persist(suggestion);
 		entityManager.getTransaction().commit();
 		return suggestion;
@@ -78,7 +75,7 @@ public class SuggestionsRepository {
 		CategoryEntity foundCategory=query.getSingleResult();
 		if (category.getCategoryName()!=null) {
 			try {
-				isSuggestion(category.getCategoryName());
+				exists(category);
 				throw new NotAllowedException("Suggestion name exists");
 			}catch(NotFoundException e) {
 			foundCategory.setCategoryName(category.getCategoryName());
@@ -165,5 +162,19 @@ public class SuggestionsRepository {
 			query.setParameter(2, State.CREATED);
 			query.setParameter("flag", true);
 			return query.getResultList();
+	}
+	
+	public CategoryEntity exists(CategoryEntity suggestion) {
+		try {
+			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where (c.categoryName=?1 and c.state=?2 and c.flag=?3) or (c.categoryName=?1 and c.state=?4 and c.flag=?3)",CategoryEntity.class);
+			query.setParameter(1, suggestion.getCategoryName());
+			query.setParameter(2, State.PROPOSED);
+			query.setParameter(4, State.CREATED);
+			query.setParameter(3, true);
+			CategoryEntity category=query.getSingleResult();
+			return category;
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
 	}
 }

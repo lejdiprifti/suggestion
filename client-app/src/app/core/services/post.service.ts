@@ -21,8 +21,36 @@ export class PostService {
     public unlike(id: number){
         return this.apiService.put(this.url+'/unlike/'+id);
     }
-    public allAsync = (): Observable<Array<Post>> => {
-        return this.apiService.get<Array<Post>>(this.url);
+  
+    public allAsync = (): Observable<any> => {
+        return this.apiService.get(this.url);
+    }
+
+    private async convertRawDataToPost(rawData: any): Promise<Post> {
+        const { user,  postId , postName, postDescription, category } = rawData; 
+        const post: Post = {
+          userId: user.id, 
+          id: postId,
+          title: postName,
+          body: postDescription,
+          category: category.categoryName };
+          return post;
+    }
+
+
+    private async convertRawDataArrayToPost(rawData: any): Promise<Array<Post>> {
+        const posts: Array<Post>  = [];
+        rawData.forEach(async element => {
+             const post: Post =  await this.convertRawDataToPost(element);
+             posts.push(post);
+        });
+        return posts;
+    }
+
+
+    public async all(): Promise<Post[]> {
+        const posts = await this.apiService.get<Array<any>>(this.url).toPromise();
+        return await this.convertRawDataArrayToPost(posts);
     }
 
     public readAsync = (id: number): Observable<Post> => {
@@ -44,6 +72,21 @@ export class PostService {
         return this.apiService.post<Post>(this.url, post);
     }
 
+    public likePost = (
+        id: number
+    ): Promise<Post> => {
+        const url = this.url + `/like/${id}`;
+        const rawPost =  this.apiService.putNoBody<Post>(url).toPromise();
+        return this.convertRawDataToPost(rawPost);
+    }
+
+    public unLikePost = (
+        id: number
+    ): Promise<Post> => {
+        const url = this.url + `/unlike/${id}`;
+        const rawPost =  this.apiService.putNoBody<Post>(url).toPromise();
+        return this.convertRawDataToPost(rawPost);
+    }
 
     public deleteAsync = (id: number): Observable<void> => {
         const url = this.url + `/${id}`;

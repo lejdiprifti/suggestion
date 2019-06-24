@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../utilities/api.service';
-import { Observable } from 'rxjs';
 import { Category } from '../models/category';
+import { Observable } from 'rxjs';
+import { ApiService } from '../utilities/api.service';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
   url = 'categories';
-
   constructor(private apiService: ApiService) { }
 
 getAllCategories() {
@@ -66,10 +67,8 @@ public  allCategories = async (): Promise<Array<Category>> => {
 //     return this.apiService.put<Post>(url, post);
 // }
 
-public createCategory = (
-  category: Category,
-): Promise<Category> => {
-  return this.convertToCategory( this.apiService.post<any>(this.url, category).toPromise());
+public suggestCategory(category: any){
+  return this.apiService.post('suggestions',category);
 }
 
 
@@ -78,4 +77,3 @@ public deleteAsync = (id: number): Observable<void> => {
   return this.apiService.delete(url);
 }
 }
-

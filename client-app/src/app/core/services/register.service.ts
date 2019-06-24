@@ -30,7 +30,7 @@ setData(registerUser: Register) {
     );
     if (registerUser) {
       this.registerUser = registerUser;
-        sessionStorage.setItem("userData", JSON.stringify(registerUser));
+      sessionStorage.setItem("userData", JSON.stringify(registerUser));
         this.onUserChanged.next(registerUser);
     } else {
         sessionStorage.removeItem("userData");

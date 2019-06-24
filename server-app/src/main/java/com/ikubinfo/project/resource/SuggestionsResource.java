@@ -16,17 +16,21 @@ import com.ikubinfo.project.converter.CategoryConverter;
 import com.ikubinfo.project.entity.CategoryEntity;
 import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.repository.SuggestionsRepository;
+import com.ikubinfo.project.repository.UserRepository;
+import com.ikubinfo.project.service.CategoryService;
 import com.ikubinfo.project.util.Paths;
+
 
 @Path(Paths.SUGGESTIONS)
 public class SuggestionsResource extends BaseResource {
 	private SuggestionsRepository suggestionsRepository;
 	private CategoryConverter categoryConverter;
-
-	public SuggestionsResource() {
-		this.suggestionsRepository = new SuggestionsRepository();
-		this.categoryConverter = new CategoryConverter();
-	}
+	private UserRepository userRepository;
+			public SuggestionsResource() {
+				this.suggestionsRepository=new SuggestionsRepository();
+				this.categoryConverter = new CategoryConverter();
+				this.userRepository= new UserRepository();
+			}
 
 	@GET
 	public Response getSuggestions() {
@@ -43,9 +47,11 @@ public class SuggestionsResource extends BaseResource {
 
 	@POST
 	public Response suggest(CategoryEntity suggestion) throws URISyntaxException {
-		suggestionsRepository.insert(suggestion);
-		return Response.created(new URI("/" + suggestion.getCategoryId())).build();
+
+		suggestionsRepository.insert(suggestion,userRepository.getUserByUsername(getUsernameFromToken()));
+		return Response.created(new URI("/"+suggestion.getCategoryId())).build();
 	}
+
 
 	@DELETE
 	@Path("/{id}")
@@ -54,16 +60,16 @@ public class SuggestionsResource extends BaseResource {
 		return Response.noContent().build();
 	}
 
-/*	@PUT
+	@PUT
 	@Path("/accept/{id}")
 	public Response accept(@PathParam("id") final int id) {
-		return Response.ok(categoryConverter.toModel(suggestionsRepository.accept(id))).build();
+		return Response.ok(categoryConverter.toModel(suggestionsRepository.accept(getUsernameFromToken(),id))).build();
 	}
-*/
-/*	@PUT
+
+	@PUT
 	@Path("/decline/{id}")
 	public Response decline(@PathParam("id") final int id) {
-		return Response.ok(categoryConverter.toModel(suggestionsRepository.decline(id))).build();
-	}*/
+		return Response.ok(categoryConverter.toModel(suggestionsRepository.decline(getUsernameFromToken(),id))).build();
+	}
 
 }

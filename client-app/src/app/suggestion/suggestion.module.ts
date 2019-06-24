@@ -15,12 +15,13 @@ import { FormsModule } from '@angular/forms';
 import { SettingsComponent } from './settings/settings.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { PostsOfCategoryComponent } from './posts-of-category/posts-of-category.component';
+import { PostViewComponent } from './posts/post-view/post-view.component';
 import { CategorySuggestionsComponent } from './category-suggestions/category-suggestions.component';
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule,ButtonModule, FormsModule, InputTextModule,InputTextareaModule, PanelModule],
     exports: [],
-    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent,CategorySuggestionsComponent, SubscriptionsComponent, PostsOfCategoryComponent],
+    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent,CategorySuggestionsComponent, SubscriptionsComponent,PostViewComponent,PostsOfCategoryComponent],
     providers: []
 })
 export class SuggestionModule { }

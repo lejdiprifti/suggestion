@@ -28,6 +28,7 @@ export class AuthService {
     login(loginContext: Login): Observable<Login> {
      return this.apiService.post<Login>('login',loginContext);
     }
+   
 
 
     logout(): void {
@@ -44,6 +45,8 @@ export class AuthService {
         );
         if (data) {
             this.user = data.user;
+            // sessionStorage.setItem("userData", JSON.stringify({"id":9,"username":"r@r.r","password":"r","role":{"id":2,"roleName":"USER","roleDescription":"Shikon_postimet_dhe_propozon_kategori"},"birthdate":-62135769600000,"email":"r@r.r","address":"p","flag":true,"delete":true}))  
+     
             sessionStorage.setItem("userData", JSON.stringify(data.user));
             sessionStorage.setItem("token", data.jwt);
             this.onUserChanged.next(data.user);

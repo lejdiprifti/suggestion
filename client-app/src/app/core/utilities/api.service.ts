@@ -23,6 +23,11 @@ export class ApiService {
       .put<Model>(BASE_URL + path, JSON.stringify(body), this.options);
   }
 
+  public putNoBody<Model>(path: string): Observable<Model> {
+    return this.httpClient
+      .put<Model>(BASE_URL + path, null, this.options);
+  }
+
   public post<Model>(path: string, body: object = {}): Observable<Model> {
     return this.httpClient
       .post<Model>(BASE_URL + path, JSON.stringify(body), this.options);

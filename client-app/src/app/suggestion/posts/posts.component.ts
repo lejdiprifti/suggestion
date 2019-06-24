@@ -45,13 +45,12 @@ export class PostsComponent implements OnInit {
     this.router.navigate(['post'],  { relativeTo: this.active.parent });
   }
 
-  loadPosts(): void {
-    this.postService.allAsync().toPromise().then(items => {
-      this.posts = items;
-    }).catch(_ => {
+  async loadPosts(): Promise<void> {
+    try {
+    this.posts = await this.postService.all();
+  } catch(_ ) {
       this.logger.error('Error', 'An error accured');
-    });
-
+  };
   }
 
   deletePost(post: Post): void {
