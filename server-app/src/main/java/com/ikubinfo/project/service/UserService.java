@@ -2,6 +2,9 @@ package com.ikubinfo.project.service;
 
 import java.util.List;
 
+import javax.ws.rs.NotAllowedException;
+import javax.ws.rs.NotFoundException;
+
 import com.ikubinfo.project.converter.UserConverter;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.UserModel;
@@ -38,7 +41,12 @@ public class UserService {
 		return userConverter.toModel(userRepository.delete(username));
 	}
 	
-	public UserModel register(UserEntity userEntity) throws Exception {
+	public UserModel register(UserEntity userEntity)  {
+		try {
+			userRepository.isUser(userEntity);
+			throw new NotAllowedException("Username is taken");
+		} catch (NotFoundException e) {
 		return userConverter.toModel(userRepository.register(userEntity));
+	}
 	}
 }

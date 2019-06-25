@@ -122,10 +122,6 @@ public class UserRepository {
 
 
 	public UserEntity register(UserEntity userEntity) {
-		try {
-			isUser(userEntity);
-			throw new NotAllowedException("Username is taken");
-		} catch (NotFoundException e) {
 			entityManager.getTransaction().begin();
 			RoleEntity role=new RoleEntity();
 			role.setId(2);
@@ -134,8 +130,6 @@ public class UserRepository {
 			entityManager.getTransaction().commit();
 
 			return userEntity;
-		}
-
 
 	}
 }

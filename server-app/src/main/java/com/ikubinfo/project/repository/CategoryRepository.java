@@ -112,26 +112,20 @@ public class CategoryRepository  {
 		}
 	}
 
-	public CategoryEntity insert(CategoryEntity category) {
-
-try {
-	getCategoryByName(category.getCategoryName());
-	throw new NotAllowedException("Category exists");
-			
-}catch(NotFoundException e) {
-
+	public CategoryEntity insert(CategoryEntity category,UserEntity user) {
 	entityManager.getTransaction().begin();
+	category.setCategoryState(State.CREATED);
+	category.setAcceptedUser(user);
+	category.setAcceptedDate(new Date());
+	category.setUser(user);
 	entityManager.persist(category);
 	entityManager.getTransaction().commit();
 	return category;
-
-		}
 		
 	}
 
 	
-	public CategoryEntity subscribe(String username,int id) {
-		if (existsSubscription(username,getCategoryById(id))==true) {
+	public CategoryEntity updateSubscription(String username,int id) {
 		UserEntity user = userRepository.getUserByUsername(username);	
 		entityManager.getTransaction().begin();
 		Query query=entityManager.createNativeQuery("Update Subscriptions SET flag=:newFlag , date=:date where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and category_id=(select c.category_id from category c"
@@ -144,18 +138,19 @@ try {
 		query.executeUpdate();
 		entityManager.getTransaction().commit();
 		
-		}else{	
-			UserEntity user = userRepository.getUserByUsername(username);
-			Subscriptions subscriptions=new Subscriptions();
-			subscriptions.setUser(user);
-			subscriptions.setCategory(getCategoryById(id));
+		return getCategoryById(id);
+	}
+	public CategoryEntity addNewSubscription(String username,int id) {
+		UserEntity user = userRepository.getUserByUsername(username);
+		Subscriptions subscription=new Subscriptions();
+		subscription.setUser(user);
+		subscription.setCategory(getCategoryById(id));
 
-			subscriptions.setDate(new Date());
-			subscriptions.setFlag(true);
-			entityManager.getTransaction().begin();
-			entityManager.persist(subscriptions);
-			entityManager.getTransaction().commit();
-		}
+		subscription.setDate(new Date());
+		subscription.setFlag(true);
+		entityManager.getTransaction().begin();
+		entityManager.persist(subscription);
+		entityManager.getTransaction().commit();
 		return getCategoryById(id);
 	}
 	
@@ -210,7 +205,7 @@ try {
 	}
 	
 	public List<PostEntity> getPostsOfCategory(String username,final int id){
-		try { isSubscribed(username, getCategoryById(id));
+		try {
 		Query query = entityManager.createNativeQuery("Select * from post p where p.category_id = ?1 and p.flag=?2");
 		query.setParameter(2, true);
 		query.setParameter(1, id);

@@ -3,8 +3,13 @@ package com.ikubinfo.project.service;
 
 import java.util.List;
 
+import javax.ws.rs.NotAllowedException;
+import javax.ws.rs.NotFoundException;
+
 import com.ikubinfo.project.converter.CategoryConverter;
 import com.ikubinfo.project.entity.CategoryEntity;
+import com.ikubinfo.project.entity.PostEntity;
+import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.repository.CategoryRepository;
 
@@ -34,10 +39,37 @@ public class CategoryService {
 	}
 	
 	
-	public CategoryModel insert(CategoryEntity categoryEntity) {
-		return categoryConverter.toModel(categoryRepository.insert(categoryEntity));
+	public CategoryModel insert(CategoryEntity categoryEntity,UserEntity user) {
+		try {
+			categoryRepository.getCategoryByName(categoryEntity.getCategoryName());
+			throw new NotAllowedException("Category exists");
+		}catch(NotFoundException e) {
+		return categoryConverter.toModel(categoryRepository.insert(categoryEntity,user));
+	}
 	}
 
+	
+	public CategoryModel subscribe(String username,int id) {
+		if (categoryRepository.existsSubscription(username, categoryRepository.getCategoryById(id))==true) {
+			return categoryConverter.toModel(categoryRepository.updateSubscription(username, id));
+		}else {
+			return categoryConverter.toModel(categoryRepository.addNewSubscription(username, id));
+			
+		}
+	}
+	
+	public CategoryModel unsubscribe(String username,int id) {
+		return categoryConverter.toModel(categoryRepository.unsubscribe(username, id));
+	}
+	
+	public List<PostEntity> getPostsOfCategory(String username,final int id){
+		try {
+			 categoryRepository.isSubscribed(username, categoryRepository.getCategoryById(id));
+			 return categoryRepository.getPostsOfCategory(username, id);
+		}catch (NotFoundException e) {
+			throw new NotFoundException();
+		}
+	}
 }
 
 
