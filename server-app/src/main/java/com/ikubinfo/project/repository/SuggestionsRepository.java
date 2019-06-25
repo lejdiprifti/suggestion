@@ -48,11 +48,7 @@ public class SuggestionsRepository {
 	
 	
 	public CategoryEntity insert(CategoryEntity suggestion,UserEntity user) {
-		try {
-			exists(suggestion);
-			throw new NotAllowedException("Category exists.");
-		}catch(NotFoundException e) {
-
+	
 		entityManager.getTransaction().begin();
 		suggestion.setAcceptedDate(new Date());
 		suggestion.setFlag(true);
@@ -62,7 +58,6 @@ public class SuggestionsRepository {
 		entityManager.persist(suggestion);
 		entityManager.getTransaction().commit();
 		return suggestion;
-		}
 	}
 	
 	
@@ -155,13 +150,14 @@ public class SuggestionsRepository {
 	}
 	
 
-	public List<CategoryModel> getAcceptedCategories(String username) {
-			Query query= entityManager.createNativeQuery("Select * from category c where c.user_id=(Select p.user_id from perdorues p where "
-					+ "p.user_id=?1) and c.state=?2 and c.flag=:flag");
-			query.setParameter(1, userRepository.getUserByUsername(username).getId());
+
+	public List<CategoryEntity> getAcceptedCategories(String username) {
+			TypedQuery<CategoryEntity> query= entityManager.createQuery("Select c from CategoryEntity c where c.user=?1 and c.state=?2 and c.flag=?3",CategoryEntity.class);
+			query.setParameter(1, userRepository.getUserByUsername(username));
 			query.setParameter(2, State.CREATED);
-			query.setParameter("flag", true);
-			return query.getResultList();
+			query.setParameter(3, true);  
+		    List<CategoryEntity> list=query.getResultList();
+		 return list;
 	}
 	
 	public CategoryEntity exists(CategoryEntity suggestion) {

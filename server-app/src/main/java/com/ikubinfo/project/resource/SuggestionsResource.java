@@ -18,6 +18,7 @@ import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.repository.SuggestionsRepository;
 import com.ikubinfo.project.repository.UserRepository;
 import com.ikubinfo.project.service.CategoryService;
+import com.ikubinfo.project.service.SuggestionsService;
 import com.ikubinfo.project.util.Paths;
 
 
@@ -26,10 +27,12 @@ public class SuggestionsResource extends BaseResource {
 	private SuggestionsRepository suggestionsRepository;
 	private CategoryConverter categoryConverter;
 	private UserRepository userRepository;
+	private SuggestionsService suggestionsService;
 			public SuggestionsResource() {
 				this.suggestionsRepository=new SuggestionsRepository();
 				this.categoryConverter = new CategoryConverter();
 				this.userRepository= new UserRepository();
+				this.suggestionsService=new SuggestionsService();
 			}
 
 	@GET
@@ -48,7 +51,7 @@ public class SuggestionsResource extends BaseResource {
 	@POST
 	public Response suggest(CategoryEntity suggestion) throws URISyntaxException {
 
-		suggestionsRepository.insert(suggestion,userRepository.getUserByUsername(getUsernameFromToken()));
+		suggestionsService.suggest(suggestion,userRepository.getUserByUsername(getUsernameFromToken()));
 		return Response.created(new URI("/"+suggestion.getCategoryId())).build();
 	}
 
