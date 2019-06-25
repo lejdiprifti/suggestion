@@ -9,11 +9,13 @@ import { AppRoutingModule } from '@ikubinfo/app-routing.module';
 import { AppComponent } from '@ikubinfo/app.component';
 import { AuthentificationModule } from '@ikubinfo/authentification/authentification.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+
 
   ],
   imports: [
@@ -23,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     AuthentificationModule,
     CommonsModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [],

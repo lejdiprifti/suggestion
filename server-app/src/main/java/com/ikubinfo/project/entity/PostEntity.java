@@ -102,6 +102,7 @@ public class PostEntity {
 		return "PostEntity [postId=" + postId + ", postName=" + postName + ", postDescription=" + postDescription
 				+ ", addedDate=" + addedDate + ", user=" + user + ", category=" + category + ", flag=" + flag + "]";
 	}
+
 	
 	
 }

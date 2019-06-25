@@ -9,8 +9,7 @@ import javax.persistence.TypedQuery;
 import javax.ws.rs.NotAllowedException;
 
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
+
 
 import com.ikubinfo.project.entity.RoleEntity;
 
@@ -25,7 +24,7 @@ public class UserRepository {
 	}
 	
 	public List<UserEntity> getUsers(){
-		return entityManager.createQuery("Select u From UserEntity u",UserEntity.class).getResultList();
+		return entityManager.createQuery("Select u From UserEntity u where u.flag=?1",UserEntity.class).setParameter(1, true).getResultList();
 	}
 	
 	public UserEntity getUser(String username,String password) {
@@ -113,7 +112,7 @@ public class UserRepository {
 		TypedQuery<UserEntity> query=entityManager.createQuery("From UserEntity where username=?1", UserEntity.class);
 		query.setParameter(1, userEntity.getUsername());
 		UserEntity user=query.getSingleResult();
-		return true;
+		return true; 
 		}catch(NoResultException e) {
 			throw new NotFoundException();
 		}

@@ -37,9 +37,7 @@ public class SuggestionsResource extends BaseResource {
 
 	@GET
 	public Response getSuggestions() {
-		RoleEntity role=getRoleFromToken();
-		System.out.println(role);
-		return Response.ok(categoryConverter.toModel(suggestionsRepository.getSuggestions())).build();
+		return Response.ok(suggestionsRepository.getSuggestions()).build();
 	}
 
 	@GET
@@ -76,3 +74,4 @@ public class SuggestionsResource extends BaseResource {
 	}
 
 }
+

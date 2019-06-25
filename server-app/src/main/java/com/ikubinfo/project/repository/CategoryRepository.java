@@ -3,15 +3,12 @@ package com.ikubinfo.project.repository;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
-
-import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.entity.CategoryEntity;
 import com.ikubinfo.project.entity.PostEntity;
 import com.ikubinfo.project.entity.State;
@@ -30,14 +27,14 @@ public class CategoryRepository  {
 	}
 
 	public List<CategoryEntity> getCategories() {
-		return entityManager.createQuery("Select c From CategoryEntity c where c.state=?1 and c.flag=:flag", CategoryEntity.class).setParameter(1, State.CREATED).setParameter("flag", true).getResultList();
+		return entityManager.createQuery("Select c From CategoryEntity c where c.categoryState=?1 and c.flag=:flag", CategoryEntity.class).setParameter(1, State.CREATED).setParameter("flag", true).getResultList();
 	}
 
 	public CategoryEntity getCategoryByName(String categoryName) {
 		CategoryEntity category = null;
 		try {
 			TypedQuery<CategoryEntity> query = entityManager
-					.createQuery("Select c From CategoryEntity c where c.categoryName=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
+					.createQuery("Select c From CategoryEntity c where c.categoryName=?1 and c.categoryState=?2 and c.flag=:flag", CategoryEntity.class);
 			query.setParameter(1, categoryName);
 			query.setParameter(2, State.CREATED);
 			query.setParameter("flag", true);
@@ -52,7 +49,7 @@ public class CategoryRepository  {
 	public CategoryEntity getCategoryById(int categoryId) {
 		try {
 		TypedQuery<CategoryEntity> query = entityManager
-				.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
+				.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.categoryState=?2 and c.flag=:flag", CategoryEntity.class);
 		query.setParameter(1, categoryId);
 		query.setParameter(2, State.CREATED);
 		query.setParameter("flag", true);
@@ -67,20 +64,22 @@ public class CategoryRepository  {
 	
 	public CategoryEntity update(CategoryEntity category, int categoryId) {
 		try {
-		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
+		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.categoryState=?2 and c.flag=:flag", CategoryEntity.class);
 		query.setParameter(1, categoryId);
 		query.setParameter(2, State.CREATED);
 		query.setParameter("flag", true);
 		CategoryEntity foundCategory=query.getSingleResult();
 		if (category.getCategoryName()!=null) {
+			try {
+				isCategory(category,categoryId);	
+			}catch(NotFoundException e) {
 			foundCategory.setCategoryName(category.getCategoryName());
+			}
 		}
 		if (category.getCategoryDescription() != null) {
 			foundCategory.setCategoryDescription(category.getCategoryDescription());
 		}
-		if (category.getAcceptedDate() != null) {
-			foundCategory.setAcceptedDate(category.getAcceptedDate());
-		}
+		
 		entityManager.getTransaction().begin();
 		entityManager.merge(foundCategory);
 		entityManager.getTransaction().commit();
@@ -91,12 +90,26 @@ public class CategoryRepository  {
 		}
 	}
 
+	public boolean isCategory(CategoryEntity category,int id) {
+		try {
+			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryName=?1 and c.categoryId != ?2 and c.flag=?3",CategoryEntity.class);
+			query.setParameter(1, category.getCategoryName());
+			query.setParameter(2, id);
+			query.setParameter(3, true);
+			query.getSingleResult();
+			throw new NotAllowedException("Category exists");
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
+	}
 	
+	
+
 
 
 	public void delete(int categoryId) {
 		try {
-		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
+		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.categoryState=?2 and c.flag=:flag", CategoryEntity.class);
 		query.setParameter(2, State.CREATED);
 		query.setParameter(1, categoryId);
 		query.setParameter("flag", true);

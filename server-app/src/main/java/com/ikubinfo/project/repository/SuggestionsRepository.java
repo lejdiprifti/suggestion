@@ -3,7 +3,6 @@ package com.ikubinfo.project.repository;
 import java.util.Date;
 import java.util.List;
 
-import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -11,9 +10,8 @@ import javax.persistence.TypedQuery;
 import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
 
-import com.ikubinfo.project.base.BaseResource;
+
 import com.ikubinfo.project.entity.CategoryEntity;
-import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.entity.State;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.CategoryModel;
@@ -21,22 +19,21 @@ import com.ikubinfo.project.util.PersistenceSingleton;
 
 public class SuggestionsRepository {
 	private EntityManager entityManager;
-	private CategoryRepository categoryRepository;
 	private UserRepository userRepository;
 	
 	public SuggestionsRepository() {
 		this.entityManager = PersistenceSingleton.INSTANCE.getEntityManagerFactory().createEntityManager();
-		this.categoryRepository = new CategoryRepository();
+		
 		this.userRepository= new UserRepository();
 	}
 	
 	public List<CategoryEntity> getSuggestions(){
-		return entityManager.createQuery("Select c from CategoryEntity c where c.state=?1",CategoryEntity.class).setParameter(1, State.PROPOSED).getResultList();
+		return entityManager.createQuery("Select c from CategoryEntity c where c.categoryState=?1",CategoryEntity.class).setParameter(1, State.PROPOSED).getResultList();
 	}
 	
 	public CategoryEntity getSuggestionById(final int id) {
 		try {
-		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=?3",CategoryEntity.class);
+		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.categoryState=?2 and c.flag=?3",CategoryEntity.class);
 		query.setParameter(1, id);
 		query.setParameter(2, State.PROPOSED);
 		query.setParameter(3, true);
@@ -63,7 +60,7 @@ public class SuggestionsRepository {
 	
 	public CategoryEntity update(CategoryEntity category, int categoryId,String username) {
 		try {
-		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
+		TypedQuery<CategoryEntity> query = entityManager.createQuery("Select c From CategoryEntity c where c.categoryId=?1 and c.categoryState=?2 and c.flag=:flag", CategoryEntity.class);
 		query.setParameter(1, categoryId);
 		query.setParameter(2, State.PROPOSED);
 		query.setParameter("flag", true);
@@ -80,7 +77,7 @@ public class SuggestionsRepository {
 			foundCategory.setCategoryDescription(category.getCategoryDescription());
 		}
 		
-		foundCategory.setUser(userRepository.getUserByUsername(username));
+		foundCategory.setProposedUser(userRepository.getUserByUsername(username));
 		entityManager.getTransaction().begin();
 		entityManager.merge(foundCategory);
 		entityManager.getTransaction().commit();
@@ -93,7 +90,7 @@ public class SuggestionsRepository {
 	
 	public void delete(final int id) {
 		try {
-		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=:flag", CategoryEntity.class);
+		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.categoryState=?2 and c.flag=:flag", CategoryEntity.class);
 		query.setParameter(1, id);
 		query.setParameter(2, State.PROPOSED);
 		query.setParameter("flag", true);
@@ -110,7 +107,7 @@ public class SuggestionsRepository {
 	public CategoryEntity accept(String username,final int id ) {
 		try {
 			
-			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=?3", CategoryEntity.class);
+			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.categoryState=?2 and c.flag=?3", CategoryEntity.class);
 			query.setParameter(1, id);
 			query.setParameter(2, State.PROPOSED);
 			query.setParameter(3, true);
@@ -131,7 +128,7 @@ public class SuggestionsRepository {
 	public CategoryEntity decline(String username,final int id) {
 		try {
 
-			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.state=?2 and c.flag=?3", CategoryEntity.class);
+			TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c from CategoryEntity c where c.categoryId=?1 and c.categoryState=?2 and c.flag=?3", CategoryEntity.class);
 			query.setParameter(1, id);
 			query.setParameter(2, State.PROPOSED);
 			query.setParameter(3, true);

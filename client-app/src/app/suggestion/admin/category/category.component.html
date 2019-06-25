@@ -1,0 +1,14 @@
+<ikubinfo-panel header="Category">
+  <div panel-content>
+    <form role="form" [formGroup]="categoryForm">
+      <ikubinfo-input label="Title">
+        <input formControlName="title" type="text" class="form-control"/>
+      </ikubinfo-input>
+      <ikubinfo-input label="Description">
+        <textarea formControlName="description" type="text" class="form-control"></textarea>
+      </ikubinfo-input>
+    </form>
+    <button type="submit" (click)="submit()" [disabled]="categoryForm.invalid" class="btn btn-primary">Submit</button>
+    <button (click)="reset()" class="btn btn-secondary">Reset</button>
+  </div>
+</ikubinfo-panel>

@@ -4,6 +4,12 @@
       <ikubinfo-input label="Title">
         <input formControlName="title" type="text" class="form-control" />
       </ikubinfo-input>
+      <ikubinfo-input label="Category">
+        <select class="custom-select" (change)="changeCategory($event)" formControlName="category">
+          <option value="" disabled>Choose the category</option>
+          <option *ngFor="let category of categories" [ngValue]="category">{{category.categoryName}}</option>
+        </select>
+      </ikubinfo-input>
       <ikubinfo-input label="Description">
         <textarea formControlName="description" type="text" class="form-control"> </textarea>
       </ikubinfo-input>

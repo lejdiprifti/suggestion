@@ -1,12 +1,7 @@
 package com.ikubinfo.project.entity;
 
 import java.util.Date;
-import java.util.Set;
-
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "perdorues")
@@ -30,7 +25,6 @@ public class UserEntity {
 	private String address;
 	@Column(name = "flag")
 	private boolean flag;
-
 
 	public UserEntity() {
 
@@ -96,14 +90,9 @@ public class UserEntity {
 		return flag;
 	}
 
-	public boolean isDelete() {
-		return flag;
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
-
-	public void setFlag(boolean delete) {
-		this.flag = delete;
-	}
-
 
 	@Override
 	public String toString() {

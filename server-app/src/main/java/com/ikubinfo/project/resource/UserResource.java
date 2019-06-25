@@ -1,6 +1,6 @@
 package com.ikubinfo.project.resource;
 
-import javax.persistence.NoResultException;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;

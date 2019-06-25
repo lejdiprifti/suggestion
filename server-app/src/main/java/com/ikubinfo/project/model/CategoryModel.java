@@ -11,7 +11,7 @@ public class CategoryModel {
 	private int categoryId;
 	private String categoryName;
 	private String categoryDescription;
-	private UserEntity user;
+	private UserEntity proposedUser;
 	private State categoryState;
 	private UserEntity acceptedUser;
 	private Date acceptedDate;
@@ -40,11 +40,11 @@ public class CategoryModel {
 	public void setCategoryDescription(String categoryDescription) {
 		this.categoryDescription = categoryDescription;
 	}
-	public UserEntity getUser() {
-		return user;
+	public UserEntity getProposedUser() {
+		return proposedUser;
 	}
-	public void setUser(UserEntity user) {
-		this.user = user;
+	public void setProposedUser(UserEntity proposedUser) {
+		this.proposedUser = proposedUser;
 	}
 	public State getCategoryState() {
 		return categoryState;

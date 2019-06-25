@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '@ikubinfo/core/services/auth.service';
-import { throwError } from 'rxjs';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 
 
@@ -32,12 +31,12 @@ export class LoginComponent implements OnInit {
   login(): void {
  this.authService.login(this.loginForm.value).subscribe(
  (res: any)=>{
-   console.log(res);
   this.authService.setData(res);
   this.router.navigate(['/suggestion']);
+  this.logger.success('Success', 'Logined successfully');
  },
  err => {
-  this.logger.error('Error', 'An error accured');
+  this.logger.error('Error', 'Invalid Username');
 });
 }
 
