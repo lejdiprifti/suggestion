@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.entity.CategoryEntity;
+import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.model.UserModel;
 import com.ikubinfo.project.repository.CategoryRepository;
 import com.ikubinfo.project.repository.UserRepository;
@@ -54,12 +55,12 @@ public class CategoryResource  extends BaseResource {
 		
 		@PUT
 		@Path("/{categoryId}")
-		public Response update(CategoryEntity category , @PathParam("categoryId") int categoryId) {
+		public Response update(CategoryModel category , @PathParam("categoryId") int categoryId) {
 			return Response.ok(categoryService.update(category,categoryId)).build();
 		}
 		
 		@POST
-		public Response insert(CategoryEntity category) {
+		public Response insert(CategoryModel category) {
 				return Response.ok(categoryService.insert(category,userRepository.getUserByUsername(getUsernameFromToken()))).build();
 		}
 		
@@ -98,6 +99,6 @@ public class CategoryResource  extends BaseResource {
 		@GET
 		@Path("/{id}/check")
 		public Response isSubscribed(@PathParam("id") final int id) {
-			return Response.ok(categoryRepository.isSubscribed(getUsernameFromToken(), categoryRepository.getCategoryById(id))).build();
+			return Response.ok(categoryService.isSubscribed(getUsernameFromToken(), categoryRepository.getCategoryById(id))).build();
 		}
 }

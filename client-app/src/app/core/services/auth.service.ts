@@ -44,9 +44,7 @@ export class AuthService {
             data  ? "Setting current user info. : Clearing current user info." : ""
         );
         if (data) {
-            this.user = data.user;
-            // sessionStorage.setItem("userData", JSON.stringify({"id":9,"username":"r@r.r","password":"r","role":{"id":2,"roleName":"USER","roleDescription":"Shikon_postimet_dhe_propozon_kategori"},"birthdate":-62135769600000,"email":"r@r.r","address":"p","flag":true,"delete":true}))  
-     
+            this.user = data.user;     
             sessionStorage.setItem("userData", JSON.stringify(data.user));
             sessionStorage.setItem("token", data.jwt);
             this.onUserChanged.next(data.user);

@@ -13,14 +13,11 @@ import javax.ws.rs.core.Response;
 
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.converter.CategoryConverter;
-import com.ikubinfo.project.entity.CategoryEntity;
-import com.ikubinfo.project.entity.RoleEntity;
+import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.repository.SuggestionsRepository;
 import com.ikubinfo.project.repository.UserRepository;
-import com.ikubinfo.project.service.CategoryService;
 import com.ikubinfo.project.service.SuggestionsService;
 import com.ikubinfo.project.util.Paths;
-
 
 @Path(Paths.SUGGESTIONS)
 public class SuggestionsResource extends BaseResource {
@@ -28,12 +25,13 @@ public class SuggestionsResource extends BaseResource {
 	private CategoryConverter categoryConverter;
 	private UserRepository userRepository;
 	private SuggestionsService suggestionsService;
-			public SuggestionsResource() {
-				this.suggestionsRepository=new SuggestionsRepository();
-				this.categoryConverter = new CategoryConverter();
-				this.userRepository= new UserRepository();
-				this.suggestionsService=new SuggestionsService();
-			}
+
+	public SuggestionsResource() {
+		this.suggestionsRepository = new SuggestionsRepository();
+		this.categoryConverter = new CategoryConverter();
+		this.userRepository = new UserRepository();
+		this.suggestionsService = new SuggestionsService();
+	}
 
 	@GET
 	public Response getSuggestions() {
@@ -47,31 +45,29 @@ public class SuggestionsResource extends BaseResource {
 	}
 
 	@POST
-	public Response suggest(CategoryEntity suggestion) throws URISyntaxException {
+	public Response suggest(CategoryModel suggestion) throws URISyntaxException {
 
-		suggestionsService.suggest(suggestion,userRepository.getUserByUsername(getUsernameFromToken()));
-		return Response.created(new URI("/"+suggestion.getCategoryId())).build();
+		suggestionsService.suggest(suggestion, userRepository.getUserByUsername(getUsernameFromToken()));
+		return Response.created(new URI("/" + suggestion.getCategoryId())).build();
 	}
-
 
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id") final int id) {
-		suggestionsRepository.delete(id);
+		suggestionsService.delete(id);
 		return Response.noContent().build();
 	}
 
 	@PUT
 	@Path("/accept/{id}")
 	public Response accept(@PathParam("id") final int id) {
-		return Response.ok(categoryConverter.toModel(suggestionsRepository.accept(getUsernameFromToken(),id))).build();
+		return Response.ok(suggestionsService.accept(getUsernameFromToken(), id)).build();
 	}
 
 	@PUT
 	@Path("/decline/{id}")
 	public Response decline(@PathParam("id") final int id) {
-		return Response.ok(categoryConverter.toModel(suggestionsRepository.decline(getUsernameFromToken(),id))).build();
+		return Response.ok(suggestionsService.decline(getUsernameFromToken(), id)).build();
 	}
 
 }
-

@@ -122,9 +122,6 @@ public class CategoryEntity {
 				+ acceptedUser + ", acceptedDate=" + acceptedDate + ", flag=" + flag + "]";
 	}
 
-	public void setUser(UserEntity user) {
-	}
-
 	
 
 }

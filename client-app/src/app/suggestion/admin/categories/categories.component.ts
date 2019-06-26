@@ -3,8 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { CategoriesService } from '../services/categories.service';
 import { CategoryComponent } from '../category/category.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+import { Category } from '@ikubinfo/core/models/category';
+import { MenuItem } from 'primeng/components/common/menuitem';
 
 
 @Component({
@@ -15,31 +17,47 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 
 export class CategoriesComponent implements OnInit {
   categories: Object;
+  items: MenuItem[];
+  cols: any[];
+  selectedCategory: Category;
   constructor(private confirmationService: ConfirmationService, private categoriesService: CategoriesService,private router: Router,
-     private logger: LoggerService, private categoryComponent: CategoryComponent) { }
+     private logger: LoggerService, private categoryComponent: CategoryComponent,private active: ActivatedRoute) { }
 
   ngOnInit() {
     this.categories=[];
     this.getAllCategories();
+
+    this.items = [
+      { label: 'Edit', icon: 'pi pi-pencil', command: (event) => this.edit(this.selectedCategory) },
+      { label: 'Delete', icon: 'pi pi-times', command: (event) => this.delete(this.selectedCategory) }
+    ];
+    
+    this.cols = [
+      { field: 'categoryName', header: 'Name' },
+      { field: 'categoryDescription', header: 'Description' }
+    ];
   }
 
   getAllCategories(){
     return this.categoriesService.getCategories().subscribe(res=>{
       this.categories=res;
-    })
+    },
+      err => {
+        this.logger.error('Error', 'An error accured');
+    });
   }
-  edit(id:number){
-    this.categoriesService.setId(id);
-    this.router.navigate(['suggestion/category']);
+  edit(category: Category){
+    this.categoriesService.setId(category.categoryId);
+    this.router.navigate(['suggestion/category']), { relativeTo: this.active.parent };
   }
 
-  delete(id: number){
+  delete(category: Category){
     this.confirmationService.confirm({
       message: 'Do you want to delete this category?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        return this.categoriesService.delete(id).subscribe(res=>{
+        return this.categoriesService.delete(category.categoryId).subscribe(res=>{
           this.logger.info("Deleted","Category deleted successfully.");
           this.getAllCategories();
         },
@@ -51,6 +69,6 @@ export class CategoriesComponent implements OnInit {
   }
 
   add(){
-    this.router.navigate(['suggestion/category/add']);
+    this.router.navigate(['suggestion/category/add']) ,{ relativeTo: this.active.parent };
   }
 }

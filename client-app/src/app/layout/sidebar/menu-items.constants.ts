@@ -18,12 +18,6 @@ export const menuItems: Array<MenuItem> = [{
     label: 'Manage categories',
     allowedRoles: [RoleEnum.ADMIN]
 },{
-    url: '/suggestion/settings',
-    icon: 'fa fa-fw fa-wrench',
-    label: 'Settings',
-    allowedRoles: [RoleEnum.ADMIN, RoleEnum.USER]
-},
-{
     url: '/suggestion/viewposts',
     icon: 'fa-table',
     label: 'Posts',

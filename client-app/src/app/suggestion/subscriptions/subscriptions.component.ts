@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '@ikubinfo/core/services/category.service';
 import { Router } from '@angular/router';
+import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 
 
 
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 export class SubscriptionsComponent implements OnInit {
   subscriptions: Object;
  
-  constructor(private categoryService: CategoryService, private router: Router ) { 
+  constructor(private categoryService: CategoryService, private router: Router,private logger: LoggerService ) { 
     this.subscriptions=[];
   }
   
@@ -23,12 +24,12 @@ export class SubscriptionsComponent implements OnInit {
   loadSubscribedCategories(){
     this.categoryService.getSubscribedCategories().subscribe(data=>{
       this.subscriptions=data;
-      console.log(this.subscriptions);
   });
   }
   unsubscribe(id:number){
     this.categoryService.unsubscribe(id).subscribe(res=>{
-      this.router.navigate(['suggestion/subscriptions']);
+      this.loadSubscribedCategories();
+      this.logger.info("Info", "Unsubscribed successfully!");
     }); 
   }
 

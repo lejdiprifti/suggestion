@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.entity.UserEntity;
+import com.ikubinfo.project.model.UserModel;
 import com.ikubinfo.project.service.UserService;
 import com.ikubinfo.project.util.Paths;
 
@@ -33,7 +34,7 @@ public class UserResource extends BaseResource {
 	}
 
 	@PUT
-	public Response update(UserEntity user) {
+	public Response update(UserModel user) {
 		return Response.ok(userService.update(user, getUsernameFromToken())).build();
 	}
 

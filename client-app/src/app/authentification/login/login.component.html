@@ -17,7 +17,7 @@
             <div class="error-text" *ngIf="loginForm.get('password').dirty && loginForm.get('password').hasError('required')">*Password is required.</div>
           </div>
         </div>
-        <button [disabled]="loginForm.invalid" class="btn rounded-btn" (click)="login()">Log in</button>
+        <button [disabled]="loginForm.invalid" class="btn rounded-btn" >Log in</button>
         <button class="btn rounded-btn" [routerLink]="['/register']">Register</button>
       </form>
     </div>

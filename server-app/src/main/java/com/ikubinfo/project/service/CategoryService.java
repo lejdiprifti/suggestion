@@ -3,6 +3,8 @@ package com.ikubinfo.project.service;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
 
@@ -25,33 +27,56 @@ public class CategoryService {
 	}
 
 	public CategoryModel getCategoryByName(String categoryName) {
+		try {
 		return categoryConverter.toModel(categoryRepository.getCategoryByName(categoryName));
-	}
+		} catch (NoResultException e) {
+			throw new NotFoundException();
+		}
+		}
 
 	public CategoryModel getCategoryById(int categoryId) {
+		try {
 		return categoryConverter.toModel(categoryRepository.getCategoryById(categoryId));
-	}
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
+		}
 
 	public List<CategoryModel> getCategories() {
+		
        return categoryConverter.toModel(categoryRepository.getCategories());
 	}
 	
-	public CategoryModel update(CategoryEntity category ,int categoryId) {
-		return categoryConverter.toModel(categoryRepository.update(category,categoryId));
+	public CategoryModel update(CategoryModel category ,int categoryId) {
+		CategoryEntity foundCategory=categoryRepository.getCategoryById(categoryId);
+		if (category.getCategoryName()!=null) {
+			try {
+				categoryRepository.isCategory(categoryConverter.toEntity(category),categoryId);	
+			}catch(NoResultException e) {
+			foundCategory.setCategoryName(category.getCategoryName());
+			}
+		}
+		if (category.getCategoryDescription() != null) {
+			foundCategory.setCategoryDescription(category.getCategoryDescription());
+		}
+		
+		return categoryConverter.toModel(categoryRepository.update(foundCategory));
 	}
 	
 	
-	public CategoryModel insert(CategoryEntity categoryEntity,UserEntity user) {
+	public CategoryModel insert(CategoryModel category,UserEntity user) {
 		try {
-			categoryRepository.getCategoryByName(categoryEntity.getCategoryName());
-			throw new NotAllowedException("Category exists");
+			categoryRepository.getCategoryByName(category.getCategoryName());
+			throw new BadRequestException("Category exists");
 		}catch(NotFoundException e) {
-		return categoryConverter.toModel(categoryRepository.insert(categoryEntity,user));
+		return categoryConverter.toModel(categoryRepository.insert(categoryConverter.toEntity(category),user));
 	}
 }
 	public void delete(final int id) {
+		CategoryEntity category=categoryRepository.getCategoryById(id);
+		category.setFlag(false);
 		postRepository.deletePostByCategory(id);
-		categoryRepository.delete(id);
+		categoryRepository.update(category);
 	}
 	
 	public CategoryModel subscribe(String username,int id) {
@@ -69,9 +94,17 @@ public class CategoryService {
 	
 	public List<PostEntity> getPostsOfCategory(String username,final int id){
 		try {
-			 categoryRepository.isSubscribed(username, categoryRepository.getCategoryById(id));
-			 return categoryRepository.getPostsOfCategory(username, id);
+			 isSubscribed(username, categoryRepository.getCategoryById(id));
+			 return categoryRepository.getPostsOfCategory(id);
 		}catch (NotFoundException e) {
+			throw new NotAllowedException("You are not subscribed.");
+		}
+	}
+	
+	public boolean isSubscribed(String username,CategoryEntity category) {
+		try {
+			return categoryRepository.isSubscribed(username, category);
+		}catch(NoResultException e) {
 			throw new NotFoundException();
 		}
 	}

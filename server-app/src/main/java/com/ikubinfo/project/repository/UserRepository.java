@@ -14,6 +14,7 @@ import javax.ws.rs.NotFoundException;
 import com.ikubinfo.project.entity.RoleEntity;
 
 import com.ikubinfo.project.entity.UserEntity;
+import com.ikubinfo.project.model.UserModel;
 import com.ikubinfo.project.util.PersistenceSingleton;
 
 public class UserRepository {
@@ -28,106 +29,47 @@ public class UserRepository {
 	}
 	
 	public UserEntity getUser(String username,String password) {
-		try {
 		TypedQuery<UserEntity> query=entityManager.createQuery("Select u From UserEntity u where u.username=?1 AND u.password=?2 AND u.flag=:flag",UserEntity.class);
 		query.setParameter(1,username);
 		query.setParameter(2, password);
 		query.setParameter("flag", true);
 		UserEntity user=query.getSingleResult();
-		
 		return user;
-		}catch(NoResultException e) {
-			throw new NotFoundException();
-		}
-		
-	
 	}
 	
 	public UserEntity getUserByUsername(String username) {
-		try {
 		TypedQuery<UserEntity> query=entityManager.createQuery("Select u From UserEntity u where u.username=?1 AND u.flag=:flag",UserEntity.class);
 		query.setParameter(1,username);
 		query.setParameter("flag", true);
 		UserEntity user=query.getSingleResult();
 		return user;
-		} catch (NoResultException e) {
-			throw new NotFoundException();
-		}
-	}
-	
-	public UserEntity update(UserEntity user, String username) {
-		TypedQuery<UserEntity> query = entityManager.createQuery("Select u From UserEntity u where u.username=?1 AND u.flag=:flag", UserEntity.class);
-		query.setParameter(1, username);
-		query.setParameter("flag", true);
-		UserEntity foundUser=query.getSingleResult();
-		if (user.getPassword()!=null) {
-			foundUser.setPassword(user.getPassword());
-		}
-		if (user.getEmail()!=null) {
-			foundUser.setEmail(user.getEmail());
-		}
-		if (user.getBirthdate()!=null) {
-			foundUser.setBirthdate(user.getBirthdate());
-		}
-		if (user.getAddress()!=null) {
-			foundUser.setAddress(user.getAddress());
-		}
-		if (user.getUsername() != null) {
-			try {
-				isUser(user);
-				throw new NotAllowedException("Username taken");
-			}catch(NotFoundException e) {
-			foundUser.setUsername(user.getUsername());
-			}
-		}
-		entityManager.getTransaction().begin();
-		entityManager.merge(foundUser);
-		entityManager.getTransaction().commit();
-		return foundUser;
 		
 	}
 	
-	public UserEntity delete(String username) {
-		try {
-		TypedQuery<UserEntity> query=entityManager.createQuery("Select u From UserEntity u where u.username LIKE ?1 AND u.flag=:flag", UserEntity.class);
-		query.setParameter(1, username);
-		query.setParameter("flag", true);
-		UserEntity foundUser=query.getSingleResult();
+	public UserEntity update(UserEntity user) {
 		entityManager.getTransaction().begin();
-		foundUser.setFlag(false);
-		entityManager.merge(foundUser);
+		entityManager.merge(user);
 		entityManager.getTransaction().commit();
-
-		return foundUser;
-		} catch (NoResultException e) {
-			throw new NotFoundException();
-		}
-		catch(IllegalStateException e) {
-			throw new NotAllowedException("Not Allowed");
-		}
+		return user;
+		
 	}
 	
-	public boolean isUser(UserEntity userEntity) {
-		try {
-		TypedQuery<UserEntity> query=entityManager.createQuery("From UserEntity where username=?1", UserEntity.class);
-		query.setParameter(1, userEntity.getUsername());
+	
+	
+	public boolean isUser(String username) {
+		TypedQuery<UserEntity> query=entityManager.createQuery("From UserEntity where username=?1 and flag=?2", UserEntity.class);
+		query.setParameter(1, username);
+		query.setParameter(2, true);
 		UserEntity user=query.getSingleResult();
 		return true; 
-		}catch(NoResultException e) {
-			throw new NotFoundException();
-		}
 	}
 	
 
 
 	public UserEntity register(UserEntity userEntity) {
 			entityManager.getTransaction().begin();
-			RoleEntity role=new RoleEntity();
-			role.setId(2);
-			userEntity.setRole(role);
 		    entityManager.persist(userEntity);
 			entityManager.getTransaction().commit();
-
 			return userEntity;
 
 	}

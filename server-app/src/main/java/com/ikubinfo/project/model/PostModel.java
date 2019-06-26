@@ -13,7 +13,7 @@ public class PostModel {
 	private Date addedDate;
 	private UserEntity user;
 	private CategoryEntity category;
-	
+	private boolean flag;
 	public PostModel() {
 		super();
 	}
@@ -53,6 +53,14 @@ public class PostModel {
 	}
 	public void setCategory(CategoryEntity category) {
 		this.category = category;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 	
 	

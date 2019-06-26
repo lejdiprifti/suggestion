@@ -1,22 +1,18 @@
 package com.ikubinfo.project.resource;
 
-import javax.persistence.NoResultException;
-import javax.ws.rs.Consumes;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.entity.PostEntity;
+import com.ikubinfo.project.model.PostModel;
 import com.ikubinfo.project.repository.PostRepository;
 import com.ikubinfo.project.repository.UserRepository;
-import com.ikubinfo.project.entity.PostEntity;
-import com.ikubinfo.project.service.PostService;
 import com.ikubinfo.project.service.PostService;
 import com.ikubinfo.project.util.Paths;
 
@@ -38,12 +34,6 @@ public class PostResource extends BaseResource{
 		return Response.ok(postService.getPosts()).build();
 	}
 	
-	@GET
-	@Path("/{postName}")
-	public Response getPostName(@PathParam("postName") String postName) {
-		return Response.ok(postService.getPostByName(postName)).build();
-	
-	}
 	
 	@GET
 	@Path("/id/{postId}")
@@ -54,7 +44,7 @@ public class PostResource extends BaseResource{
 	
 	@PUT
 	@Path("/{postId}")
-	public Response update(PostEntity post , @PathParam("postId") int postId) {
+	public Response update(PostModel post , @PathParam("postId") int postId) {
 		return Response.ok(postService.update(post,postId)).build();
 	}
 	
@@ -75,18 +65,18 @@ public class PostResource extends BaseResource{
 	@PUT
 	@Path("/like/{id}")
 	public Response like(@PathParam("id") final int id) {
-		return Response.ok(postRepository.like(getUsernameFromToken(),postRepository.getPostById(id))).build();
+		return Response.ok(postService.like(getUsernameFromToken(),postRepository.getPostById(id))).build();
 	}
 	
 	@PUT
 	@Path("/unlike/{id}")
 	public Response unlike(@PathParam("id") final int id) {
-		return Response.ok(postRepository.unlike(getUsernameFromToken(),postRepository.getPostById(id))).build();
+		return Response.ok(postService.unlike(getUsernameFromToken(),postRepository.getPostById(id))).build();
 	}
 	
 	@GET
 	@Path("/{id}/liked")
 	public Response hasLiked(@PathParam("id") final int id) {
-		return Response.ok(postRepository.hasLiked(getUsernameFromToken(), postRepository.getPostById(id))).build();
+		return Response.ok(postService.hasLiked(getUsernameFromToken(), postRepository.getPostById(id))).build();
 	}
 }

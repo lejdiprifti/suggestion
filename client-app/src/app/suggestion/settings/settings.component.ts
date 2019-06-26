@@ -87,8 +87,7 @@ update(): void {
       icon: 'pi pi-info-circle',
       accept: () => {
         this.settingsService.update(this.updateUser).subscribe(res=>{
-          this.logger.success("Success", "Data saved successfully!")
-          this.router.navigate(["/suggestion"]);
+          this.logger.success("Success", "Data saved successfully!");
       },
       err=>{
         this.logger.error("Error","Username is taken.");

@@ -38,8 +38,8 @@ const suggestionRoutes: Routes = [
             { path: 'propose', component: CategorySuggestionsComponent, canActivate: [UserGuard] },
             { path: 'post/:id', component: PostComponent, canActivate: [AdminGuard] },
             {path: 'categories/:id/posts', component: PostsOfCategoryComponent, canActivate: [UserGuard]},
-            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-            { path: '', redirectTo: 'categories', pathMatch: 'full' , canActivate:[AdminGuard]}
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+            //{ path: '', redirectTo: 'categories', pathMatch: 'full' , canActivate:[AdminGuard]}
         ]
     }
 ];

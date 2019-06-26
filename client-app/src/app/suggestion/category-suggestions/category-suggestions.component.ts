@@ -43,7 +43,7 @@ export class CategorySuggestionsComponent implements OnInit {
  
    this.categoryService.suggestCategory(this.getData()).subscribe(res=>{
      console.log(this.getData());
-     this.logger.success("Add Success", "Category was added successfully"); 
+     this.logger.success("Success", "Category was added successfully"); 
    }, 
    err=>{
      this.logger.error("Error", "Category already exists.");

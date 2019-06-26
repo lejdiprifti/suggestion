@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.NoResultException;
+import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.converter.UserConverter;
 import com.ikubinfo.project.model.LoginRequest;
@@ -23,17 +24,19 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class LoginService {
-//	public static final List<User> users = Arrays.asList(new User("gcota", "basic"), new User("rmusaj", "admin"));
 	private UserConverter userConverter = new UserConverter();
 	private UserRepository userRepository = new UserRepository();
 	public LoginResponse login(LoginRequest request) {
+		try {
 		UserModel loggedInUser = userConverter.toModel(userRepository.getUser(request.getUsername(), request.getPassword()));
 		LoginResponse response = new LoginResponse();
 		response.setJwt(getToken(loggedInUser));
 		response.setUser(loggedInUser);
 
 		return response;
-	
+		}catch(NoResultException e) {
+			throw new NotFoundException();
+		}
 
 	}
 	
@@ -45,9 +48,9 @@ public class LoginService {
 		String token = Jwts.builder().setClaims(customClaims)
 				.setExpiration(
 						Date.from(LocalDateTime.now().plus(1, ChronoUnit.HOURS).toInstant(ZoneOffset.ofHours(+1))))
-				.setId(UUID.randomUUID().toString()) //
-				.setIssuedAt(new Date()) //
-				.setIssuer("ikubinfo") //
+				.setId(UUID.randomUUID().toString()) 
+				.setIssuedAt(new Date()) 
+				.setIssuer("ikubinfo") 
 				.signWith(SignatureAlgorithm.HS256, Constants.JWT_KEY).compact();
 		return token;
 	}

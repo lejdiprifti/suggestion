@@ -15,7 +15,7 @@ public class CategoryModel {
 	private State categoryState;
 	private UserEntity acceptedUser;
 	private Date acceptedDate;
-	
+	private boolean flag;
 	
 	public CategoryModel() {
 		super();
@@ -64,5 +64,23 @@ public class CategoryModel {
 	public void setAcceptedDate(Date acceptedDate) {
 		this.acceptedDate = acceptedDate;
 	}
+	public boolean isFlag() {
+		return flag;
+	}
+
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+
+
+	@Override
+	public String toString() {
+		return "CategoryModel [categoryId=" + categoryId + ", categoryName=" + categoryName + ", categoryDescription="
+				+ categoryDescription + ", proposedUser=" + proposedUser + ", categoryState=" + categoryState
+				+ ", acceptedUser=" + acceptedUser + ", acceptedDate=" + acceptedDate + ", flag=" + flag + "]";
+	}
+
+
 
 }
