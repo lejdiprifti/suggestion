@@ -24,7 +24,7 @@ export const menuItems: Array<MenuItem> = [{
     allowedRoles: [ RoleEnum.USER]
 },{
     url: '/suggestion/proposals',
-    icon: 'fa fa-th-list',
+    icon: 'fa fa-fw fa-edit',
     label: 'Proposals',
     allowedRoles: [RoleEnum.ADMIN]
 },{   
@@ -33,9 +33,9 @@ export const menuItems: Array<MenuItem> = [{
     label: 'Manage posts',
     allowedRoles: [RoleEnum.ADMIN]
 },{
-    url: '/suggestion/proposal',
-    icon: 'fa-table',
-    label: 'Proposals',
+    url: '/suggestion/propose',
+    icon: 'fa fa-fw fa-edit',
+    label: 'My Proposals',
     allowedRoles: [RoleEnum.USER]
 },{
     url: '/suggestion/users',

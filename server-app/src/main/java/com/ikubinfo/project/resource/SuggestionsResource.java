@@ -54,6 +54,11 @@ public class SuggestionsResource extends BaseResource {
 		return Response.created(new URI("/"+suggestion.getCategoryId())).build();
 	}
 
+	@PUT
+	@Path("/{id}")
+	public Response updateSuggestion(CategoryModel category,@PathParam("id") final int id) {
+		return Response.ok(suggestionsService.update(category, id, getUsernameFromToken())).build();
+	}
 
 	@DELETE
 	@Path("/{id}")

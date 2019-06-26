@@ -27,12 +27,12 @@ public abstract class BaseResource {
 		return Response.ok(entity).build();
 	}
 
-	public  RoleEntity getRoleFromToken() {
+	public  LinkedHashMap getRoleFromToken() {
 		
 
 		String token = httpHeaders.getHeaderString(HttpHeaders.AUTHORIZATION).substring(Constants.BEARER.length())
 				.trim();
-		return  (RoleEntity)Jwts.parser().setSigningKey(Constants.JWT_KEY).parseClaimsJws(token).getBody().get("role", RoleEntity.class);
+		return  (LinkedHashMap) Jwts.parser().setSigningKey(Constants.JWT_KEY).parseClaimsJws(token).getBody().get("role");
 	}
 	
 	public String getUsernameFromToken() {

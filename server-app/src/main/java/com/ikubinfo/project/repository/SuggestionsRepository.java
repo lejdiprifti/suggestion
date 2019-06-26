@@ -77,12 +77,13 @@ public class SuggestionsRepository {
 	}
 	
 	public List<CategoryEntity> getMySuggestions(String username){
-		TypedQuery<CategoryEntity> query= entityManager.createQuery("Select c from CategoryEntity c where c.categoryState=?1 and c.user=?2 and c.flag=?3",CategoryEntity.class);
-		query.setParameter(1, State.PROPOSED);
-		query.setParameter(2, userRepository.getUserByUsername(username));
-		query.setParameter(3, true);
+		TypedQuery<CategoryEntity> query= entityManager.createQuery("Select c from CategoryEntity c where c.proposedUser=?1 and c.flag=?2",CategoryEntity.class);
+		query.setParameter(1, userRepository.getUserByUsername(username));
+		query.setParameter(2, true);
 		
 		List<CategoryEntity> list=query.getResultList();
 		return list;
 	}
+	
+
 }

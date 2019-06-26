@@ -3,6 +3,7 @@ import { CategoryService } from '@ikubinfo/core/services/category.service';
 import { Category } from '@ikubinfo/core/models/category';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ikubinfo-category-suggestions',
@@ -15,7 +16,7 @@ export class CategorySuggestionsComponent implements OnInit {
   category: Category;
   suggestionForm: FormGroup;
   
-  constructor(private fb: FormBuilder, private categoryService: CategoryService,private logger: LoggerService) { }
+  constructor(private router: Router,private fb: FormBuilder, private categoryService: CategoryService,private logger: LoggerService) { }
 
   ngOnInit() {
     this.initInputData();
@@ -43,6 +44,7 @@ export class CategorySuggestionsComponent implements OnInit {
  
    this.categoryService.suggestCategory(this.getData()).subscribe(res=>{
      console.log(this.getData());
+     this.router.navigate(['suggestion/propose']);
      this.logger.success("Success", "Category was added successfully"); 
    }, 
    err=>{

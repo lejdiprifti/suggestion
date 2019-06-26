@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col col-xl-12 col-lg-12">
-    <ikubinfo-panel header="Posts">
+    <ikubinfo-panel header="My Proposals">
       <div panel-content>
         <button (click)="addPost()" class="btn btn-primary">Suggest new category</button>
-        <p-table [columns]="cols" [value]="proposals" [paginator]="true" [rows]="10" [(contextMenuSelection)]="selectedProposal"
+        <p-table [columns]="cols" [value]="categories" [paginator]="true" [rows]="10" [(contextMenuSelection)]="selectedSuggestion"
           [contextMenu]="cm">
           <ng-template pTemplate="header" let-columns>
             <tr>

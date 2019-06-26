@@ -20,7 +20,7 @@ export class ListOfProposalsComponent implements OnInit {
     private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
-    this.categories={};
+    this.categories=[];
     this.loadSuggestions();
     
     this.items = [
@@ -30,11 +30,13 @@ export class ListOfProposalsComponent implements OnInit {
     
     this.cols = [
       { field: 'categoryName', header: 'Name' },
-      { field: 'categoryDescription', header: 'Description' }
+      { field: 'categoryDescription', header: 'Description' },
+      { field: 'categoryState', header: 'Status'}
     ];
   }
+
   viewSuggestion(suggestion: Category) {
-    this.router.navigate([suggestion.categoryId], { relativeTo: this.active.parent });
+    this.router.navigate(['propose/'+suggestion.categoryId], { relativeTo: this.active.parent });
   }
   
 
@@ -62,5 +64,9 @@ export class ListOfProposalsComponent implements OnInit {
         });
       }
     });
+  }
+
+  addPost(){
+    this.router.navigate(['suggestion/proposal']);
   }
 }

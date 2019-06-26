@@ -9,6 +9,7 @@ import { ApiService } from '../utilities/api.service';
   providedIn: 'root'
 })
 export class CategoryService {
+  
   url = 'categories';
   constructor(private apiService: ApiService) { }
 
@@ -86,6 +87,10 @@ public deleteSuggestion(id:number){
 }
 
 public updateSuggestion(id: any,category: Category){
-  return this.apiService.put('suggestions/'+id);
+  return this.apiService.put('suggestions/'+id+'',category);
+}
+
+public getSuggestionById(id: any) {
+  return this.apiService.get('suggestions/'+id);
 }
 }

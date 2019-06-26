@@ -1,6 +1,7 @@
 package com.ikubinfo.project.service;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -34,12 +35,13 @@ public class SuggestionsService {
 		}
 	}
 
-
 	public CategoryModel update(CategoryModel category, final int id, String username) {
 		try {
 			CategoryEntity foundCategory = suggestionsRepository.getSuggestionById(id);
 			foundCategory.setProposedUser(userRepository.getUserByUsername(username));
-			if (category.getCategoryName() != null) {
+			if (category.getCategoryName().trim().equals(foundCategory.getCategoryName())) {
+				foundCategory.setCategoryName(category.getCategoryName());
+			} else {
 				try {
 					exists(category);
 					throw new BadRequestException("Suggestion name exists");
@@ -47,9 +49,8 @@ public class SuggestionsService {
 					foundCategory.setCategoryName(category.getCategoryName());
 				}
 			}
-			if (category.getCategoryDescription() != null) {
-				foundCategory.setCategoryDescription(category.getCategoryDescription());
-			}
+
+			foundCategory.setCategoryDescription(category.getCategoryDescription());
 
 			return categoryConverter.toModel(suggestionsRepository.update(foundCategory));
 		} catch (NoResultException e) {
@@ -83,8 +84,8 @@ public class SuggestionsService {
 	}
 
 	public boolean exists(CategoryModel suggestion) {
-			return suggestionsRepository.exists(categoryConverter.toEntity(suggestion));
-		
+		return suggestionsRepository.exists(categoryConverter.toEntity(suggestion));
+
 	}
 
 	public CategoryModel accept(String username, final int id) {
@@ -115,14 +116,15 @@ public class SuggestionsService {
 		return categoryConverter.toModel(suggestionsRepository.getAcceptedCategories(username));
 	}
 
-	public List<CategoryModel> getSuggestions(RoleEntity roleFromToken,String username) {
-		RoleEntity userRole=new RoleEntity();
+	public List<CategoryModel> getSuggestions(LinkedHashMap roleFromToken, String username) {
+		RoleEntity userRole = new RoleEntity();
 		userRole.setId(2);
-		RoleEntity adminRole=new RoleEntity();
+		RoleEntity adminRole = new RoleEntity();
 		adminRole.setId(1);
-		if (roleFromToken == userRole) {
+		System.out.println(roleFromToken.get("id"));
+		if (roleFromToken.get("id").equals(userRole.getId())) {
 			return categoryConverter.toModel(suggestionsRepository.getMySuggestions(username));
-		}else {
+		} else {
 			return categoryConverter.toModel(suggestionsRepository.getSuggestions());
 		}
 	}
