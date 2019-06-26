@@ -31,4 +31,6 @@ getPostsOfCategory(id:number){
 isSubscribed(id:number){
   return this.apiService.get('categories/'+id+'/check');
 }
+
+
 }

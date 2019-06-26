@@ -11,11 +11,12 @@ import { FormsModule } from '@angular/forms';
 import { SettingsComponent } from './settings/settings.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { PostsOfCategoryComponent } from './posts-of-category/posts-of-category.component';
+import { ListOfProposalsComponent } from './list-of-proposals/list-of-proposals.component';
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule],
     exports: [],
-    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent, PostsOfCategoryComponent],
+    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent, PostsOfCategoryComponent, ListOfProposalsComponent],
     providers: []
 })
 export class SuggestionModule { }

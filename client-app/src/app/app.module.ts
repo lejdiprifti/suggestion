@@ -9,11 +9,13 @@ import { AppRoutingModule } from '@ikubinfo/app-routing.module';
 import { AppComponent } from '@ikubinfo/app.component';
 import { AuthentificationModule } from '@ikubinfo/authentification/authentification.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ListOfProposalsComponent } from './suggestions/list-of-proposals/list-of-proposals.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    ListOfProposalsComponent,
 
   ],
   imports: [
