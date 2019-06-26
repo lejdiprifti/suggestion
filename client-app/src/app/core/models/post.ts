@@ -1,5 +1,6 @@
-import { Category } from './category';
+
 import { User } from './user';
+import { Category } from './category';
 
 export interface Post {
   userId?:number;

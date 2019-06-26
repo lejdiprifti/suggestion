@@ -33,9 +33,9 @@ export const menuItems: Array<MenuItem> = [{
     label: 'Manage posts',
     allowedRoles: [RoleEnum.ADMIN]
 },{
-    url: '/suggestion/propose',
+    url: '/suggestion/proposal',
     icon: 'fa-table',
-    label: 'Suggestions',
+    label: 'Proposals',
     allowedRoles: [RoleEnum.USER]
 },{
     url: '/suggestion/users',

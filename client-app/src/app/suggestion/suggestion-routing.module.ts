@@ -17,6 +17,8 @@ import { CategoriesComponent } from './admin/categories/categories.component';
 import { CategoryComponent } from './admin/category/category.component';
 import { AddCategoryComponent } from './admin/add-category/add-category.component';
 import { CurrentUsersComponent } from './admin/current-users/current-users.component';
+import { ProposalComponent } from './proposal/proposal.component';
+import { ListOfProposalsComponent } from './list-of-proposals/list-of-proposals.component';
 
 
 const suggestionRoutes: Routes = [
@@ -29,13 +31,15 @@ const suggestionRoutes: Routes = [
             { path: 'settings', component: SettingsComponent},
             { path: 'users', component: CurrentUsersComponent, canActivate: [AdminGuard]},
             { path: 'category/add', component: AddCategoryComponent, canActivate: [AdminGuard]},
+            { path: 'propose/:id', component: ProposalComponent, canActivate: [UserGuard]},
             { path: 'category', component: CategoryComponent, canActivate: [AdminGuard]},
             { path: 'subscriptions', component: SubscriptionsComponent , canActivate: [UserGuard]},
             { path: 'posts', component: PostsComponent, canActivate: [AdminGuard] },
             { path: 'viewposts', component: PostViewComponent, canActivate: [UserGuard] },
             { path: 'proposals', component: ProposalsComponent, canActivate: [AdminGuard]},
             { path: 'post', component: PostComponent, canActivate: [AdminGuard] },
-            { path: 'propose', component: CategorySuggestionsComponent, canActivate: [UserGuard] },
+            { path: 'propose', component: ListOfProposalsComponent, canActivate: [UserGuard] },
+            { path: 'proposal', component: CategorySuggestionsComponent, canActivate: [UserGuard] },
             { path: 'post/:id', component: PostComponent, canActivate: [AdminGuard] },
             {path: 'categories/:id/posts', component: PostsOfCategoryComponent, canActivate: [UserGuard]},
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' }

@@ -8,6 +8,7 @@ import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import com.ikubinfo.project.converter.CategoryConverter;
 import com.ikubinfo.project.entity.CategoryEntity;
+import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.entity.State;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.CategoryModel;
@@ -112,5 +113,17 @@ public class SuggestionsService {
 
 	public List<CategoryModel> getAcceptedCategories(String username) {
 		return categoryConverter.toModel(suggestionsRepository.getAcceptedCategories(username));
+	}
+
+	public List<CategoryModel> getSuggestions(RoleEntity roleFromToken,String username) {
+		RoleEntity userRole=new RoleEntity();
+		userRole.setId(2);
+		RoleEntity adminRole=new RoleEntity();
+		adminRole.setId(1);
+		if (roleFromToken == userRole) {
+			return categoryConverter.toModel(suggestionsRepository.getMySuggestions(username));
+		}else {
+			return categoryConverter.toModel(suggestionsRepository.getSuggestions());
+		}
 	}
 }

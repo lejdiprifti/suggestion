@@ -76,4 +76,16 @@ public deleteAsync = (id: number): Observable<void> => {
   const url = this.url + `/${id}`;
   return this.apiService.delete(url);
 }
+
+public getSuggestions(){
+  return this.apiService.get('suggestions');
+}
+
+public deleteSuggestion(id:number){
+  return this.apiService.delete('suggestions/'+id);
+}
+
+public updateSuggestion(id: any,category: Category){
+  return this.apiService.put('suggestions/'+id);
+}
 }
