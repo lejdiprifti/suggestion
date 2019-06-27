@@ -31,7 +31,7 @@ public class PostResource extends BaseResource{
 	
 	@GET
 	public Response getPosts() {
-		return Response.ok(postService.getPosts()).build();
+		return Response.ok(postService.getPosts(getUsernameFromToken())).build();
 	}
 	
 	

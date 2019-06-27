@@ -1,15 +1,23 @@
+.panel{
+    transition: transform .2s; 
+}
 
-    body .booleanCheckbox.ui-chkbox {
-        width: auto;
-    }
+.panel:hover{
+    transform: scale(1.03);
+    -moz-box-shadow: 0 0 3px #ccc;
+    -webkit-box-shadow: 0 0 3px #ccc;
+    box-shadow: 0 0 3px #ccc;
+}
 
-    body .booleanCheckbox .ui-chkbox-box {
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 4px;
-    }
+.like{
+    margin-top: 10%;
+}
 
-    body .booleanCheckbox .ui-chkbox-label {
-        vertical-align: middle;
-        margin-top: 0;
-    }
+.unlike{
+    margin-top:10%;
+}
+
+.user-avatar{
+    float:left;
+    margin-right: 5%;
+}

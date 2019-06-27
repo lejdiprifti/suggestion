@@ -35,10 +35,14 @@ public class PostService {
 		}
 		}
 
-	public List<PostModel> getPosts() {
-       return postConverter.toModel(postRepository.getPosts());
+	public List<PostModel> getPosts(String username) {
+		List<PostModel> list=postConverter.toModel(postRepository.getPosts());
+		for (PostModel post: list) {
+			post.setLiked(postRepository.hasLiked(username, postConverter.toEntity(post)));
+			post.setLikedUsers(postRepository.getUsersLikingPost(post.getPostId()));
+			}
+       return list;
 	}
-	
 	public PostModel update(PostModel post ,int postId) {
 		PostEntity foundPost= postConverter.toEntity(getPostById(postId));
 		if (post.getPostName() != null) {

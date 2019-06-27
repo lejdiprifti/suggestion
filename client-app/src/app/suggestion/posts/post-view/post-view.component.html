@@ -1,75 +1,21 @@
 <div class="row">
-  <div class="col col-xl-12 col-lg-12">
-    <ikubinfo-panel header="Posts">
-      <div panel-content>
-        <p-table [value]="posts" [paginator]="true" [rows]="10" >
-              <ng-template pTemplate="header">
-                  <tr>
-                      <th>Title</th>
-                      <th>Body</th>
-                      <th>Category</th>
-                      <th>Liked</th>
-                  </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-rowData>
-                  <tr>
-                      <td>
-                          <p-cellEditor>
-                              <ng-template pTemplate="output">
-                                  {{rowData.title}}
-                              </ng-template>
-                          </p-cellEditor>
-                      </td>
-                      <td>
-                          <p-cellEditor>
-                              <ng-template pTemplate="output">
-                                  {{rowData.body}}
-                              </ng-template>
-                          </p-cellEditor>
-                      </td>
-                      <td>
-                          <p-cellEditor>
-                              <ng-template pTemplate="output">
-                                  {{rowData.category}}
-                              </ng-template>
-                          </p-cellEditor>
-                      </td>
-                        <td pEditableColumn>
-                          
-                              <ng-template pTemplate="input">
-                                  <form>
-                                    <button type="button" (click)="like(rowData)">Like</button>
-                                  </form>
-                              </ng-template>
-                             <ng-template pTemplate="output">
-                                  {{rowData.liked}}
-                              </ng-template>
-                            
-                        
-                      </td>
-                  </tr>
-              </ng-template>
-       </p-table>
-        <!-- <p-table [columns]="cols" [value]="posts" [paginator]="true" [rows]="10" [(contextMenuSelection)]="selectedPost"
-          [contextMenu]="cm">
-          <ng-template pTemplate="header" let-columns>
-            <tr>
-              <th *ngFor="let col of columns">
-                {{col.header}}
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr [pContextMenuRow]="rowData">
-              <td *ngFor="let col of columns">
-                {{ rowData[col.field] }}
-              </td>
-            </tr>
-          </ng-template>
-        </p-table> -->
-        <p-contextMenu #cm [model]="items"></p-contextMenu>
+            
+    <div class="col col-xl-6 col-lg-12" *ngFor="let post of posts" >
+      <div class="panel" >
+      <ikubinfo-panel header="Post">
+        <div panel-content >
+          <img src="assets/images/slider3.jpg" width="250px" height="200px" class="user-avatar" />
+          <h1 class="text">{{ post.postName }}</h1>
+          <p class="text">{{ post.postDescription }}</p>
+          
+          <span class="badge badge-primary" *ngIf="post.likedUsers === undefined || post.likedUsers.length === 0"> Be the first to like this post.</span>
+          <span class="badge badge-primary" *ngIf="post.likedUsers.length > 0">{{ post.likedUsers }} like this post.</span>
+          <br>
+          <p-button class="like" icon="pi pi-check" *ngIf="!post.liked" (click)="like(post.postId)" label="Like"></p-button>
+          <button pButton type="button" *ngIf="post.liked" label="Unlike" (click)="unlike(post.postId)" class="ui-button-rounded ui-button-danger unlike"></button>
+        </div>
+      </ikubinfo-panel>
       </div>
-    </ikubinfo-panel>
+    </div> 
   </div>
-</div>
-      
+  

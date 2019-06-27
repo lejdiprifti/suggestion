@@ -53,7 +53,8 @@ export class PostService {
         const posts = await this.apiService.get<Array<any>>(this.url).toPromise();
         return await this.convertRawDataArrayToPost(posts);
     }
-        public getAllPosts() {
+    
+    public getAllPosts() {
         return this.apiService.get<Array<Post>>(this.url);
     }
 
