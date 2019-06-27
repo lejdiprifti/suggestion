@@ -161,14 +161,14 @@ public class CategoryRepository  {
 	
 	public List<CategoryEntity> getSubscribedCategories(String username) {
 		UserEntity user=userRepository.getUserByUsername(username);
-		Query query=entityManager.createNativeQuery("Select * from category c where c.category_id in (Select category_id from subscriptions where user_id=?1 and flag=?2)");
+		Query query=entityManager.createNativeQuery("Select * from category c where c.category_id in (Select category_id from subscriptions where user_id=?1 and flag=?2) ORDER BY accepted_date DESC");
 		query.setParameter(2, true);
 		query.setParameter(1, user.getId());
 		return query.getResultList();
 	}
 	
 	public List<PostEntity> getPostsOfCategory(final int id){
-		TypedQuery<PostEntity> query = entityManager.createQuery("Select p from PostEntity p where p.category = ?1 and p.flag=?2",PostEntity.class);
+		TypedQuery<PostEntity> query = entityManager.createQuery("Select p from PostEntity p where p.category = ?1 and p.flag=?2 ORDER BY p.addedDate DESC",PostEntity.class);
 		query.setParameter(2, true);
 		query.setParameter(1, getCategoryById(id));
 		return query.getResultList();
@@ -176,7 +176,7 @@ public class CategoryRepository  {
 	
 	public List<Object> getUnsubscribedCategories(String username){
 		UserEntity user=userRepository.getUserByUsername(username);
-		Query query=entityManager.createNativeQuery("Select * from category c where c.category_id not in (Select category_id from subscriptions where user_id = ?1 and flag=?2) and c.flag=?3 and c.category_state=?4");
+		Query query=entityManager.createNativeQuery("Select * from category c where c.category_id not in (Select category_id from subscriptions where user_id = ?1 and flag=?2) and c.flag=?3 and c.category_state=?4 ORDER BY accepted_date DESC");
 		query.setParameter(2, true);
 		query.setParameter(1, user.getId());
 		query.setParameter(3, true);

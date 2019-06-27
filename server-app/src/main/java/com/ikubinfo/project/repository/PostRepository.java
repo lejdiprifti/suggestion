@@ -26,7 +26,7 @@ public class PostRepository {
 	}
 
 	public List<PostEntity> getPosts() {
-		return entityManager.createQuery("Select c From PostEntity c where c.flag=?1", PostEntity.class).setParameter(1, true).getResultList();
+		return entityManager.createQuery("Select c From PostEntity c where c.flag=?1 order by c.addedDate DESC", PostEntity.class).setParameter(1, true).getResultList();
 	}
 
 	public PostEntity getPostById(int postId) {
@@ -152,7 +152,7 @@ try {
 	}
 	
 	public List<String> getUsersLikingPost(final int id){
-		TypedQuery<UserEntity> query=entityManager.createQuery("Select p.user from PostsLiked p where p.post =?1 and p.flag=?2",UserEntity.class);
+		TypedQuery<UserEntity> query=entityManager.createQuery("Select p.user from PostsLiked p where p.post =?1 and p.flag=?2 ORDER BY p.date DESC",UserEntity.class);
 		query.setParameter(1, getPostById(id));
 		query.setParameter(2, true);
 		List<UserEntity> list=query.getResultList();
