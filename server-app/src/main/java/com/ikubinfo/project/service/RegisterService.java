@@ -4,6 +4,7 @@ import javax.ws.rs.BadRequestException;
 
 import com.ikubinfo.project.converter.RegisterConverter;
 import com.ikubinfo.project.converter.UserConverter;
+import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.RegisterRequest;
 import com.ikubinfo.project.model.UserModel;
@@ -24,6 +25,10 @@ public class RegisterService {
 			userRepository.isUser(registerModel.getUsername());
 			throw new BadRequestException();
 		}catch(NoResultException e) {
+			RoleEntity role=new RoleEntity();
+			role.setId(2);
+			registerModel.setRole(role);
+			registerModel.setFlag(true);
 		UserEntity user = userRepository.register(registerConverter.toEntity(registerModel));
 		return user;
 		}

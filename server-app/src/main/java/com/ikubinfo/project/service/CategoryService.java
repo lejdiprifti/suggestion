@@ -110,6 +110,7 @@ public class CategoryService {
 				
 				for (PostModel post: list) {
 					post.setLiked(postRepository.hasLiked(username, postConverter.toEntity(post)));
+					post.setLikedUsers(postRepository.getUsersLikingPost(post.getPostId()));
 				}
 				return list;
 		}catch (NotFoundException e) {

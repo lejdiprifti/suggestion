@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.entity.CategoryEntity;
+import com.ikubinfo.project.entity.PostsLiked;
 
 public class PostModel {
 	
@@ -16,7 +17,7 @@ public class PostModel {
 	private CategoryEntity category;
 	private boolean flag;
 	private boolean isLiked;
-	private List<UserEntity> likedUsers;
+	private List<String> likedUsers;
 	public PostModel() {
 		super();
 	}
@@ -74,11 +75,11 @@ public class PostModel {
 		this.isLiked = isLiked;
 	}
 
-	public List<UserEntity> getLikedUsers() {
+	public List<String> getLikedUsers() {
 		return likedUsers;
 	}
 
-	public void setLikedUsers(List<UserEntity> likedUsers) {
+	public void setLikedUsers(List<String> likedUsers) {
 		this.likedUsers = likedUsers;
 	}
 	

@@ -1,13 +1,15 @@
 <div class="row">
             
-  <div class="col col-xl-6 col-lg-12" *ngFor="let post of posts">
-    <div class="panel">
+  <div class="col col-xl-6 col-lg-12" *ngFor="let post of posts" >
+    <div class="panel" >
     <ikubinfo-panel header="Post">
-      <div panel-content>
+      <div panel-content >
         <h1>{{ post.postName }}</h1>
         <p>{{ post.postDescription }}</p>
-        <button class="btn btn-info" *ngIf="!post.liked" (click)="like(post.postId)">Like</button>
-        <button class="btn btn-danger" *ngIf="post.liked" (click)="unlike(post.postId)">Unlike</button>
+        <span class="badge badge-primary">{{ post.likedUsers }} like this post.</span>
+        <br>
+        <p-button class="like" icon="pi pi-check" *ngIf="!post.liked" (click)="like(post.postId)" label="Like"></p-button>
+        <button pButton type="button" *ngIf="post.liked" label="Unlike" (click)="unlike(post.postId)" class="ui-button-rounded ui-button-danger unlike"></button>
       </div>
     </ikubinfo-panel>
     </div>

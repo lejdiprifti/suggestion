@@ -1,5 +1,6 @@
 package com.ikubinfo.project.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -148,5 +149,17 @@ try {
 		query.setParameter("categoryId", id);
 		query.executeUpdate();
 		entityManager.getTransaction().commit();
+	}
+	
+	public List<String> getUsersLikingPost(final int id){
+		TypedQuery<UserEntity> query=entityManager.createQuery("Select p.user from PostsLiked p where p.post =?1 and p.flag=?2",UserEntity.class);
+		query.setParameter(1, getPostById(id));
+		query.setParameter(2, true);
+		List<UserEntity> list=query.getResultList();
+		List<String> usernameList=new ArrayList<String>();
+		for (UserEntity post: list) {
+			usernameList.add(post.getUsername());
+		}
+		return usernameList;
 	}
 }
