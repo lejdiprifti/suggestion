@@ -15,6 +15,7 @@ public class PostModel {
 	private Date addedDate;
 	private UserEntity user;
 	private CategoryEntity category;
+	private int categoryId;
 	private boolean flag;
 	private boolean isLiked;
 	private List<String> likedUsers;
@@ -52,11 +53,14 @@ public class PostModel {
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
-	public CategoryEntity getCategory() {
-		return category;
+	
+
+	public int getCategoryId() {
+		return categoryId;
 	}
-	public void setCategory(CategoryEntity category) {
-		this.category = category;
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public boolean isFlag() {
@@ -81,6 +85,21 @@ public class PostModel {
 
 	public void setLikedUsers(List<String> likedUsers) {
 		this.likedUsers = likedUsers;
+	}
+
+	public CategoryEntity getCategory() {
+		return category;
+	}
+
+	public void setCategory(CategoryEntity category) {
+		this.category = category;
+	}
+
+	@Override
+	public String toString() {
+		return "PostModel [postId=" + postId + ", postName=" + postName + ", postDescription=" + postDescription
+				+ ", addedDate=" + addedDate + ", user=" + user + ", category=" + category + ", categoryId="
+				+ categoryId + ", flag=" + flag + ", isLiked=" + isLiked + ", likedUsers=" + likedUsers + "]";
 	}
 	
 	

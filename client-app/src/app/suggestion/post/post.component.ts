@@ -64,7 +64,7 @@ export class PostComponent implements OnInit {
     return {
       postName: this.postForm.get('title').value,
       postDescription: this.postForm.get('description').value,
-      category: this.postForm.get('category').value
+      categoryId: this.postForm.get('category').value
     }
 
   }

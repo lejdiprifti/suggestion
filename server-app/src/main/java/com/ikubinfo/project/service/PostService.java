@@ -5,28 +5,31 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.converter.PostConverter;
 import com.ikubinfo.project.entity.PostEntity;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.PostModel;
+import com.ikubinfo.project.repository.CategoryRepository;
 import com.ikubinfo.project.repository.PostRepository;
 
 public class PostService {
 	
 	private PostRepository postRepository;
 	private PostConverter postConverter;
-
+	private CategoryRepository categoryRepository;
 	public PostService() {
 		postRepository = new PostRepository();
 		postConverter = new PostConverter();
+		categoryRepository=new CategoryRepository();
 	}
 	
 	public PostModel getPostById(int postId) {
 		try {
-		return postConverter.toModel(postRepository.getPostById(postId));
+			PostModel post=postConverter.toModel(postRepository.getPostById(postId));
+			post.setCategoryId(postRepository.getPostById(postId).getCategory().getCategoryId());
+		return post;
 		} catch (NoResultException e) {
 			throw new NotFoundException();
 		}
@@ -40,7 +43,7 @@ public class PostService {
 		PostEntity foundPost= postConverter.toEntity(getPostById(postId));
 		if (post.getPostName() != null) {
 			try {
-				postRepository.isPost(post.getPostName(),post.getCategory().getCategoryId());
+				postRepository.isPost(post.getPostName(),post.getCategoryId());
 			}catch(NotFoundException e) {
 			foundPost.setPostName(post.getPostName());
 			}
@@ -48,9 +51,9 @@ public class PostService {
 		if (post.getPostDescription() != null) {
 			foundPost.setPostDescription(post.getPostDescription());
 		}
-		if (post.getCategory() != null) {
-			foundPost.setCategory(post.getCategory());
-		}
+		
+		foundPost.setCategory(categoryRepository.getCategoryById(post.getCategoryId()));
+		
 		return postConverter.toModel(postRepository.update(foundPost,postId));
 	}
 	
@@ -64,15 +67,16 @@ public class PostService {
 		}
 		}
 	
-	public PostModel insert(PostEntity post,UserEntity user) {
+	public PostModel insert(PostModel post,UserEntity user) {
 		try {
-			postRepository.isPost(post.getPostName(),post.getCategory().getCategoryId());
+			postRepository.isPost(post.getPostName(),post.getCategoryId());
 			throw new BadRequestException("Already exists.");
 		} catch (NotFoundException e) {
 			post.setAddedDate(new Date());
+			post.setCategory(categoryRepository.getCategoryById(post.getCategoryId()));
 			post.setUser(user);
 			post.setFlag(true);
-		return postConverter.toModel(postRepository.insert(post, user));
+		return postConverter.toModel(postRepository.insert(postConverter.toEntity(post), user));
 	}
 	}
 	

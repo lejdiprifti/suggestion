@@ -44,14 +44,12 @@ public class PostResource extends BaseResource{
 	
 	@PUT
 	@Path("/{postId}")
-	public Response update(PostModel post , @PathParam("postId") int postId) {
+	public Response update(PostModel post, @PathParam("postId") int postId) {
 		return Response.ok(postService.update(post,postId)).build();
 	}
 	
 	@POST
-	public Response insert(PostEntity post) {
-	
-			
+	public Response insert(PostModel post) {
 			return Response.ok(postService.insert(post,userRepository.getUserByUsername(getUsernameFromToken()))).build();
 	}
 	

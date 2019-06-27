@@ -86,12 +86,13 @@ public class PostRepository {
 			UserEntity user = userRepository.getUserByUsername(username);
 			entityManager.getTransaction().begin();
 			Query query = entityManager.createNativeQuery(
-					"Update postsliked SET flag=:newFlag where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and post_id=(select p.post_id from post p"
+					"Update postsliked SET flag=:newFlag , date=:newDate where ( user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and post_id=(select p.post_id from post p"
 							+ " where" + " p.post_id=:post_id) AND flag=:flag ) ");
 			query.setParameter("newFlag", true);
 			query.setParameter("flag", false);
 			query.setParameter("user_id", user.getId());
 			query.setParameter("post_id", post.getPostId());
+			query.setParameter("newDate", new Date());
 			query.executeUpdate();
 			entityManager.getTransaction().commit();
 			return post;

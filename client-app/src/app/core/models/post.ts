@@ -14,4 +14,5 @@ export interface Post {
   user?: User;
   category?: Category;
   isLiked?:boolean;
+  categoryId?: number;
 }

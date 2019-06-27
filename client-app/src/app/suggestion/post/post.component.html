@@ -9,9 +9,6 @@
           <option value="" disabled>Choose the category</option>
           <option *ngFor="let category of categories" [ngValue]="category.categoryId">{{category.categoryName}}</option>
         </select>
-
-        <p-dropdown [options]="cities" formControlName="category" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown>
-
       </ikubinfo-input>
       <ikubinfo-input label="Description">
         <textarea formControlName="description" type="text" class="form-control"> </textarea>
