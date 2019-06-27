@@ -8,7 +8,7 @@
         <textarea formControlName="categoryDescription" type="text" class="form-control"> </textarea>
       </ikubinfo-input>
     </form>
-    <button type="submit" (click)="addData($event)" [disabled]="suggestionForm.invalid" class="btn btn-primary">Submit</button>
-    <button (click)="clearData($event)" class="btn btn-secondary">Reset</button>
+    <p-button icon="pi pi-check" label="Submit" (click)="addData($event)" [disabled]="suggestionForm.invalid"></p-button>
+    <button pButton type="button" label="Clear" class="ui-button-secondary reset" (click)="clearData($event)" ></button>
   </div>
 </ikubinfo-panel>

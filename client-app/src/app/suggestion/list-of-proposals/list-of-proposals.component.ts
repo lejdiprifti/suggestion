@@ -24,7 +24,6 @@ export class ListOfProposalsComponent implements OnInit {
     this.loadSuggestions();
     
     this.items = [
-      { label: 'Edit', icon: 'pi pi-pencil', command: (event) => this.viewSuggestion(this.selectedSuggestion) },
       { label: 'Delete', icon: 'pi pi-times', command: (event) => this.deleteSuggestion(this.selectedSuggestion) }
     ];
     
@@ -33,10 +32,6 @@ export class ListOfProposalsComponent implements OnInit {
       { field: 'categoryDescription', header: 'Description' },
       { field: 'categoryState', header: 'Status'}
     ];
-  }
-
-  viewSuggestion(suggestion: Category) {
-    this.router.navigate(['propose/'+suggestion.categoryId], { relativeTo: this.active.parent });
   }
   
 

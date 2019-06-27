@@ -25,7 +25,7 @@ export class CategorySuggestionsComponent implements OnInit {
   initInputData() {
     this.suggestionForm=this.fb.group({
       categoryName: ['' , Validators.required],
-      categoryDescription:  ['' , Validators.required],
+      categoryDescription:  [''],
     });   
     }
 
@@ -43,7 +43,6 @@ export class CategorySuggestionsComponent implements OnInit {
   async addData($event): Promise<void> {
  
    this.categoryService.suggestCategory(this.getData()).subscribe(res=>{
-     console.log(this.getData());
      this.router.navigate(['suggestion/propose']);
      this.logger.success("Success", "Category was added successfully"); 
    }, 
