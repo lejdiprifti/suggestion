@@ -4,10 +4,10 @@
     <div class="panel">
     <ikubinfo-panel header="Post">
       <div panel-content>
-        <h1>{{ post[3] }}</h1>
-        <p>{{ post[2] }}</p>
-        <button class="btn btn-info" *ngIf="post.isLiked" (click)="like(post[0])">{{ post.isLiked? 'Liked':'Like' }}</button>
-        <button class="btn btn-danger" *ngIf="!post.isLiked" (click)="unlike(post[0])">Dislike</button>
+        <h1>{{ post.postName }}</h1>
+        <p>{{ post.postDescription }}</p>
+        <button class="btn btn-info" *ngIf="!post.liked" (click)="like(post.postId)">Like</button>
+        <button class="btn btn-danger" *ngIf="post.liked" (click)="unlike(post.postId)">Unlike</button>
       </div>
     </ikubinfo-panel>
     </div>

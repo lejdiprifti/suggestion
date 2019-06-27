@@ -24,13 +24,7 @@ export class PostsOfCategoryComponent implements OnInit {
     const id = this.active.snapshot.paramMap.get('id')
     this.categoryService.getPostsOfCategory(Number(id)).subscribe(res=>{
       this.posts=res;
-      this.posts.forEach((post) =>{
-        this.postService.hasLiked(post[0]).subscribe(res=>{
-          post.isLiked=true;
-        }, err=>{
-          post.isLiked=false;
-        });
-      })
+      console.log(this.posts);
     },
     err=>{
       this.logger.error("Error", "Something bad happened");

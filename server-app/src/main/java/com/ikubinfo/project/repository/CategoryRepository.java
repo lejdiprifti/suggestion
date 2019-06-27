@@ -168,9 +168,9 @@ public class CategoryRepository  {
 	}
 	
 	public List<PostEntity> getPostsOfCategory(final int id){
-		Query query = entityManager.createNativeQuery("Select * from post p where p.category_id = ?1 and p.flag=?2");
+		TypedQuery<PostEntity> query = entityManager.createQuery("Select p from PostEntity p where p.category = ?1 and p.flag=?2",PostEntity.class);
 		query.setParameter(2, true);
-		query.setParameter(1, id);
+		query.setParameter(1, getCategoryById(id));
 		return query.getResultList();
 	}
 	

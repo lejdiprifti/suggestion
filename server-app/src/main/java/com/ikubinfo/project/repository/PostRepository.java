@@ -111,16 +111,19 @@ public class PostRepository {
 		}
 	}
 	
-	public Object hasLiked(String username, PostEntity post) {
-
+	public boolean hasLiked(String username, PostEntity post) {
+try {
 			Query query = entityManager.createNativeQuery(
 					"Select from postsliked where user_id=(select u.user_id from perdorues u where u.user_id=:user_id) and post_id=(select p.post_id from post p where "
 							+ " post_id=:post_id) and flag=:flag ");
 			query.setParameter("user_id", userRepository.getUserByUsername(username).getId());
 			query.setParameter("post_id", post.getPostId());
 			query.setParameter("flag", true);
-			return query.getSingleResult();
-			
+			query.getSingleResult();
+			return true;
+}catch(NoResultException e) {
+	return false;
+}
 		
 	}
 	public PostEntity unlike(String username,PostEntity post) {

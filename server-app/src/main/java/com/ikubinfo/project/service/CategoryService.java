@@ -10,11 +10,13 @@ import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.converter.CategoryConverter;
+import com.ikubinfo.project.converter.PostConverter;
 import com.ikubinfo.project.entity.CategoryEntity;
 import com.ikubinfo.project.entity.PostEntity;
 import com.ikubinfo.project.entity.State;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.CategoryModel;
+import com.ikubinfo.project.model.PostModel;
 import com.ikubinfo.project.repository.CategoryRepository;
 import com.ikubinfo.project.repository.PostRepository;
 
@@ -22,10 +24,12 @@ public class CategoryService {
 	private CategoryRepository categoryRepository;
 	private CategoryConverter categoryConverter;
 	private PostRepository postRepository;
+	private PostConverter postConverter;
 	public CategoryService() {
 		categoryRepository = new CategoryRepository();
 		categoryConverter = new CategoryConverter();
 		postRepository= new PostRepository();
+		postConverter=new PostConverter();
 	}
 
 	public CategoryModel getCategoryByName(String categoryName) {
@@ -99,10 +103,15 @@ public class CategoryService {
 		return categoryConverter.toModel(categoryRepository.unsubscribe(username, id));
 	}
 	
-	public List<PostEntity> getPostsOfCategory(String username,final int id){
+	public List<PostModel> getPostsOfCategory(String username,final int id){
 		try {
 			 isSubscribed(username, categoryRepository.getCategoryById(id));
-			 return categoryRepository.getPostsOfCategory(id);
+			 List<PostModel> list=postConverter.toModel(categoryRepository.getPostsOfCategory(id));
+				
+				for (PostModel post: list) {
+					post.setLiked(postRepository.hasLiked(username, postConverter.toEntity(post)));
+				}
+				return list;
 		}catch (NotFoundException e) {
 			throw new NotAllowedException("You are not subscribed.");
 		}

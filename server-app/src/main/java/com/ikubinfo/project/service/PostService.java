@@ -89,9 +89,9 @@ public class PostService {
 	}
 	
 	public Object hasLiked(String username,PostEntity post) {
-		try {
+		if (postRepository.hasLiked(username, post)==true) {
 		return postRepository.hasLiked(username, post);
-		} catch (NoResultException e) {
+		} else {
 			throw new NotFoundException();
 		}
 	}
