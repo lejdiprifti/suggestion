@@ -97,8 +97,8 @@ public class CategoryResource  extends BaseResource {
 		}
 		
 		@GET
-		@Path("/{id}/check")
-		public Response isSubscribed(@PathParam("id") final int id) {
-			return Response.ok(categoryService.isSubscribed(getUsernameFromToken(), categoryRepository.getCategoryById(id))).build();
+		@Path("/unsubscribed")
+		public Response getUnsubscribedCategories() {
+			return Response.ok(categoryRepository.getUnsubscribedCategories(getUsernameFromToken())).build();
 		}
 }

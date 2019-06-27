@@ -14,6 +14,7 @@ public class PostModel {
 	private UserEntity user;
 	private CategoryEntity category;
 	private boolean flag;
+	private boolean isLiked;
 	public PostModel() {
 		super();
 	}
@@ -61,6 +62,14 @@ public class PostModel {
 
 	public void setFlag(boolean flag) {
 		this.flag = flag;
+	}
+
+	public boolean isLiked() {
+		return isLiked;
+	}
+
+	public void setLiked(boolean isLiked) {
+		this.isLiked = isLiked;
 	}
 	
 	

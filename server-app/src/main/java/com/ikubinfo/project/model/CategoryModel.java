@@ -16,7 +16,7 @@ public class CategoryModel {
 	private UserEntity acceptedUser;
 	private Date acceptedDate;
 	private boolean flag;
-	
+	private int postsNumber;
 	public CategoryModel() {
 		super();
 	}
@@ -74,13 +74,26 @@ public class CategoryModel {
 	}
 
 
+	public int getPostsNumber() {
+		return postsNumber;
+	}
+
+
+	public void setPostsNumber(int postsNumber) {
+		this.postsNumber = postsNumber;
+	}
+
+
 	@Override
 	public String toString() {
 		return "CategoryModel [categoryId=" + categoryId + ", categoryName=" + categoryName + ", categoryDescription="
 				+ categoryDescription + ", proposedUser=" + proposedUser + ", categoryState=" + categoryState
-				+ ", acceptedUser=" + acceptedUser + ", acceptedDate=" + acceptedDate + ", flag=" + flag + "]";
+				+ ", acceptedUser=" + acceptedUser + ", acceptedDate=" + acceptedDate + ", flag=" + flag
+				+ ", postsNumber=" + postsNumber + "]";
 	}
 
+
+	
 
 
 }

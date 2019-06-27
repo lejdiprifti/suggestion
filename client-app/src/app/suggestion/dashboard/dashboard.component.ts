@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CategoryService } from '@ikubinfo/core/services/category.service';
 import { Router } from '@angular/router';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
+import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 @Component({
   selector: 'ikubinfo-dashboard',
@@ -12,10 +13,8 @@ import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 
 export class DashboardComponent implements OnInit {
   categories: any;
-  text: string;
-  constructor(private logger: LoggerService,private categoryService: CategoryService, private router: Router) { 
+  constructor(private confirmationService: ConfirmationService,private logger: LoggerService,private categoryService: CategoryService, private router: Router) { 
     this.categories=[];
-    this.text='';
   }
 
   ngOnInit() {
@@ -23,6 +22,11 @@ export class DashboardComponent implements OnInit {
   }
 
  subscribe(id: number){
+  this.confirmationService.confirm({
+    message: 'Do you want to subscribe to this category?',
+    header: 'Subscribe Confirmation',
+    icon: 'pi pi-info-circle',
+    accept: () => {
    this.categoryService.subscribe(id).subscribe(res=>{
      this.loadData();
      this.logger.success("Success","You subscribed successfully!");
@@ -31,15 +35,14 @@ export class DashboardComponent implements OnInit {
      this.logger.error("Error","Something bad happened.");
    });
  }
+  });
+}
 
 loadData(){
-  this.categoryService.getAllCategories().subscribe(res=>{
+  this.categoryService.getUnsubscribedCategories().subscribe(res=>{
     this.categories=res;
-    this.categories.forEach((category) => {
-         this.categoryService.isSubscribed(category.categoryId).subscribe(res=>{
-           category.isSubscribed = true;
-         });
-      });
+  },err=>{
+    this.logger.error("Error","Something bad happened.");
   });
 }
 }

@@ -21,6 +21,10 @@ subscribe(id: number){
   return this.apiService.put('categories/subscribe/'+id);
 }
 
+getUnsubscribedCategories(){
+  return this.apiService.get('categories/unsubscribed');
+}
+
 getSubscribedCategories(){
   return this.apiService.get('categories/subscribed');
 }

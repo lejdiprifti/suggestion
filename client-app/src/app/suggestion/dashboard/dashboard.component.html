@@ -4,9 +4,9 @@
     <div class="panel">
     <ikubinfo-panel header="Category">
       <div panel-content  >
-        <h1 >{{ category.categoryName }}</h1>
-        <p>{{ category.categoryDescription }}</p>
-        <button [disabled]="category.isSubscribed" class="btn btn-success" (click)="subscribe(category.categoryId)">{{ category.isSubscribed? 'Subscribed':'Subscribe' }}</button>
+        <h1 >{{ category[3] }}</h1>
+        <p>{{ category[2] }}</p>
+        <button class="btn btn-success" (click)="subscribe(category[0])">Subscribe</button>
       </div>
     </ikubinfo-panel>
     </div>

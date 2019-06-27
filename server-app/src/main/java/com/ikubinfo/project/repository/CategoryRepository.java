@@ -173,4 +173,16 @@ public class CategoryRepository  {
 		query.setParameter(1, id);
 		return query.getResultList();
 	}
+	
+	public List<Object> getUnsubscribedCategories(String username){
+		UserEntity user=userRepository.getUserByUsername(username);
+		Query query=entityManager.createNativeQuery("Select * from category c where c.category_id not in (Select category_id from subscriptions where user_id = ?1 and flag=?2) and c.flag=?3 and c.category_state=?4");
+		query.setParameter(2, true);
+		query.setParameter(1, user.getId());
+		query.setParameter(3, true);
+		query.setParameter(4, 1);
+		List<Object> list=query.getResultList();
+		return list;
+	}
+	
 }

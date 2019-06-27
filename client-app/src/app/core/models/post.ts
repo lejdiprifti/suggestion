@@ -7,11 +7,11 @@ export interface Post {
   id?:number;
   title?:string;
   body?:string;
-  isLiked?:boolean;
   postId?:number;
   postName?: string;
   postDescription?: string;
   addedDate?: Date;
   user?: User;
   category?: Category;
+  isLiked?:boolean;
 }

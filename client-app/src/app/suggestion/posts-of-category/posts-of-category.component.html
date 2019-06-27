@@ -6,8 +6,8 @@
       <div panel-content>
         <h1>{{ post[3] }}</h1>
         <p>{{ post[2] }}</p>
-        <button class="btn btn-info" [disabled]="post.isLiked" (click)="like(post[0])">{{ post.isLiked? 'Liked':'Like' }}</button>
-        <button class="btn btn-danger" [disabled]="!post.isLiked" (click)="unlike(post[0])">Dislike</button>
+        <button class="btn btn-info" *ngIf="post.isLiked" (click)="like(post[0])">{{ post.isLiked? 'Liked':'Like' }}</button>
+        <button class="btn btn-danger" *ngIf="!post.isLiked" (click)="unlike(post[0])">Dislike</button>
       </div>
     </ikubinfo-panel>
     </div>

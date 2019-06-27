@@ -39,11 +39,10 @@ const suggestionRoutes: Routes = [
             { path: 'proposals', component: ProposalsComponent, canActivate: [AdminGuard]},
             { path: 'post', component: PostComponent, canActivate: [AdminGuard] },
             { path: 'propose', component: ListOfProposalsComponent, canActivate: [UserGuard] },
-            { path: 'proposal', component: CategorySuggestionsComponent, canActivate: [UserGuard] },
+            { path: 'proposal', component: ListOfProposalsComponent, canActivate: [UserGuard] },
             { path: 'post/:id', component: PostComponent, canActivate: [AdminGuard] },
-            {path: 'categories/:id/posts', component: PostsOfCategoryComponent, canActivate: [UserGuard]},
-            { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
-            //{ path: '', redirectTo: 'categories', pathMatch: 'full' , canActivate:[AdminGuard]}
+            {path: 'categories/:id/posts', component: PostsOfCategoryComponent, canActivate: [UserGuard]}
+            
         ]
     }
 ];
