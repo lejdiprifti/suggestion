@@ -17,13 +17,24 @@ export class PostComponent implements OnInit {
   categories: Object;
   postForm: FormGroup;
   post: Post;
-
+  images: Array<String>;
   constructor(private categoryService: CategoryService ,private fb: FormBuilder, private active: ActivatedRoute, private postService: PostService, private logger: LoggerService, private router: Router) { }
 
   ngOnInit() {
     this.initializeForm();
     this.loadData();
     this.category={};
+    this.images=[
+      'football',
+      'music',
+      'nature',
+      'restaurant',
+      'hotels',
+      'news',
+      'cars',
+      'holidays',
+      'technology',
+    ]
   }
 
   loadData(): void {
@@ -35,6 +46,7 @@ export class PostComponent implements OnInit {
           this.postForm.get('title').setValue(this.post.postName);
           this.postForm.get('description').setValue(this.post.postDescription);
           this.postForm.get('category').setValue(this.post.category.categoryId);
+          this.postForm.get('image').setValue(this.post.image);
         },
         err => {
           this.logger.error('Error', 'An error accured');
@@ -50,6 +62,7 @@ export class PostComponent implements OnInit {
     this.postForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
+      image: [''],
       category: ['' , Validators.required]
     });
   }
@@ -58,13 +71,15 @@ export class PostComponent implements OnInit {
     this.postForm.get('title').setValue(data.postName);
     this.postForm.get('description').setValue(data.postDescription);
     this.postForm.get('category').setValue(data.category.categoryId);
+    this.postForm.get('image').setValue(data.image);
   }
 
   getData(): Post {
     return {
       postName: this.postForm.get('title').value,
       postDescription: this.postForm.get('description').value,
-      categoryId: this.postForm.get('category').value
+      categoryId: this.postForm.get('category').value,
+      image: this.postForm.get('image').value
     }
 
   }
@@ -108,5 +123,9 @@ export class PostComponent implements OnInit {
     }
     }
 
-    
+    changeImage(e){
+      this.post.image=e.target.value,{
+        onlySelf: true
+      }
+    }
 }

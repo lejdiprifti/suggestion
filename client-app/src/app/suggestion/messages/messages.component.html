@@ -1,0 +1,10 @@
+<div  *ngIf="categories.length > 0">
+<div *ngFor="let category of categories">
+<div _ngcontent-c12="" class="alert alert-success" *ngIf="category.categoryState === 'CREATED'">
+<strong _ngcontent-c12="" class="ng-tns-c12-8">Well done!</strong> Your proposal <strong>{{ category.categoryName }}</strong> was accepted by our administrator <strong>{{ category.acceptedUser.username }}</strong>
+</div>
+<div _ngcontent-c12="" class="alert alert-danger" *ngIf="category.categoryState === 'DECLINED'">
+  <strong _ngcontent-c12="" class="ng-tns-c12-8">Oh snap!</strong> 
+  Your proposal <strong>{{ category.categoryName }}</strong> was declined by our administrator <strong>{{ category.acceptedUser.username }}</strong>   </div>
+</div>
+</div>

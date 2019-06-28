@@ -17,6 +17,7 @@ export class PostsOfCategoryComponent implements OnInit {
   constructor(private logger: LoggerService,private categoryService: CategoryService,private postService: PostService,private active: ActivatedRoute) { }
 
   ngOnInit() {
+    this.posts={};
     this.loadPosts();
   }
 
@@ -43,7 +44,7 @@ export class PostsOfCategoryComponent implements OnInit {
 
   unlike(id: number){
     this.postService.unlike(id).subscribe(res=>{
-      this.logger.warning("Success","You disliked the post!");
+      this.logger.warning("Warning","You disliked the post!");
       this.loadPosts();
     }, 
     err=>{

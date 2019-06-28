@@ -18,6 +18,7 @@ import { CategoryComponent } from './admin/category/category.component';
 import { AddCategoryComponent } from './admin/add-category/add-category.component';
 import { CurrentUsersComponent } from './admin/current-users/current-users.component';
 import { ListOfProposalsComponent } from './list-of-proposals/list-of-proposals.component';
+import { MessagesComponent } from './messages/messages.component';
 
 
 const suggestionRoutes: Routes = [
@@ -35,6 +36,7 @@ const suggestionRoutes: Routes = [
             { path: 'posts', component: PostsComponent, canActivate: [AdminGuard] },
             { path: 'viewposts', component: PostViewComponent, canActivate: [UserGuard] },
             { path: 'proposals', component: ProposalsComponent, canActivate: [AdminGuard]},
+            { path: 'messages', component: MessagesComponent,canActivate:[UserGuard]},
             { path: 'post', component: PostComponent, canActivate: [AdminGuard] },
             { path: 'propose', component: ListOfProposalsComponent, canActivate: [UserGuard] },
             { path: 'proposal', component: CategorySuggestionsComponent, canActivate: [UserGuard] },

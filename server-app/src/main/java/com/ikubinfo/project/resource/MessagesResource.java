@@ -22,7 +22,7 @@ public class MessagesResource extends BaseResource {
 		
 		@GET
 		public Response get() {
-			return Response.ok(suggestionsService.getAcceptedCategories(getUsernameFromToken())).build();
+			return Response.ok(suggestionsService.getMyProposedCategories(getUsernameFromToken())).build();
 		}
 	
 }

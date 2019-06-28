@@ -54,11 +54,12 @@ public class SuggestionsRepository {
 		return category;
 	}
 
-	public List<CategoryEntity> getAcceptedCategories(String username) {
+	public List<CategoryEntity> getMyProposedCategories(String username) {
 		TypedQuery<CategoryEntity> query = entityManager.createQuery(
-				"Select c from CategoryEntity c where c.user=?1 and c.categoryState=?2 and c.flag=?3", CategoryEntity.class);
+				"Select c from CategoryEntity c where (c.proposedUser=?1 and c.categoryState=?2 and c.flag=?3) or (c.proposedUser=?1 and c.categoryState=?4 and c.flag=?3) ORDER BY c.acceptedDate DESC", CategoryEntity.class);
 		query.setParameter(1, userRepository.getUserByUsername(username));
 		query.setParameter(2, State.CREATED);
+		query.setParameter(4, State.DECLINED);
 		query.setParameter(3, true);
 		List<CategoryEntity> list = query.getResultList();
 		return list;
@@ -77,8 +78,9 @@ public class SuggestionsRepository {
 	}
 	
 	public List<CategoryEntity> getMySuggestions(String username){
-		TypedQuery<CategoryEntity> query= entityManager.createQuery("Select c from CategoryEntity c where c.proposedUser=?1 and c.flag=?2",CategoryEntity.class);
+		TypedQuery<CategoryEntity> query= entityManager.createQuery("Select c from CategoryEntity c where c.proposedUser=?1 and c.flag=?2 and c.categoryState=?3",CategoryEntity.class);
 		query.setParameter(1, userRepository.getUserByUsername(username));
+		query.setParameter(3, State.PROPOSED);
 		query.setParameter(2, true);
 		
 		List<CategoryEntity> list=query.getResultList();

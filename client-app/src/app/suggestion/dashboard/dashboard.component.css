@@ -8,3 +8,17 @@
     -webkit-box-shadow: 0 0 3px #ccc;
     box-shadow: 0 0 3px #ccc;
 }
+
+.button{
+    margin-left: 80%;
+
+} 
+
+.icon{
+    float: left;
+    margin-right: 5%;
+}
+
+.header{
+    margin-bottom: 2%;
+}

@@ -15,4 +15,5 @@ export interface Post {
   category?: Category;
   isLiked?:boolean;
   categoryId?: number;
+  image?: String;
 }

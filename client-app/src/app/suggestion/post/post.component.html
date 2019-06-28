@@ -4,6 +4,12 @@
       <ikubinfo-input label="Title">
         <input formControlName="title" type="text" class="form-control" />
       </ikubinfo-input>
+      <ikubinfo-input label="Image">
+          <select class="custom-select" (change)="changeImage($event)" formControlName="image">
+            <option value="" disabled>Choose an image</option>
+            <option *ngFor="let image of images" [ngValue]="image">{{image}}</option>
+          </select>
+        </ikubinfo-input>
       <ikubinfo-input label="Category">
         <select class="custom-select" (change)="changeCategory($event)" formControlName="category">
           <option value="" disabled>Choose the category</option>

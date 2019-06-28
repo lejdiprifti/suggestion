@@ -55,7 +55,7 @@ public class PostService {
 		if (post.getPostDescription() != null) {
 			foundPost.setPostDescription(post.getPostDescription());
 		}
-		
+		foundPost.setImage(post.getImage());
 		foundPost.setCategory(categoryRepository.getCategoryById(post.getCategoryId()));
 		
 		return postConverter.toModel(postRepository.update(foundPost,postId));

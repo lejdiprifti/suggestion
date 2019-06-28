@@ -17,11 +17,10 @@
     margin-top:10%;
 }
 
-.user-avatar{
-    float:left;
-    margin-right: 5%;
+.image{
+    float: left;
+    margin-right: 2%;
 }
-
 .header{
-    color: cornflowerblue;
+    margin-bottom: 2%;
 }

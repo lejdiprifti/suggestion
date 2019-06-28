@@ -112,8 +112,8 @@ public class SuggestionsService {
 		}
 	}
 
-	public List<CategoryModel> getAcceptedCategories(String username) {
-		return categoryConverter.toModel(suggestionsRepository.getAcceptedCategories(username));
+	public List<CategoryModel> getMyProposedCategories(String username) {
+		return categoryConverter.toModel(suggestionsRepository.getMyProposedCategories(username));
 	}
 
 	public List<CategoryModel> getSuggestions(LinkedHashMap roleFromToken, String username) {

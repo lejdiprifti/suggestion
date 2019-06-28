@@ -1,15 +1,25 @@
 <div _ngcontent-c27="" class="alert alert-success" *ngIf="categories.length === 0">
   <strong _ngcontent-c27="" class="ng-tns-c27-3">Well done!</strong> You successfully subscribed to all the categories.</div>
-
+  <div _ngcontent-c5="" class="card text-white bg-success header" *ngIf="categories.length > 0">
+    <div _ngcontent-c5="" class="card-header">
+      <div _ngcontent-c5="" class="row">
+        <div _ngcontent-c5="" class="col col-xs-3">
+        <i _ngcontent-c5="" class="fa fa-tasks fa-5x"></i>
+      </div>
+        <div _ngcontent-c5="" class="col col-xs-9 text-right">
+          <div _ngcontent-c5="" class="d-block huge">{{categories.length}}</div>
+          <div _ngcontent-c5="" class="d-block">New Categories!</div></div></div></div>
+    </div>
 <div class="row" *ngIf="categories.length > 0">
             
   <div class="col col-xl-6 col-lg-12" *ngFor="let category of categories">
     <div class="panel">
-    <ikubinfo-panel header="Category">
+    <ikubinfo-panel header="{{ category[3] }}">
       <div panel-content  >
+        <img src="assets/images/{{category[8]}}.png" alt="{{category[8]}}" width="80px" class="icon"/>
         <h1 >{{ category[3] }}</h1>
         <p>{{ category[2] }}</p>
-        <button class="btn btn-success" (click)="subscribe(category[0])">Subscribe</button>
+        <button pButton icon="pi pi-check" class="ui-button-success button" (click)="subscribe(category[0])" label="Subscribe"></button>
       </div>
     </ikubinfo-panel>
     </div>

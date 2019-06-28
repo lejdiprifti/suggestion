@@ -37,6 +37,9 @@ public class PostEntity {
 	@JoinColumn(name= "category_id")
 	private CategoryEntity category;
 	
+	@Column(name="image")
+	private String image;
+	
 	@Column(name="flag")
 	private boolean flag;
 	
@@ -97,12 +100,23 @@ public class PostEntity {
 	public void setFlag(boolean flag) {
 		this.flag = flag;
 	}
+	
+	
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
 	@Override
 	public String toString() {
 		return "PostEntity [postId=" + postId + ", postName=" + postName + ", postDescription=" + postDescription
-				+ ", addedDate=" + addedDate + ", user=" + user + ", category=" + category + ", flag=" + flag + "]";
+				+ ", addedDate=" + addedDate + ", user=" + user + ", category=" + category + ", image=" + image
+				+ ", flag=" + flag + "]";
 	}
-
+	
+	
 	
 	
 }

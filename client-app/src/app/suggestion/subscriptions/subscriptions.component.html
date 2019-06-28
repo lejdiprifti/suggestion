@@ -1,8 +1,10 @@
+<div _ngcontent-c27="" class="alert alert-warning" *ngIf="subscriptions.length === 0">
+    <strong _ngcontent-c27="" class="ng-tns-c27-3">Oh snap!</strong> You have not subscribed to a category yet.</div>
 <div class="row">
             
   <div class="col col-xl-6 col-lg-12" *ngFor="let category of subscriptions" >
     <div class="panel" >
-    <ikubinfo-panel header="Category"  >
+    <ikubinfo-panel header="{{ category[3] }}"  >
       <div panel-content >
         <img src="assets/images/{{category[8]}}.png" alt="{{category[8]}}" width="80px" class="icon"/>
         <h1>{{ category[3] }}</h1>

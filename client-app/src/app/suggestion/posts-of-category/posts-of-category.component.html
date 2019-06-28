@@ -5,14 +5,17 @@
             
   <div class="col col-xl-6 col-lg-12" *ngFor="let post of posts" >
     <div class="panel" >
-    <ikubinfo-panel header="Post">
+    <ikubinfo-panel header="{{post.postName}}">
       <div panel-content >
+        <div>
+            <img src="assets/images/{{ post.image }}.jpg" width="250px" alt="{{post.image}}" class="image"/>
         <h1>{{ post.postName }}</h1>
         <p>{{ post.postDescription }}</p>
         
         <span class="badge badge-primary" *ngIf="post.likedUsers === undefined || post.likedUsers.length === 0"> Be the first to like this post.</span>
         <span class="badge badge-primary" *ngIf="post.likedUsers.length > 0">{{ post.likedUsers }} like this post.</span>
         <br>
+        </div>
         <p-button class="like" icon="pi pi-check" *ngIf="!post.liked" (click)="like(post.postId)" label="Like"></p-button>
         <button pButton type="button" icon="pi pi-times" *ngIf="post.liked" label="Unlike" (click)="unlike(post.postId)" class="ui-button-rounded ui-button-danger unlike"></button>
       </div>

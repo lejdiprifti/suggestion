@@ -35,6 +35,7 @@ import { CommonModule } from '@angular/common';
 
 import { InputComponent } from '@ikubinfo/commons/input/input.component';
 import { PanelComponent } from '@ikubinfo/commons/panel/panel.component';
+import {CarouselModule} from 'primeng/carousel';
 
 @core.NgModule({
     imports: [CommonModule],
@@ -69,6 +70,7 @@ import { PanelComponent } from '@ikubinfo/commons/panel/panel.component';
         CommonModule,
         ContextMenuModule,
         ToastModule,
+        CarouselModule,
         ConfirmDialogModule,
         InputComponent,
         PanelComponent],

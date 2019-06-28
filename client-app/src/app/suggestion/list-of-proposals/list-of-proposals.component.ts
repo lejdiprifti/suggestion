@@ -13,8 +13,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ListOfProposalsComponent implements OnInit {
   categories: Object;
-  items: MenuItem[];
-  selectedSuggestion: Category;
   cols: any[];
   constructor(private categoryService: CategoryService,private logger:LoggerService, private router: Router, private active: ActivatedRoute,
     private confirmationService: ConfirmationService) { }
@@ -22,16 +20,6 @@ export class ListOfProposalsComponent implements OnInit {
   ngOnInit() {
     this.categories=[];
     this.loadSuggestions();
-    
-    this.items = [
-      { label: 'Delete', icon: 'pi pi-times', command: (event) => this.deleteSuggestion(this.selectedSuggestion) }
-    ];
-    
-    this.cols = [
-      { field: 'categoryName', header: 'Name' },
-      { field: 'categoryDescription', header: 'Description' },
-      { field: 'categoryState', header: 'Status'}
-    ];
   }
   
 

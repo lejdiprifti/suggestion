@@ -23,12 +23,13 @@ import { CategoryComponent } from './admin/category/category.component';
 import { AddCategoryComponent } from './admin/add-category/add-category.component';
 import { CurrentUsersComponent } from './admin/current-users/current-users.component';
 import { ListOfProposalsComponent } from './list-of-proposals/list-of-proposals.component';
+import { MessagesComponent } from './messages/messages.component';
 
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule,ReactiveFormsModule],
     exports: [],
-    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent,CategoriesComponent,ProposalsComponent,CategorySuggestionsComponent, CategoryComponent, AddCategoryComponent, CurrentUsersComponent,PostViewComponent,PostsOfCategoryComponent,ListOfProposalsComponent],
+    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent,CategoriesComponent,ProposalsComponent,CategorySuggestionsComponent, CategoryComponent, AddCategoryComponent, CurrentUsersComponent,PostViewComponent,PostsOfCategoryComponent,ListOfProposalsComponent, MessagesComponent],
     providers: [CategoryComponent]
 })
 export class SuggestionModule { }
