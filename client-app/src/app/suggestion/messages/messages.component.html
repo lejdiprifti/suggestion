@@ -1,3 +1,8 @@
+<div *ngIf="categories.length === 0">
+    <div _ngcontent-c12="" class="alert alert-warning" >
+        <strong _ngcontent-c12="" class="ng-tns-c12-8">No messages!</strong> Our administrators will take into consideration your proposals as soon as possible.
+        </div>
+</div>
 <div  *ngIf="categories.length > 0">
 <div *ngFor="let category of categories">
 <div _ngcontent-c12="" class="alert alert-success" *ngIf="category.categoryState === 'CREATED'">
