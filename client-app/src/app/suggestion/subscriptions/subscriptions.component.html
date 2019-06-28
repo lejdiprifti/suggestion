@@ -6,8 +6,9 @@
       <div panel-content >
         <h1>{{ category[3] }}</h1>
         <p>{{ category[2] }}</p>
-        <button class="btn btn-info" (click)="viewPosts(category[0])" >Open</button>
-        <button class="btn btn-danger button" (click)="unsubscribe(category[0])">Unsubscribe</button>
+        <button pButton type="button" label="Open" class="ui-button-info" (click)="viewPosts(category[0])"></button>
+        <button pButton type="button" label="Unsubscribe" icon="pi pi-times" class="ui-button-danger button" (click)="unsubscribe(category[0])"></button>
+
       </div>
     </ikubinfo-panel>
     </div>

@@ -1,4 +1,7 @@
-<div class="row">
+<div _ngcontent-c27="" class="alert alert-success" *ngIf="categories.length === 0">
+  <strong _ngcontent-c27="" class="ng-tns-c27-3">Well done!</strong> You successfully subscribed to all the categories.</div>
+
+<div class="row" *ngIf="categories.length > 0">
             
   <div class="col col-xl-6 col-lg-12" *ngFor="let category of categories">
     <div class="panel">
