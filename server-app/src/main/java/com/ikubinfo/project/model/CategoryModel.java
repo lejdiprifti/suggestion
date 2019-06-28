@@ -15,6 +15,7 @@ public class CategoryModel {
 	private State categoryState;
 	private UserEntity acceptedUser;
 	private Date acceptedDate;
+	private String icon;
 	private boolean flag;
 	private int postsNumber;
 	public CategoryModel() {
@@ -84,14 +85,26 @@ public class CategoryModel {
 	}
 
 
+	public String getIcon() {
+		return icon;
+	}
+
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+
 	@Override
 	public String toString() {
 		return "CategoryModel [categoryId=" + categoryId + ", categoryName=" + categoryName + ", categoryDescription="
 				+ categoryDescription + ", proposedUser=" + proposedUser + ", categoryState=" + categoryState
-				+ ", acceptedUser=" + acceptedUser + ", acceptedDate=" + acceptedDate + ", flag=" + flag
-				+ ", postsNumber=" + postsNumber + "]";
+				+ ", acceptedUser=" + acceptedUser + ", acceptedDate=" + acceptedDate + ", icon=" + icon + ", flag="
+				+ flag + ", postsNumber=" + postsNumber + "]";
 	}
 
+
+	
 
 	
 

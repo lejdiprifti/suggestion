@@ -13,18 +13,30 @@ import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 export class CategoryComponent implements OnInit {
    categoryForm: FormGroup
   category: Category;
+  icons: Array<String>;
   constructor(private categoriesService: CategoriesService,private logger: LoggerService,private fb: FormBuilder,private router: Router) { }
 
   ngOnInit() {
     this.loadData();
     this.categoryForm=this.fb.group({
       title: ['', Validators.required] ,
-      description: ['' , Validators.required],
+      icon: [''],
+      description: [''],
     });
     this.category={
 
     }
-    
+    this.icons=[
+      'sports',
+      'music',
+      'nature',
+      'restaurants',
+      'hotels',
+      'news',
+      'cars',
+      'holidays',
+      'technology',
+    ]
     }
 
     reset(): void {
@@ -36,19 +48,18 @@ export class CategoryComponent implements OnInit {
       this.category=res;
       this.categoryForm.get('title').setValue(this.category.categoryName);
     this.categoryForm.get('description').setValue(this.category.categoryDescription);
+    this.categoryForm.get('icon').setValue(this.category.icon);
     });
   }
 
   submit(){
-    console.log(this.categoriesService.getId());
     this.category.categoryName=this.categoryForm.value.title;
     this.category.categoryDescription=this.categoryForm.value.description;
-    console.log(this.category);
+    this.category.icon=this.categoryForm.value.icon;
     this.categoriesService.edit(this.categoriesService.getId(),this.category).subscribe(res=>{
       this.router.navigate(['suggestion/categories']);
       this.logger.success("Success", "Data saved");
     }, err=>{
-      console.log(this.category);
       this.logger.error("Error", "Category name exists.");
     });
   }
@@ -56,7 +67,12 @@ export class CategoryComponent implements OnInit {
   fillForm(data: Category={}){
     this.categoryForm.get('title').setValue(data.categoryName);
     this.categoryForm.get('description').setValue(data.categoryDescription);
+    this.categoryForm.get('icon').setValue(data.icon);
   }
   
-  
+  changeIcon(e) {
+    this.category.icon = e.target.value, {
+    onlySelf: true
+    }
+  }
 }

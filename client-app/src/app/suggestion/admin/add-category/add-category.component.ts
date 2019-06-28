@@ -16,12 +16,25 @@ export class AddCategoryComponent implements OnInit {
   constructor(private logger: LoggerService,private categoriesService: CategoriesService, private router: Router,private fb: FormBuilder) { }
   category: Category;
   categoryForm: FormGroup;
+  icons: Array<String>;
   ngOnInit() {
     this.category={};
     this.categoryForm=this.fb.group({
       title: ['' , Validators.required] ,
-      description: ['' , Validators.required],
+      icon: [''],
+      description: ['' ],
     });
+    this.icons=[
+      'sports',
+      'music',
+      'nature',
+      'restaurants',
+      'hotels',
+      'news',
+      'cars',
+      'holidays',
+      'technology',
+    ]
   }
 
   reset(): void {
@@ -32,7 +45,7 @@ export class AddCategoryComponent implements OnInit {
     console.log(this.categoriesService.getId());
     this.category.categoryName=this.categoryForm.value.title;
     this.category.categoryDescription=this.categoryForm.value.description;
-    console.log(this.category);
+    this.category.icon=this.categoryForm.value.icon;
     return this.categoriesService.add(this.category).subscribe(res=>{
       this.router.navigate(['suggestion/categories']);
       this.logger.success("Success", "Category created");
@@ -44,5 +57,14 @@ export class AddCategoryComponent implements OnInit {
   fillForm(data: Category={}){
     this.categoryForm.get('title').setValue(data.categoryName);
     this.categoryForm.get('description').setValue(data.categoryDescription);
+    this.categoryForm.get('icon').setValue(data.icon);
   }
+
+  
+  changeIcon(e) {
+    this.category.icon = e.target.value, {
+    onlySelf: true
+    }
+  }
+
 }

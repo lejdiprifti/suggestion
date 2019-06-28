@@ -65,7 +65,7 @@ public class CategoryService {
 		if (category.getCategoryDescription() != null) {
 			foundCategory.setCategoryDescription(category.getCategoryDescription());
 		}
-		
+		foundCategory.setIcon(category.getIcon());
 		return categoryConverter.toModel(categoryRepository.update(foundCategory));
 	}
 	
@@ -79,6 +79,7 @@ public class CategoryService {
 			category.setAcceptedUser(user);
 			category.setCategoryState(State.CREATED);
 			category.setProposedUser(user);
+			category.setIcon(category.getIcon());
 			category.setFlag(true);
 		return categoryConverter.toModel(categoryRepository.insert(categoryConverter.toEntity(category),user));
 	}

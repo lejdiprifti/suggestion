@@ -72,7 +72,7 @@ public  allCategories = async (): Promise<Array<Category>> => {
 //     return this.apiService.put<Post>(url, post);
 // }
 
-public suggestCategory(category: any){
+public suggestCategory(category: Category){
   return this.apiService.post('suggestions',category);
 }
 

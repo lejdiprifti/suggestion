@@ -43,8 +43,12 @@ public class CategoryEntity {
 	@Column(name = "accepted_date")
 	private Date acceptedDate;
 	
+	@Column(name="icon")
+	private String icon;
+	
 	@Column(name="flag")
 	private boolean flag;
+	
 	
 	public CategoryEntity() {
 
@@ -115,12 +119,23 @@ public class CategoryEntity {
 		this.flag = flag;
 	}
 
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
 	@Override
 	public String toString() {
 		return "CategoryEntity [categoryId=" + categoryId + ", categoryName=" + categoryName + ", categoryDescription="
-				+ categoryDescription + ", proposedUser=" + proposedUser + ", state=" + categoryState + ", acceptedUser="
-				+ acceptedUser + ", acceptedDate=" + acceptedDate + ", flag=" + flag + "]";
+				+ categoryDescription + ", proposedUser=" + proposedUser + ", categoryState=" + categoryState
+				+ ", acceptedUser=" + acceptedUser + ", acceptedDate=" + acceptedDate + ", icon=" + icon + ", flag="
+				+ flag + "]";
 	}
+
+	
 
 	
 

@@ -15,7 +15,7 @@ export class CategorySuggestionsComponent implements OnInit {
   
   category: Category;
   suggestionForm: FormGroup;
-  
+  icons: Array<String>;
   constructor(private router: Router,private fb: FormBuilder, private categoryService: CategoryService,private logger: LoggerService) { }
 
   ngOnInit() {
@@ -25,8 +25,22 @@ export class CategorySuggestionsComponent implements OnInit {
   initInputData() {
     this.suggestionForm=this.fb.group({
       categoryName: ['' , Validators.required],
+      icon:[''],
       categoryDescription:  [''],
+      
     });   
+
+    this.icons=[
+      'sports',
+      'music',
+      'nature',
+      'restaurants',
+      'hotels',
+      'news',
+      'cars',
+      'holidays',
+      'technology',
+    ]
     }
 
   clearData() {
@@ -36,7 +50,8 @@ export class CategorySuggestionsComponent implements OnInit {
   getData(){
     return {
       categoryName: this.suggestionForm.get('categoryName').value,
-      categoryDescription: this.suggestionForm.get('categoryDescription').value
+      categoryDescription: this.suggestionForm.get('categoryDescription').value,
+      icon: this.suggestionForm.get('icon').value
     }
   }
 
@@ -44,7 +59,7 @@ export class CategorySuggestionsComponent implements OnInit {
  
    this.categoryService.suggestCategory(this.getData()).subscribe(res=>{
      this.router.navigate(['suggestion/propose']);
-     this.logger.success("Success", "Category was added successfully"); 
+     this.logger.success("Success", "Category was proposed successfully."); 
    }, 
    err=>{
      this.logger.error("Error", "Category already exists.");
@@ -53,4 +68,9 @@ export class CategorySuggestionsComponent implements OnInit {
    
   }
 
+  changeIcon(e) {
+    this.getData().icon = e.target.value, {
+    onlySelf: true
+    }
+  }
 }

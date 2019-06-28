@@ -9,5 +9,6 @@ export interface Category {
     categoryState?: State;
     acceptedUser?: User;
     acceptedDate?: Date;
+    icon?: String;
     isSubscribed?: boolean;
 }
