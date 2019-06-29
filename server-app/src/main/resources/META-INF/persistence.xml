@@ -26,7 +26,7 @@
 				value="jdbc:postgresql://localhost:5432/postgres" />
 			<property name="hibernate.connection.username"
 				value="postgres" />
-			<property name="hibernate.connection.password" value="admin" />
+			<property name="hibernate.connection.password" value="root" />
 			<property name="hibernate.connection.pool_size" value="5" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />

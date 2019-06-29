@@ -44,7 +44,8 @@ export class AuthService {
             data  ? "Setting current user info. : Clearing current user info." : ""
         );
         if (data) {
-            this.user = data.user;     
+            this.user = data.user; 
+            sessionStorage.setItem("usernameOfLoggedUser", data.user.username);    
             sessionStorage.setItem("userData", JSON.stringify(data.user));
             sessionStorage.setItem("token", data.jwt);
             this.onUserChanged.next(data.user);

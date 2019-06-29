@@ -6,6 +6,9 @@ import { SettingsService } from '@ikubinfo/core/services/settings.service';
 import { Register } from '@ikubinfo/core/models/register';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+import { User } from '@ikubinfo/core/models/user';
+import { AuthService } from '@ikubinfo/core/services/auth.service';
+import { RegisterService } from '@ikubinfo/core/services/register.service';
 
 
 @Component({
@@ -17,7 +20,12 @@ export class SettingsComponent implements OnInit {
  settingsForm: FormGroup;
  updateUser: Register;
  passwordForm: FormGroup;
-  constructor(private confirmationService: ConfirmationService, private logger: LoggerService,private router: Router , private fb:FormBuilder,private settingsService: SettingsService) { 
+ user : User 
+  constructor(private confirmationService: ConfirmationService,
+     private logger: LoggerService,private router: Router ,
+      private fb:FormBuilder,
+      private settingsService: SettingsService,
+      private registerService : RegisterService) { 
     this.updateUser={
 
     }
@@ -25,6 +33,11 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.registerService.getUserByUsername(sessionStorage.getItem("usernameOfLoggedUser")).subscribe(
+      result => {
+        this.user = result;
+      }
+    );
     this.passwordForm=this.fb.group({
       password: [
         "",
@@ -61,26 +74,14 @@ export class SettingsComponent implements OnInit {
     ],
     address: [
       "",
-    ],
-    passwordForm: this.passwordForm
+    ]
     });
   }
-update(): void {
-    if (this.settingsForm.value.username !== ""){
-      this.updateUser.username=this.settingsForm.value.username;
-    }
+updatePassword(): void {
     if (this.passwordForm.value.password !== ""){
       this.updateUser.password=this.passwordForm.value.password;
     }
-    if (this.settingsForm.value.birthdate !== null){
-      this.updateUser.birthdate=this.settingsForm.value.birthdate;
-    }
-    if (this.settingsForm.value.email !== ""){
-      this.updateUser.email=this.settingsForm.value.email;
-    }
-    if (this.settingsForm.value.address !== ""){
-      this.updateUser.address=this.settingsForm.value.address;
-    }
+   // if(this.passwordForm.value.password === this.passwordForm.value.repeatPassword){
     this.confirmationService.confirm({
       message: 'Do you want to save your data?',
       header: 'Save Confirmation',
@@ -95,7 +96,39 @@ update(): void {
       });
       }
     });
+  // }else{
+  //   this.logger.error("Error","Password doesn't match");
+  // }
     
+}
+updateData(): void {
+  if (this.settingsForm.value.username !== ""){
+    this.updateUser.username=this.settingsForm.value.username;
+  }
+  if (this.settingsForm.value.birthdate !== null){
+    this.updateUser.birthdate=this.settingsForm.value.birthdate;
+  }
+  if (this.settingsForm.value.email !== ""){
+    this.updateUser.email=this.settingsForm.value.email;
+  }
+  if (this.settingsForm.value.address !== ""){
+    this.updateUser.address=this.settingsForm.value.address;
+  }
+  this.confirmationService.confirm({
+    message: 'Do you want to save your data?',
+    header: 'Save Confirmation',
+    icon: 'pi pi-info-circle',
+    accept: () => {
+      this.settingsService.update(this.updateUser).subscribe(res=>{
+        this.logger.success("Success", "Data saved successfully!");
+    },
+    err=>{
+      this.logger.error("Error","Username is taken.");
+      this.router.navigate(["/suggestion/settings"]);
+    });
+    }
+  });
+  
 }
 delete(): any{
   this.confirmationService.confirm({
