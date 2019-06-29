@@ -1,5 +1,6 @@
 package com.ikubinfo.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -8,9 +9,13 @@ import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.converter.UserConverter;
+import com.ikubinfo.project.entity.CategoryEntity;
+import com.ikubinfo.project.entity.PostEntity;
 import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.UserModel;
+import com.ikubinfo.project.repository.CategoryRepository;
+import com.ikubinfo.project.repository.PostRepository;
 import com.ikubinfo.project.repository.UserRepository;
 
 
@@ -18,10 +23,14 @@ import com.ikubinfo.project.repository.UserRepository;
 public class UserService {
 	private UserRepository userRepository;
 	private UserConverter userConverter;
-
+	private CategoryRepository categoryRepository;
+	private PostRepository postRepository;
+	
 	public UserService() {
 		userRepository = new UserRepository();
 		userConverter = new UserConverter();
+		categoryRepository=new CategoryRepository();
+		postRepository=new PostRepository();
 	}
 
 	public UserModel getUser(String username,String password) {
@@ -42,7 +51,24 @@ public class UserService {
 	}
 
 	public List<UserModel> getUsers() {
-       return userConverter.toModel(userRepository.getUsers());
+		List<UserModel> userList=userConverter.toModel(userRepository.getUsers());
+		for(UserModel user: userList) {
+			List<String> categoryNameList=new ArrayList<>();
+			List<String> postNameList=new ArrayList<>();
+		List<CategoryEntity> categoryList=categoryRepository.getSubscribedCategoriesByUser(userConverter.toEntity(user));
+		List<PostEntity> postList=postRepository.getLikedPostsByUser(userConverter.toEntity(user));
+		for (CategoryEntity category: categoryList) {
+			categoryNameList.add(category.getCategoryName());
+		}
+		user.setCategories(categoryNameList);
+		for(PostEntity post: postList) {
+			
+			postNameList.add(post.getPostName());
+		}
+		user.setPosts(postNameList);
+		
+		}
+       return userList; 
 	}
 	
 	public UserModel update(UserModel user ,String username) {
@@ -93,4 +119,5 @@ public class UserService {
 		return userConverter.toModel(userRepository.register(userConverter.toEntity(user)));
 	}
 	}
+	
 }

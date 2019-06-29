@@ -70,7 +70,7 @@ export class PostComponent implements OnInit {
   fillForm(data: Post = {}): void {
     this.postForm.get('title').setValue(data.postName);
     this.postForm.get('description').setValue(data.postDescription);
-    this.postForm.get('category').setValue(data.category.categoryId);
+    this.postForm.get('category').setValue(data.categoryId);
     this.postForm.get('image').setValue(data.image);
   }
 
@@ -97,11 +97,11 @@ export class PostComponent implements OnInit {
     }
     else {
       this.postService.createPost(this.getData()).subscribe(res => {
-        this.logger.info('Success', 'Created ');
+        this.logger.info('Success', 'Post was created successfully.');
         this.router.navigate(['posts'], { relativeTo: this.active.parent });
       },
       err => {
-        this.logger.error('Error', 'An error accured');
+        this.logger.error('Error', 'An error occured.');
       });
 
     }

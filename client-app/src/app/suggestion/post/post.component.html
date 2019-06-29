@@ -20,7 +20,7 @@
         <textarea formControlName="description" type="text" class="form-control"> </textarea>
       </ikubinfo-input>
     </form>
-    <button type="submit" (click)="submit()" [disabled]="postForm.invalid" class="btn btn-primary">Submit</button>
-    <button (click)="reset()" class="btn btn-secondary">Reset</button>
+    <button pButton type="submit" (click)="submit()" [disabled]="postForm.invalid" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
+    <button pButton type="button" (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
   </div>
 </ikubinfo-panel>

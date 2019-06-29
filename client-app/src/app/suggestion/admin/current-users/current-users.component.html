@@ -14,7 +14,13 @@
           <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr [pContextMenuRow]="rowData">
               <td *ngFor="let col of columns">
-                {{ rowData[col.field] }}
+               <p *ngIf="col.field !== 'categories' && col.field !== 'posts'"> {{ rowData[col.field] }} </p>
+              <ol *ngIf="col.field === 'categories'">
+                <li *ngFor="let category of rowData[col.field]">{{category}}</li>
+              </ol>
+              <ol *ngIf="col.field === 'posts'">
+                  <li *ngFor="let likes of rowData[col.field]">{{likes}}</li>
+                </ol>
               </td>
             </tr>
           </ng-template>

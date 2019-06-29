@@ -163,4 +163,11 @@ try {
 		}
 		return usernameList;
 	}
+	
+	public List<PostEntity> getLikedPostsByUser(UserEntity user){
+		TypedQuery<PostEntity> query= entityManager.createQuery("Select c.post from PostsLiked c where c.user=?1 and c.flag=?2",PostEntity.class);
+		query.setParameter(1, user);
+		query.setParameter(2, true);
+		return query.getResultList();
+	}
 }

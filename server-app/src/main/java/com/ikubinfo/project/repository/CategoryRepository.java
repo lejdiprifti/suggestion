@@ -185,4 +185,12 @@ public class CategoryRepository  {
 		return list;
 	}
 	
+	public List<CategoryEntity> getSubscribedCategoriesByUser(UserEntity user){
+		TypedQuery<CategoryEntity> query=entityManager.createQuery("Select c.category from Subscriptions c where c.user = ?1 and c.flag=?2 order by c.date DESC",CategoryEntity.class);
+		query.setParameter(1, user);
+		query.setParameter(2, true);
+		return query.getResultList();
+	}
+	
+	
 }

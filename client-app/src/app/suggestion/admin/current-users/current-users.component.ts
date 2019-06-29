@@ -22,7 +22,9 @@ export class CurrentUsersComponent implements OnInit {
       { field: 'username', header: 'Username' },
       { field: 'password', header: 'Password' },
       { field: 'email', header: 'Email'},
-      { field: 'address', header: 'Address'}
+      { field: 'address', header: 'Address'},
+      {field: 'categories', header: 'Subscribed to'},
+      {field: 'posts', header: 'Liked'}
     ];
   }
 

@@ -23,5 +23,14 @@
 }
 .header{
     margin-bottom: 2%;
-    width: 10px;
+    height: 85px;
 }
+
+.back {
+    height:85px;
+}
+
+.card-header{
+    height:85px;
+}
+

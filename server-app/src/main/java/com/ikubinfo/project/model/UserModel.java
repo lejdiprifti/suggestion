@@ -1,6 +1,7 @@
 package com.ikubinfo.project.model;
 
 import java.util.Date;
+import java.util.List;
 
 import com.ikubinfo.project.entity.RoleEntity;
 
@@ -12,6 +13,8 @@ public class UserModel {
 	private Date birthdate;
 	private String email;
 	private String address;
+	private List<String> categories;
+	private List<String> posts;
 	private boolean flag;
 
 	public UserModel() {
@@ -81,6 +84,26 @@ public class UserModel {
 
 	public void setFlag(boolean flag) {
 		this.flag = flag;
+	}
+
+
+	public List<String> getCategories() {
+		return categories;
+	}
+
+
+	public void setCategories(List<String> categories) {
+		this.categories = categories;
+	}
+
+
+	public List<String> getPosts() {
+		return posts;
+	}
+
+
+	public void setPosts(List<String> posts) {
+		this.posts = posts;
 	}
 
 }

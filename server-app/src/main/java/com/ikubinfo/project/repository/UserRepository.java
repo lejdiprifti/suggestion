@@ -25,7 +25,11 @@ public class UserRepository {
 	}
 	
 	public List<UserEntity> getUsers(){
-		return entityManager.createQuery("Select u From UserEntity u where u.flag=?1",UserEntity.class).setParameter(1, true).getResultList();
+		TypedQuery<UserEntity> query= entityManager.createQuery("Select u From UserEntity u where u.role=?1 and u.flag=?2",UserEntity.class);
+		TypedQuery<RoleEntity> query2=entityManager.createQuery("Select c from RoleEntity c where c.id=2",RoleEntity.class);
+		query.setParameter(1, query2.getSingleResult());
+		query.setParameter(2, true);
+		return query.getResultList();
 	}
 	
 	public UserEntity getUser(String username,String password) {
@@ -73,4 +77,5 @@ public class UserRepository {
 			return userEntity;
 
 	}
+	
 }
