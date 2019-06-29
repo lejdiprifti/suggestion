@@ -1,8 +1,9 @@
+<button pButton (click)="addPost()" class="ui-button-info addpost" label="Add Post" icon="pi pi-plus"></button>
 <div class="row">
   <div class="col col-xl-12 col-lg-12">
     <ikubinfo-panel header="Posts">
       <div panel-content>
-        <button (click)="addPost()" class="btn btn-primary">Add Post</button>
+
         <p-table [columns]="cols" [value]="posts" [paginator]="true" [rows]="10" [(contextMenuSelection)]="selectedPost"
           [contextMenu]="cm">
           <ng-template pTemplate="header" let-columns>
@@ -15,7 +16,8 @@
           <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr [pContextMenuRow]="rowData">
               <td *ngFor="let col of columns">
-                {{ rowData[col.field] }}
+               <p *ngIf="col.field!=='image'"> {{ rowData[col.field] }}</p>
+               <img *ngIf="col.field==='image'" src="assets/images/{{rowData[col.field]}}.jpg" alt="{{rowData[col.field]}}" width="300px" height="200px" />
               </td>
             </tr>
           </ng-template>

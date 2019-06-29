@@ -5,3 +5,11 @@
 .panel:hover{
     transform: scale(1.02);
 }
+
+.addcategory{
+    margin-bottom: 2%;
+}
+
+.image{
+    margin-left: 30%;
+}

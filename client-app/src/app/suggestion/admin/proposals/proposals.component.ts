@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProposalsService } from '../services/proposals.service';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 @Component({
   selector: 'ikubinfo-proposals',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class ProposalsComponent implements OnInit {
   proposals: Object;
-  constructor(private proposalsService: ProposalsService, private logger: LoggerService, private router: Router) { }
+  constructor(private confirmationService: ConfirmationService,private proposalsService: ProposalsService, private logger: LoggerService, private router: Router) { }
 
   ngOnInit() {
     this.proposals=[];
@@ -30,18 +31,40 @@ export class ProposalsComponent implements OnInit {
   }
 
   accept(id: number){
+    this.confirmationService.confirm({
+      message: 'Do you want to accept this proposal?',
+      header: 'Accept Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
     this.proposalsService.accept(id).subscribe(res=>{
       this.getProposals();
-      this.logger.success("Success", "To be created...");
+      this.logger.success("Success", "Proposal was accepted.");
+    
+    },
+    err=>{
+      this.logger.error("Error","Something bad happened.");
     });
-   
+  
   }
+  });
+}
 
   decline(id: number){
-    this.proposalsService.decline(id).subscribe(res=>{
-      this.getProposals();
-      this.logger.info("Deleted", "To be deleted...");
+    this.confirmationService.confirm({
+      message: 'Do you want to decline this proposal?',
+      header: 'Decline Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.proposalsService.decline(id).subscribe(res=>{
+          this.getProposals();
+          this.logger.info("Declined", "Proposal was successfully declined.");
+    },
+    err=>{
+      this.logger.error("Error","Something bad happened.");
     });
-   
+  
+  }
+  });
   }
 }
+

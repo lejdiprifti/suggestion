@@ -71,7 +71,7 @@ export class CategoryComponent implements OnInit {
   }
   
   changeIcon(e) {
-    this.category.icon = e.target.value, {
+   return this.category.icon = e.target.value, {
     onlySelf: true
     }
   }

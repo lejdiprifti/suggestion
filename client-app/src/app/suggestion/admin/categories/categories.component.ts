@@ -34,7 +34,8 @@ export class CategoriesComponent implements OnInit {
     
     this.cols = [
       { field: 'categoryName', header: 'Name' },
-      { field: 'categoryDescription', header: 'Description' }
+      { field: 'categoryDescription', header: 'Description' },
+      {field: 'icon', header: 'Icon'}
     ];
   }
 

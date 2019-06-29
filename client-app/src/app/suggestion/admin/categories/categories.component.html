@@ -1,8 +1,9 @@
+<button pButton type="button" (click)="add()" class="ui-button-info addcategory" icon="pi pi-plus" label="Add Category"></button>
 <div class="row">
   <div class="col col-xl-12 col-lg-12">
-    <ikubinfo-panel header="Posts">
+    <ikubinfo-panel header="Categories">
       <div panel-content>
-        <button (click)="add()" class="btn btn-primary">Add Post</button>
+        
         <p-table [columns]="cols" [value]="categories" [paginator]="true" [rows]="10" [(contextMenuSelection)]="selectedCategory"
           [contextMenu]="cm">
           <ng-template pTemplate="header" let-columns>
@@ -13,9 +14,10 @@
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr [pContextMenuRow]="rowData">
-              <td *ngFor="let col of columns">
-                {{ rowData[col.field] }}
+            <tr [pContextMenuRow]="rowData" >
+              <td *ngFor="let col of columns" >
+              <p *ngIf="col.field !== 'icon'">  {{ rowData[col.field] }} </p>
+                <img *ngIf="col.field === 'icon'" src="assets/images/{{rowData[col.field]}}.png" alt="{{rowData[col.field]}}" width="70px" class="image"/>
               </td>
             </tr>
           </ng-template>
