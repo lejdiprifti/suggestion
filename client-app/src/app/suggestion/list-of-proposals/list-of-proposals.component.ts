@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '@ikubinfo/core/services/category.service';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
-import { MenuItem } from 'primeng/components/common/menuitem';
 import { Category } from '@ikubinfo/core/models/category';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { Router, ActivatedRoute } from '@angular/router';

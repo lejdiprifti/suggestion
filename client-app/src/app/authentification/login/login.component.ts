@@ -53,10 +53,10 @@ export class LoginComponent implements OnInit {
   } else {
     this.router.navigate(['suggestion/dashboard']);
   }
-  this.logger.success('Success', 'Logined successfully');
+  this.logger.success('Success', 'You logged in successfully!');
  },
  err => {
-  this.logger.error('Error', 'Invalid Username');
+  this.logger.error('Error', 'Invalid username or password');
 });
 }
 

@@ -8,8 +8,7 @@
     <ikubinfo-panel header="{{post.postName}}">
       <div panel-content >
         <div>
-            <img src="assets/images/{{ post.image }}.jpg" width="250px" alt="{{post.image}}" class="image"/>
-        <h1>{{ post.postName }}</h1>
+            <img src="assets/images/{{ post.image }}.jpg" width="480px" alt="{{post.image}}" class="image"/>
         <p>{{ post.postDescription }}</p>
         
         <span class="badge badge-primary" *ngIf="post.likedUsers === undefined || post.likedUsers.length === 0"> Be the first to like this post.</span>
