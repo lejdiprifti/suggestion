@@ -40,6 +40,9 @@ public class PostEntity {
 	@Column(name="image")
 	private String image;
 	
+	@Column (name="link")
+	private String link;
+	
 	@Column(name="flag")
 	private boolean flag;
 	
@@ -109,12 +112,19 @@ public class PostEntity {
 		this.image = image;
 	}
 	
+	public String getLink() {
+		return link;
+	}
+	public void setLink(String link) {
+		this.link = link;
+	}
 	@Override
 	public String toString() {
 		return "PostEntity [postId=" + postId + ", postName=" + postName + ", postDescription=" + postDescription
 				+ ", addedDate=" + addedDate + ", user=" + user + ", category=" + category + ", image=" + image
-				+ ", flag=" + flag + "]";
+				+ ", link=" + link + ", flag=" + flag + "]";
 	}
+	
 	
 	
 	

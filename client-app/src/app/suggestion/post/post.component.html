@@ -16,6 +16,9 @@
           <option *ngFor="let category of categories" [ngValue]="category.categoryId">{{category.categoryName}}</option>
         </select>
       </ikubinfo-input>
+      <ikubinfo-input label="Source">
+        <input formControlName="link" type="link" class="form-control" />
+      </ikubinfo-input>
       <ikubinfo-input label="Description">
         <textarea formControlName="description" type="text" class="form-control"> </textarea>
       </ikubinfo-input>

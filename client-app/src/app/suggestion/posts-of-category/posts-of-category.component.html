@@ -1,6 +1,16 @@
 <div _ngcontent-c27="" class="alert alert-info" *ngIf="!posts || posts.length === 0">
   <strong _ngcontent-c27="" class="ng-tns-c27-3">Oh snap!</strong> There are no posts for this category yet. 
 </div>
+<div _ngcontent-c5="" class="card text-white bg-warning header" *ngIf="posts.length > 0">
+    <div _ngcontent-c5="" class="card-header">
+      <div _ngcontent-c5="" class="row back">
+        <div _ngcontent-c5="" class="col col-xs-3 ">
+            <i _ngcontent-c5="" class="fa fa-comments fa-4x"></i>
+      </div>
+        <div _ngcontent-c5="" class="col col-xs-9 text-right">
+          <div _ngcontent-c5="" class="d-block huge">{{posts[0].category.categoryName}}</div>
+          <div _ngcontent-c5="" class="d-block">New Posts!</div></div></div></div>
+    </div>
 <div class="row" *ngIf=" posts.length > 0">
             
   <div class="col col-xl-6 col-lg-12" *ngFor="let post of posts" >
@@ -10,9 +20,12 @@
         <div>
             <img src="assets/images/{{ post.image }}.jpg" width="480px" alt="{{post.image}}" class="image"/>
         <p>{{ post.postDescription }}</p>
-        
+        <p class="link" *ngIf="post.link !== null">Source: <a href="{{post.link}}">{{post.link}}</a></p>
+        <div class="likeIconStatement">
+        <img class="likeIcon" src="assets/images/like.png" alt="like"/>
         <span class="badge badge-primary" *ngIf="post.likedUsers === undefined || post.likedUsers.length === 0"> Be the first to like this post.</span>
         <span class="badge badge-primary" *ngIf="post.likedUsers.length > 0">{{ post.likedUsers }} like this post.</span>
+        </div>
         <br>
         </div>
         <p-button class="like" icon="pi pi-check" *ngIf="!post.liked" (click)="like(post.postId)" label="Like"></p-button>

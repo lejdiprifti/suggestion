@@ -47,6 +47,7 @@ export class PostComponent implements OnInit {
           this.postForm.get('description').setValue(this.post.postDescription);
           this.postForm.get('category').setValue(this.post.category.categoryId);
           this.postForm.get('image').setValue(this.post.image);
+          this.postForm.get('link').setValue(this.post.link);
         },
         err => {
           this.logger.error('Error', 'An error accured');
@@ -63,7 +64,8 @@ export class PostComponent implements OnInit {
       title: ['', Validators.required],
       description: ['', Validators.required],
       image: [''],
-      category: ['' , Validators.required]
+      category: ['' , Validators.required],
+      link: [''],
     });
   }
 
@@ -72,6 +74,7 @@ export class PostComponent implements OnInit {
     this.postForm.get('description').setValue(data.postDescription);
     this.postForm.get('category').setValue(data.categoryId);
     this.postForm.get('image').setValue(data.image);
+    this.postForm.get('link').setValue(data.link);
   }
 
   getData(): Post {
@@ -79,7 +82,8 @@ export class PostComponent implements OnInit {
       postName: this.postForm.get('title').value,
       postDescription: this.postForm.get('description').value,
       categoryId: this.postForm.get('category').value,
-      image: this.postForm.get('image').value
+      image: this.postForm.get('image').value,
+      link: this.postForm.get('link').value
     }
 
   }

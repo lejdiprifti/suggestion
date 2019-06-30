@@ -10,15 +10,40 @@
 }
 
 .like{
-    margin-top: 10%;
+    margin-top: 7%;
 }
 
 .unlike{
-    margin-top:10%;
+    margin-top:7%;
 }
 
 .image{
     float: top;
     margin-bottom: 2%;
  
+}
+
+.link{
+    margin-top:2%;
+    margin-bottom:2%;
+    font-size: 80%;
+}
+
+.likeIcon{
+    float: left;
+    width: 5%;
+    margin-right: 1%;
+}
+
+.likeIconStatement{
+    margin-top: 5%;
+}
+
+.huge{
+    font-size: 250%;
+    font-weight: bold;
+}
+
+.header{
+    margin-bottom: 2%;
 }

@@ -21,6 +21,7 @@ public class PostConverter implements BaseConverter<PostModel, PostEntity>{
 		model.setAddedDate(entity.getAddedDate());
 		model.setUser(entity.getUser());
 		model.setImage(entity.getImage());
+		model.setLink(entity.getLink());
 		model.setFlag(entity.isFlag());
 		return model;
 	}
@@ -36,6 +37,7 @@ public class PostConverter implements BaseConverter<PostModel, PostEntity>{
 		entity.setPostDescription(model.getPostDescription());
 		entity.setUser(model.getUser());
 		entity.setImage(model.getImage());
+		entity.setLink(model.getLink());
 		entity.setFlag(model.isFlag());
 		return entity;
 	}

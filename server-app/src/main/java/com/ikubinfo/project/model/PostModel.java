@@ -17,6 +17,7 @@ public class PostModel {
 	private CategoryEntity category;
 	private int categoryId;
 	private String image;
+	private String link;
 	private boolean flag;
 	private boolean isLiked;
 	private List<String> likedUsers;
@@ -104,13 +105,23 @@ public class PostModel {
 		this.image = image;
 	}
 
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
 	@Override
 	public String toString() {
 		return "PostModel [postId=" + postId + ", postName=" + postName + ", postDescription=" + postDescription
 				+ ", addedDate=" + addedDate + ", user=" + user + ", category=" + category + ", categoryId="
-				+ categoryId + ", image=" + image + ", flag=" + flag + ", isLiked=" + isLiked + ", likedUsers="
-				+ likedUsers + "]";
+				+ categoryId + ", image=" + image + ", link=" + link + ", flag=" + flag + ", isLiked=" + isLiked
+				+ ", likedUsers=" + likedUsers + "]";
 	}
+
+	
 
 	
 	
