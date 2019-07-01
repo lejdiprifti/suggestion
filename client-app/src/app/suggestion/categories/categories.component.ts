@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
-import { CategoriesService } from '../services/categories.service';
-import { CategoryComponent } from '../category/category.component';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { Category } from '@ikubinfo/core/models/category';
 import { MenuItem } from 'primeng/components/common/menuitem';
+import { CategoryComponent } from '../category/category.component';
+import { CategoriesService } from '@ikubinfo/core/services/categories.service';
 
 
 @Component({

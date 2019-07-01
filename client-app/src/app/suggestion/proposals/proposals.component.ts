@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ProposalsService } from '../services/proposals.service';
+
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+import { ProposalsService } from '@ikubinfo/core/services/proposals.service';
 
 @Component({
   selector: 'ikubinfo-proposals',

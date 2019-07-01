@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../services/users.service';
+
 import { User } from '@ikubinfo/core/models/user';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
+import { UsersService } from '@ikubinfo/core/services/users.service';
 
 @Component({
   selector: 'ikubinfo-current-users',
