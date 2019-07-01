@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '@ikubinfo/core/models/category';
-import { CategoriesService } from '../services/categories.service';
+
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { ConfirmationService } from 'primeng/primeng';
+import { CategoriesService } from '@ikubinfo/core/services/categories.service';
 
 @Component({
   selector: 'ikubinfo-add-category',

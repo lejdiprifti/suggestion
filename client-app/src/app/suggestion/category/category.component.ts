@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CategoriesService } from '../services/categories.service';
+
 import { Category } from '@ikubinfo/core/models/category';
 import { Router } from '@angular/router';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
+import { CategoriesService } from '@ikubinfo/core/services/categories.service';
 
 @Component({
   selector: 'ikubinfo-category',
