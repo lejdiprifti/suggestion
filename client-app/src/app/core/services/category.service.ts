@@ -63,15 +63,6 @@ public  allCategories = async (): Promise<Array<Category>> => {
  return this.convertToCategories(this.apiService.get<Array<any>>(this.url).toPromise());
 }
 
-
-// public editAsync = (
-//     id: number,
-//     post: Post
-// ): Observable<Post> => {
-//     const url = this.url + `/${id}`;
-//     return this.apiService.put<Post>(url, post);
-// }
-
 public suggestCategory(category: Category){
   return this.apiService.post('suggestions',category);
 }
