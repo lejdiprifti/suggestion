@@ -47,9 +47,10 @@ public class PostService {
 		PostEntity foundPost= postConverter.toEntity(getPostById(postId));
 		if (post.getPostName() != null) {
 			try {
-				postRepository.isPost(post.getPostName(),post.getCategoryId());
+				postRepository.isPost(post.getPostName().trim(),post.getCategoryId());
+				throw new BadRequestException();
 			}catch(NotFoundException e) {
-			foundPost.setPostName(post.getPostName());
+			foundPost.setPostName(post.getPostName().trim());
 			}
 		}
 		if (post.getPostDescription() != null) {
@@ -74,7 +75,7 @@ public class PostService {
 	
 	public PostModel insert(PostModel post,UserEntity user) {
 		try {
-			postRepository.isPost(post.getPostName(),post.getCategoryId());
+			postRepository.isPost(post.getPostName().trim(),post.getCategoryId());
 			throw new BadRequestException("Already exists.");
 		} catch (NotFoundException e) {
 			post.setAddedDate(new Date());

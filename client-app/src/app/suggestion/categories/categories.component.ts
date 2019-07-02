@@ -41,15 +41,15 @@ export class CategoriesComponent implements OnInit {
     ];
   }
 
-  getAllCategories() : Subscription {
-    return this.categoriesService.getCategories().subscribe(res=>{
+  getAllCategories() : void {
+     this.categoriesService.getCategories().subscribe(res=>{
       this.categories=res;
     },
       err => {
-        this.logger.error('Error', 'An error accured');
+        this.logger.error('Error', 'Something bad happened.');
     });
   }
-  edit(category: Category){
+  edit(category: Category): void{
  
     this.router.navigate(['suggestion/category/'+category.categoryId]);
   }

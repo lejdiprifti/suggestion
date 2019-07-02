@@ -35,7 +35,7 @@ public class UserService {
 
 	public UserModel getUser(String username,String password) {
 		try {
-		return userConverter.toModel(userRepository.getUser(username,password));
+		return userConverter.toModel(userRepository.getUser(username.trim(),password.trim()));
 	}catch(NoResultException e) {
 		throw new NotFoundException();
 	}
@@ -73,27 +73,20 @@ public class UserService {
 	
 	public UserModel update(UserModel user ,String username) {
 	
-		UserEntity foundUser=userRepository.getUserByUsername(username);
-		if (user.getPassword()!=null) {
+		UserEntity foundUser=userRepository.getUserByUsername(username.trim());
+		if (user.getPassword().trim()!=null) {
 			foundUser.setPassword(user.getPassword());
 		}
-		if (user.getEmail()!=null) {
+		if (user.getEmail().trim()!=null) {
 			foundUser.setEmail(user.getEmail());
 		}
 		if (user.getBirthdate()!=null) {
 			foundUser.setBirthdate(user.getBirthdate());
 		}
-		if (user.getAddress()!=null) {
+		if (user.getAddress().trim()!=null) {
 			foundUser.setAddress(user.getAddress());
 		}
-		if (user.getUsername() != null) {
-			try {
-				userRepository.isUser(user.getUsername());
-				throw new BadRequestException("Username taken");
-			}catch(NoResultException e) {
-			foundUser.setUsername(user.getUsername());
-			}
-		}
+		
 		return userConverter.toModel(userRepository.update(foundUser));
 		
 	}
@@ -110,7 +103,7 @@ public class UserService {
 	
 	public UserModel register(UserModel user)  {
 		try {
-			userRepository.isUser(user.getUsername());
+			userRepository.isUser(user.getUsername().trim());
 			throw new NotAllowedException("Username is taken");
 		} catch (NoResultException e) {
 			RoleEntity role=new RoleEntity();

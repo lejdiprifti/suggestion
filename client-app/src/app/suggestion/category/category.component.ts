@@ -85,10 +85,10 @@ export class CategoryComponent implements OnInit {
     this.categoryForm.get('icon').setValue(data.icon);
   }
 
-  loadData(): Subscription{ 
+  loadData(): void{ 
     const id = this.active.snapshot.paramMap.get('id');
     if (id) {
-    return this.categoriesService.getCategoryById(Number(id)).subscribe(res=>{
+     this.categoriesService.getCategoryById(Number(id)).subscribe(res=>{
       this.category=res;
       this.categoryForm.get('categoryName').setValue(this.category.categoryName);
     this.categoryForm.get('categoryDescription').setValue(this.category.categoryDescription);

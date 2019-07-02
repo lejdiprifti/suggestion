@@ -38,9 +38,9 @@ public class SuggestionsRepository {
 	public CategoryEntity insert(CategoryEntity suggestion) {
 
 		entityManager.getTransaction().begin();
-
-		entityManager.persist(suggestion);
 		suggestion.setFlag(true);
+		entityManager.persist(suggestion);
+		
 		entityManager.getTransaction().commit();
 		
 		return suggestion;
@@ -69,7 +69,7 @@ public class SuggestionsRepository {
 		TypedQuery<CategoryEntity> query = entityManager.createQuery(
 				"Select c from CategoryEntity c where (c.categoryName=?1 and c.categoryState=?2 and c.flag=?3) or (c.categoryName=?1 and c.categoryState=?4 and c.flag=?3)",
 				CategoryEntity.class);
-		query.setParameter(1, suggestion.getCategoryName());
+		query.setParameter(1, suggestion.getCategoryName().trim());
 		query.setParameter(2, State.PROPOSED);
 		query.setParameter(4, State.CREATED);
 		query.setParameter(3, true);

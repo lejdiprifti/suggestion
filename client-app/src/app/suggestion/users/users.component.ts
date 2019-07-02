@@ -28,8 +28,8 @@ export class UsersComponent implements OnInit {
     ];
   }
 
-loadUsers() : Object{
-  return this.usersService.getUsers().subscribe(res=>{
+loadUsers() : void{
+  this.usersService.getUsers().subscribe(res=>{
     this.users=res;
   },
   err=>{

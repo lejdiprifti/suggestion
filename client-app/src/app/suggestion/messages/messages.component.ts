@@ -20,8 +20,8 @@ export class MessagesComponent implements OnInit {
     this.loadData();
   }
 
-  loadData() : Object{
-    return this.messagesService.getMessages().subscribe(res=>{
+  loadData(): void{
+    this.messagesService.getMessages().subscribe(res=>{
       this.categories=res;
     },
     err=>{

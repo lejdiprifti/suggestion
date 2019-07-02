@@ -40,9 +40,10 @@ public class SuggestionsService {
 			CategoryEntity foundCategory = suggestionsRepository.getSuggestionById(id);
 			foundCategory.setProposedUser(userRepository.getUserByUsername(username));
 			if (category.getCategoryName().trim().equals(foundCategory.getCategoryName())) {
-				foundCategory.setCategoryName(category.getCategoryName());
+				foundCategory.setCategoryName(category.getCategoryName().trim());
 			} else {
 				try {
+					category.setCategoryName(category.getCategoryName().trim());
 					exists(category);
 					throw new BadRequestException("Suggestion name exists");
 				} catch (NoResultException e) {
@@ -121,7 +122,6 @@ public class SuggestionsService {
 		userRole.setId(2);
 		RoleEntity adminRole = new RoleEntity();
 		adminRole.setId(1);
-		System.out.println(roleFromToken.get("id"));
 		if (roleFromToken.get("id").equals(userRole.getId())) {
 			return categoryConverter.toModel(suggestionsRepository.getMySuggestions(username));
 		} else {

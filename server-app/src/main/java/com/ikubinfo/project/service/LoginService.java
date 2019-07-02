@@ -28,7 +28,7 @@ public class LoginService {
 	private UserRepository userRepository = new UserRepository();
 	public LoginResponse login(LoginRequest request) {
 		try {
-		UserModel loggedInUser = userConverter.toModel(userRepository.getUser(request.getUsername(), request.getPassword()));
+		UserModel loggedInUser = userConverter.toModel(userRepository.getUser(request.getUsername().trim(), request.getPassword().trim()));
 		LoginResponse response = new LoginResponse();
 		response.setJwt(getToken(loggedInUser));
 		response.setUser(loggedInUser);

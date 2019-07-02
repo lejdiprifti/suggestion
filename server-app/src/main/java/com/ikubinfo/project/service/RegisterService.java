@@ -22,7 +22,7 @@ public class RegisterService {
 
 	public UserEntity register(RegisterRequest registerModel) {
 		try {
-			userRepository.isUser(registerModel.getUsername());
+			userRepository.isUser(registerModel.getUsername().trim());
 			throw new BadRequestException();
 		}catch(NoResultException e) {
 			RoleEntity role=new RoleEntity();

@@ -27,7 +27,7 @@ public class CategoryRepository  {
 	}
 
 	public List<CategoryEntity> getCategories() {
-		return entityManager.createQuery("Select c From CategoryEntity c where c.categoryState=?1 and c.flag=:flag", CategoryEntity.class).setParameter(1, State.CREATED).setParameter("flag", true).getResultList();
+		return entityManager.createQuery("Select c From CategoryEntity c where c.categoryState=?1 and c.flag=:flag ORDER BY c.acceptedDate DESC", CategoryEntity.class).setParameter(1, State.CREATED).setParameter("flag", true).getResultList();
 	}
 
 	public CategoryEntity getCategoryByName(String categoryName) {
@@ -81,10 +81,11 @@ public class CategoryRepository  {
 	
 	public CategoryEntity insert(CategoryEntity category,UserEntity user) {
 	entityManager.getTransaction().begin();
-	category.setCategoryState(State.CREATED);
-	category.setAcceptedUser(user);
 	category.setAcceptedDate(new Date());
+	category.setAcceptedUser(user);
+	category.setCategoryState(State.CREATED);
 	category.setProposedUser(user);
+	category.setIcon(category.getIcon());
 	category.setFlag(true);
 	entityManager.persist(category);
 	entityManager.getTransaction().commit();

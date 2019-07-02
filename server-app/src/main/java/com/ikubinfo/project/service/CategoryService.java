@@ -55,11 +55,11 @@ public class CategoryService {
 	
 	public CategoryModel update(CategoryModel category ,int categoryId) {
 		CategoryEntity foundCategory=categoryRepository.getCategoryById(categoryId);
-		if (category.getCategoryName()!=null) {
+		if (category.getCategoryName().trim()!=null) {
 			try {
 				categoryRepository.isCategory(categoryConverter.toEntity(category),categoryId);	
 			}catch(NoResultException e) {
-			foundCategory.setCategoryName(category.getCategoryName());
+			foundCategory.setCategoryName(category.getCategoryName().trim());
 			}
 		}
 		if (category.getCategoryDescription() != null) {
@@ -72,15 +72,10 @@ public class CategoryService {
 	
 	public CategoryModel insert(CategoryModel category,UserEntity user) {
 		try {
-			categoryRepository.getCategoryByName(category.getCategoryName());
+			categoryRepository.getCategoryByName(category.getCategoryName().trim());
 			throw new BadRequestException("Category exists");
 		}catch(NoResultException e) {
-			category.setAcceptedDate(new Date());
-			category.setAcceptedUser(user);
-			category.setCategoryState(State.CREATED);
-			category.setProposedUser(user);
-			category.setIcon(category.getIcon());
-			category.setFlag(true);
+			
 		return categoryConverter.toModel(categoryRepository.insert(categoryConverter.toEntity(category),user));
 	}
 }
