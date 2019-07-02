@@ -5,20 +5,20 @@
 
     <!--Birthdate -->
     <div class="form-group">
-      <input type="date" formControlName="birthdate" [ngModel]= "user.birthdate | date: 'yyyy-MM-dd'" class="form-control input-underline input-lg "
-        placeholder="Birthdate" />
+      <input type="date" formControlName="birthdate" class="form-control input-underline input-lg "
+       placeholder="Birthdate" format="yyyy-MM-dd" />
       <div class="required" *ngIf="settingsForm.get('birthdate').dirty && settingsForm.get('birthdate').hasError('tooYoung')">
         *You must be over 18 years old.
       </div>
     </div>
     <!--Address -->
     <div class="form-group">
-      <input type="text" formControlName="address" [ngModel]= "user.address" class="form-control input-underline input-lg"
+      <input type="text" formControlName="address" class="form-control input-underline input-lg"
         placeholder="Address" />
     </div>
     <!--Email -->
     <div class="form-group">
-      <input type="text" formControlName="email" [ngModel]= "user.email" class="form-control input-underline input-lg" placeholder="Email" />
+      <input type="text" formControlName="email" class="form-control input-underline input-lg" placeholder="Email" />
 
       <div class="required" *ngIf="
       settingsForm.get('email').dirty &&

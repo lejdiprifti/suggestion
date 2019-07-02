@@ -9,6 +9,7 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 import { User } from '@ikubinfo/core/models/user';
 import { AuthService } from '@ikubinfo/core/services/auth.service';
 import { RegisterService } from '@ikubinfo/core/services/register.service';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -20,12 +21,14 @@ export class SettingsComponent implements OnInit {
  settingsForm: FormGroup;
  updateUser: Register;
  passwordForm: FormGroup;
- user : User 
+ authService: AuthService;
+ user: User;
   constructor(private confirmationService: ConfirmationService,
-     private logger: LoggerService,private router: Router ,
-      private fb:FormBuilder,
-      private settingsService: SettingsService,
-      private registerService : RegisterService) { 
+              private logger: LoggerService,private router: Router ,
+              private fb:FormBuilder,
+              private settingsService: SettingsService,
+              private registerService : RegisterService,
+              private datePipe: DatePipe) { 
     this.updateUser={
 
     }
@@ -36,6 +39,12 @@ export class SettingsComponent implements OnInit {
     this.registerService.getUserByUsername(sessionStorage.getItem("usernameOfLoggedUser")).subscribe(
       result => {
         this.user = result;
+        const dateString = this.user.birthdate;
+        const newDate= new Date(dateString);
+        const convertedDate = this.datePipe.transform(newDate, "yyyy-MM-dd");
+        this.settingsForm.get('birthdate').setValue(convertedDate);
+        this.settingsForm.get('address').setValue(this.user.address);
+        this.settingsForm.get('email').setValue(this.user.email);
       }
     );
     this.passwordForm=this.fb.group({
@@ -71,6 +80,8 @@ export class SettingsComponent implements OnInit {
     ]
     });
   }
+
+
 updatePassword(): void {
     if (this.passwordForm.value.password !== ""){
       this.updateUser.password=this.passwordForm.value.password;
