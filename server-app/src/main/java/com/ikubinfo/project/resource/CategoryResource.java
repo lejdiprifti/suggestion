@@ -15,9 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.ikubinfo.project.base.BaseResource;
-import com.ikubinfo.project.entity.CategoryEntity;
 import com.ikubinfo.project.model.CategoryModel;
-import com.ikubinfo.project.model.UserModel;
 import com.ikubinfo.project.repository.CategoryRepository;
 import com.ikubinfo.project.repository.UserRepository;
 import com.ikubinfo.project.service.CategoryService;
@@ -64,8 +62,7 @@ public class CategoryResource  extends BaseResource {
 		
 		@POST
 		public Response insert(CategoryModel category) throws URISyntaxException {
-			categoryService.insert(category,userRepository.getUserByUsername(getUsernameFromToken()));
-				return Response.created(new URI("/categories/"+category.getCategoryId())).build();
+				return Response.created(new URI("/categories/"+categoryService.getCategoryByName(category.getCategoryName()).getCategoryId())).build();
 		}
 		
 		@DELETE

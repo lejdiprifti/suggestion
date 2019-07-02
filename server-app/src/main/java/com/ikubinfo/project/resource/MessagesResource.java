@@ -8,7 +8,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.ikubinfo.project.base.BaseResource;
-import com.ikubinfo.project.repository.SuggestionsRepository;
 import com.ikubinfo.project.service.SuggestionsService;
 import com.ikubinfo.project.util.*;
 @Consumes(MediaType.APPLICATION_JSON)

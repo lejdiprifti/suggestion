@@ -13,12 +13,11 @@ import javax.ws.rs.core.Response;
 
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.converter.CategoryConverter;
-import com.ikubinfo.project.entity.CategoryEntity;
-import com.ikubinfo.project.entity.RoleEntity;
+
 import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.repository.SuggestionsRepository;
 import com.ikubinfo.project.repository.UserRepository;
-import com.ikubinfo.project.service.CategoryService;
+
 import com.ikubinfo.project.service.SuggestionsService;
 import com.ikubinfo.project.util.Paths;
 
@@ -49,9 +48,7 @@ public class SuggestionsResource extends BaseResource {
 
 	@POST
 	public Response suggest(CategoryModel suggestion) throws URISyntaxException {
-
-		suggestionsService.suggest(suggestion,userRepository.getUserByUsername(getUsernameFromToken()));
-		return Response.created(new URI("/suggestions/"+suggestion.getCategoryId())).build();
+		return Response.created(new URI("/suggestions/"+suggestionsService.suggest(suggestion,userRepository.getUserByUsername(getUsernameFromToken())).getCategoryId())).build();
 	}
 
 	@PUT

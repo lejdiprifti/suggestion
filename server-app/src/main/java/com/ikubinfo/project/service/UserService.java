@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.converter.UserConverter;
@@ -74,17 +73,18 @@ public class UserService {
 	public UserModel update(UserModel user ,String username) {
 	
 		UserEntity foundUser=userRepository.getUserByUsername(username.trim());
-		if (user.getPassword().trim()!=null) {
-			foundUser.setPassword(user.getPassword());
+		if (user.getPassword()!=null) {
+			
+			foundUser.setPassword(user.getPassword().trim());
 		}
-		if (user.getEmail().trim()!=null) {
-			foundUser.setEmail(user.getEmail());
+		if (user.getEmail()!=null) {
+			foundUser.setEmail(user.getEmail().trim());
 		}
 		if (user.getBirthdate()!=null) {
 			foundUser.setBirthdate(user.getBirthdate());
 		}
-		if (user.getAddress().trim()!=null) {
-			foundUser.setAddress(user.getAddress());
+		if (user.getAddress()!=null) {
+			foundUser.setAddress(user.getAddress().trim());
 		}
 		
 		return userConverter.toModel(userRepository.update(foundUser));
@@ -104,7 +104,7 @@ public class UserService {
 	public UserModel register(UserModel user)  {
 		try {
 			userRepository.isUser(user.getUsername().trim());
-			throw new NotAllowedException("Username is taken");
+			throw new BadRequestException("Username is taken");
 		} catch (NoResultException e) {
 			RoleEntity role=new RoleEntity();
 			role.setId(2);

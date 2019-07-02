@@ -40,8 +40,6 @@ export class LoginComponent implements OnInit {
  this.authService.login(this.loginForm.value).subscribe(
  (res: any)=>{
   this.authService.setData(res);
-  console.log(this.authService.user.role);
-  console.log(this.role);
   if (this.authService.user.role.id === RoleEnum.ADMIN){
     this.router.navigate(['suggestion/categories']);
   } else {

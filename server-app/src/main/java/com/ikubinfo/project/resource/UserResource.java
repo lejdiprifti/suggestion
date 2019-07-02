@@ -9,7 +9,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 import com.ikubinfo.project.base.BaseResource;
-import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.UserModel;
 import com.ikubinfo.project.service.UserService;
 import com.ikubinfo.project.util.Paths;

@@ -12,7 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import com.ikubinfo.project.base.BaseResource;
-import com.ikubinfo.project.entity.PostEntity;
+
 import com.ikubinfo.project.model.PostModel;
 import com.ikubinfo.project.repository.PostRepository;
 import com.ikubinfo.project.repository.UserRepository;
@@ -53,8 +53,7 @@ public class PostResource extends BaseResource{
 	
 	@POST
 	public Response insert(PostModel post) throws URISyntaxException {
-		postService.insert(post,userRepository.getUserByUsername(getUsernameFromToken()));
-			return Response.created(new URI("/posts/"+post.getPostId())).build();
+			return Response.created(new URI("/posts/"+postService.insert(post,userRepository.getUserByUsername(getUsernameFromToken())).getPostId())).build();
 	}
 	
 	@DELETE
