@@ -1,7 +1,7 @@
 
 package com.ikubinfo.project.service;
 
-import java.util.Date;
+
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -12,8 +12,7 @@ import javax.ws.rs.NotFoundException;
 import com.ikubinfo.project.converter.CategoryConverter;
 import com.ikubinfo.project.converter.PostConverter;
 import com.ikubinfo.project.entity.CategoryEntity;
-import com.ikubinfo.project.entity.PostEntity;
-import com.ikubinfo.project.entity.State;
+
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.model.PostModel;

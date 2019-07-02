@@ -17,8 +17,8 @@
             <tr [pContextMenuRow]="rowData">
               <td *ngFor="let col of columns">
                <p *ngIf="col.field!=='image' && col.field !== 'link'"> {{ rowData[col.field] }}</p>
-               <img *ngIf="col.field==='image' && col.field !== 'link'" src="assets/images/{{rowData[col.field]}}.jpg" alt="{{rowData[col.field]}}" width="240px" height="150px" />
-               <img *ngIf="col.field==='image' && col.field !== 'link' && rowData[col.field] === ''" src="assets/images/football.jpg" alt="football" width="240px" height="150px" />
+               <img *ngIf="col.field==='image' && col.field !== 'link'" src="assets/images/{{rowData[col.field]}}.jpg" alt="{{rowData[col.field]}}" width="100%" height="30%" />
+               <img *ngIf="col.field==='image' && col.field !== 'link' && rowData[col.field] === ''" src="assets/images/football.jpg" alt="football" width="100%" height="30%" />
                <a *ngIf="col.field==='link'" href="{{ rowData[col.field] }}">{{rowData[col.field]}}</a>
               </td>
             </tr>

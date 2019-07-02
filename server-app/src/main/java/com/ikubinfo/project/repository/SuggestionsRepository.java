@@ -19,8 +19,9 @@ public class SuggestionsRepository {
 
 	public List<CategoryEntity> getSuggestions() {
 		return entityManager
-				.createQuery("Select c from CategoryEntity c where c.categoryState=?1", CategoryEntity.class)
-				.setParameter(1, State.PROPOSED).getResultList();
+				.createQuery("Select c from CategoryEntity c where c.categoryState=?1 and c.flag=?2", CategoryEntity.class)
+				.setParameter(1, State.PROPOSED)
+				.setParameter(2, true).getResultList();
 	}
 
 	public CategoryEntity getSuggestionById(final int id) {

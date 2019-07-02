@@ -28,7 +28,15 @@ public class PostRepository {
 	public List<PostEntity> getPosts() {
 		return entityManager.createQuery("Select c From PostEntity c where c.flag=?1 order by c.addedDate DESC", PostEntity.class).setParameter(1, true).getResultList();
 	}
-
+	
+	public List<PostEntity> getPostsOfSubscribedCategories(String username){
+		TypedQuery<PostEntity> query=entityManager.createQuery("Select c from PostEntity c where c.category in (Select s.category from Subscriptions s"
+				+ " where s.user = ?1 and s.flag=?2) and c.flag=?2 order by c.addedDate DESC", PostEntity.class);
+		query.setParameter(1,userRepository.getUserByUsername(username));
+		query.setParameter(2, true);
+		return query.getResultList();
+		
+	}
 	public PostEntity getPostById(int postId) {
 			TypedQuery<PostEntity> query = entityManager.createQuery("Select c From PostEntity c where c.postId=?1 and c.flag=?2",
 					PostEntity.class);

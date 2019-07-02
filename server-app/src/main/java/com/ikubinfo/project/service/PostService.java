@@ -1,6 +1,7 @@
 package com.ikubinfo.project.service;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -9,6 +10,7 @@ import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.converter.PostConverter;
 import com.ikubinfo.project.entity.PostEntity;
+import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.PostModel;
 import com.ikubinfo.project.repository.CategoryRepository;
@@ -35,14 +37,20 @@ public class PostService {
 		}
 		}
 
-	public List<PostModel> getPosts(String username) {
+	public List<PostModel> getPosts(String username,LinkedHashMap role) {
+		if (role.get("id").equals(1)) {
 		List<PostModel> list=postConverter.toModel(postRepository.getPosts());
-		for (PostModel post: list) {
-			post.setLiked(postRepository.hasLiked(username, postConverter.toEntity(post)));
-			post.setLikedUsers(postRepository.getUsersLikingPost(post.getPostId()));
-			}
        return list;
+		}else {
+			List<PostModel> list=postConverter.toModel(postRepository.getPostsOfSubscribedCategories(username));
+			for (PostModel post: list) {
+				post.setLiked(postRepository.hasLiked(username, postConverter.toEntity(post)));
+				post.setLikedUsers(postRepository.getUsersLikingPost(post.getPostId()));
+			}
+	   return list;
+		}
 	}
+	
 	public PostModel update(PostModel post ,int postId) {
 		PostEntity foundPost= postConverter.toEntity(getPostById(postId));
 		if (post.getPostName() != null) {
