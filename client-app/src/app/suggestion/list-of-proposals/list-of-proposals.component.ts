@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '@ikubinfo/core/services/category.service';
+import { SuggestionService } from '@ikubinfo/core/services/suggestion.service';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { Category } from '@ikubinfo/core/models/category';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MenuItem } from 'primeng/primeng';
 
 @Component({
   selector: 'ikubinfo-list-of-proposals',
@@ -12,17 +13,29 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ListOfProposalsComponent implements OnInit {
   categories: Object;
-  cols: any[];
-  constructor(private categoryService: CategoryService,private logger:LoggerService, private router: Router, private active: ActivatedRoute,
+  items: MenuItem[];
+  cols: Array<{field:string, header:string}>;
+  selectedCategory: Category;
+  constructor(private categoryService: SuggestionService,private logger:LoggerService, private router: Router, private active: ActivatedRoute,
     private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.categories=[];
     this.loadSuggestions();
+
+    this.items = [
+      { label: 'Delete', icon: 'pi pi-times', command: (event) => this.deleteSuggestion(this.selectedCategory) }
+    ];
+
+    this.cols = [
+      { field: 'categoryName', header: 'Name' },
+      { field: 'categoryDescription', header: 'Description' },
+      {field: 'icon', header: 'Icon'}
+    ];
   }
   
 
-  loadSuggestions(){
+  loadSuggestions() : Object{
     return this.categoryService.getSuggestions().subscribe(res=>{
       this.categories=res;
     },
@@ -31,7 +44,7 @@ export class ListOfProposalsComponent implements OnInit {
     })
   }
 
-  deleteSuggestion(suggestion: Category){
+  deleteSuggestion(suggestion: Category) : void{
     this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
@@ -48,7 +61,7 @@ export class ListOfProposalsComponent implements OnInit {
     });
   }
 
-  addPost(){
+  addPost(): void{
     this.router.navigate(['suggestion/proposal']);
   }
 }

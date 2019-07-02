@@ -1,8 +1,11 @@
 .icon{
     float: left;
-    margin-right: 2%;
+    margin-right: 3%;
 }
-
+.accept{
+    margin-top:4%;
+}
 .decline{
-    margin-left: 50%;
+    margin-top: 4%;
+    margin-left: 55%;
 }

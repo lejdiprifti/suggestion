@@ -20,7 +20,7 @@ export class PostViewComponent implements OnInit {
       this.loadPosts();
     }
   
-    loadPosts(){
+    loadPosts() : void{
       this.postService.getAllPosts().subscribe(res=>{
         this.posts=res;
       },
@@ -29,7 +29,7 @@ export class PostViewComponent implements OnInit {
       });
     }
   
-    like(id: number){
+    like(id: number) : void{
       this.postService.like(id).subscribe(res=>{
         this.logger.success("Success","You liked the post!");
         this.loadPosts();
@@ -39,7 +39,7 @@ export class PostViewComponent implements OnInit {
       });
     }
   
-    unlike(id: number){
+    unlike(id: number): void{
       this.postService.unlike(id).subscribe(res=>{
         this.logger.warning("Success","You disliked the post!");
         this.loadPosts();

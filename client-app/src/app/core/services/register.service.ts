@@ -12,7 +12,7 @@ export class RegisterService {
   
 registerUser: Register;
   onUserChanged: Subject<User>;
-  
+  url='users';
   constructor(private apiService: ApiService) { 
 
   }
@@ -39,11 +39,8 @@ setData(registerUser: Register) {
     
 }
 
-
- 
-
 getUserByUsername(username: string): Observable<any> {
-    return this.apiService.get<User>('users/'+username);
+    return this.apiService.get<User>(this.url+'/'+username);
 }
 
 }

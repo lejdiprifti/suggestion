@@ -1,25 +1,30 @@
 <button pButton class="button" label="Suggest" (click)="addPost()" type="button" icon="pi pi-plus"></button>
-<p-toast [style]="{marginTop: '80px'}"></p-toast>
-
-<p-carousel headerText="My Proposals" [value]="categories">
-    <ng-template let-category pTemplate="item">
-        <div class="ui-grid ui-grid-responsive" >
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12"><img src="assets/images/{{category.icon}}.png" width="60"/></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-6"><strong>Name</strong></div>
-                <div class="ui-grid-col-6">{{category.categoryName}}</div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-6"><strong>Description</strong></div>
-                <div class="ui-grid-col-6">{{category.categoryDescription}}</div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12">
-                    <button type="button" pButton icon="pi pi-times" class="ui-button-danger"  (click)="deleteSuggestion(category)" label="Delete"></button>
-                </div>
-            </div>
+<div class="row">
+    <div class="col col-xl-12 col-lg-12">
+      <ikubinfo-panel header="Categories">
+        <div panel-content>
+          
+          <p-table [columns]="cols" [value]="categories" [paginator]="true" [rows]="10" [(contextMenuSelection)]="selectedCategory"
+            [contextMenu]="cm">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{ col.header }}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr [pContextMenuRow]="rowData" >
+                <td *ngFor="let col of columns" >
+                <p *ngIf="col.field !== 'icon'">  {{ rowData[col.field] }} </p>
+                  <img *ngIf="col.field === 'icon' && rowData[col.field] !== ''" src="assets/images/{{rowData[col.field]}}.png" alt="{{rowData[col.field]}}" width="70px" class="image"/>
+                  <img *ngIf="col.field === 'icon' && rowData[col.field] === ''" src="assets/images/sports.png" alt="sports" width="70px" class="image"/>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <p-contextMenu #cm [model]="items"></p-contextMenu>
         </div>
-    </ng-template>
-</p-carousel>
+      </ikubinfo-panel>
+    </div>
+  </div>

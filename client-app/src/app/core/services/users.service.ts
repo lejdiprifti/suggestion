@@ -7,8 +7,9 @@ import { ApiService } from '@ikubinfo/core/utilities/api.service';
 export class UsersService {
 
   constructor(private apiService: ApiService) { }
+  url='users';
 
-  getActiveUsers(){
-    return this.apiService.get('users');
+  getUsers(){
+    return this.apiService.get(this.url);
   }
 }

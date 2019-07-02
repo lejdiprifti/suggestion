@@ -55,12 +55,6 @@ export class SettingsComponent implements OnInit {
     {validators: RegisterComponent.passwordMatch});
 
     this.settingsForm=this.fb.group({
-      username: [
-        "",
-        [
-          Validators.minLength(4)
-        ]
-      ],
       birthdate: ['',
     [
       RegisterComponent.isOldEnough
@@ -81,7 +75,6 @@ updatePassword(): void {
     if (this.passwordForm.value.password !== ""){
       this.updateUser.password=this.passwordForm.value.password;
     }
-   // if(this.passwordForm.value.password === this.passwordForm.value.repeatPassword){
     this.confirmationService.confirm({
       message: 'Do you want to save your data?',
       header: 'Save Confirmation',
@@ -96,15 +89,10 @@ updatePassword(): void {
       });
       }
     });
-  // }else{
-  //   this.logger.error("Error","Password doesn't match");
-  // }
+
     
 }
 updateData(): void {
-  if (this.settingsForm.value.username !== ""){
-    this.updateUser.username=this.settingsForm.value.username;
-  }
   if (this.settingsForm.value.birthdate !== null){
     this.updateUser.birthdate=this.settingsForm.value.birthdate;
   }
@@ -120,17 +108,18 @@ updateData(): void {
     icon: 'pi pi-info-circle',
     accept: () => {
       this.settingsService.update(this.updateUser).subscribe(res=>{
+        this.router.navigate(['suggestion/settings']);
         this.logger.success("Success", "Data saved successfully!");
     },
     err=>{
-      this.logger.error("Error","Username is taken.");
+      this.logger.error("Error","Something bad happened.");
       this.router.navigate(["/suggestion/settings"]);
     });
     }
   });
   
 }
-delete(): any{
+delete(): void{
   this.confirmationService.confirm({
     message: 'Do you want to delete your account?',
     header: 'Delete Confirmation',

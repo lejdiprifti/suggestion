@@ -9,5 +9,7 @@ export interface User {
     birthdate?: Date;
     email?: string;
     address?: string;
+    categories?: Array<string>;
+    posts?: Array<string>;
     flag?: boolean;
 }

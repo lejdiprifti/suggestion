@@ -1,11 +1,11 @@
 :host .navbar {
-  background-color: #B3C6C0;
+  background-color: #8DAA9D;
 }
 :host .navbar .navbar-brand {
   color: #fff;
 }
 :host .navbar .nav-item > a {
-  color: #999;
+  color: rgb(26, 24, 24);;
 }
 :host .navbar .nav-item > a:hover {
   color: #fff;
@@ -13,4 +13,5 @@
 
 .logo{
   width: 60%;
+  height: 30%;
 }

@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CategoryService } from '@ikubinfo/core/services/category.service';
+import { SuggestionService } from '@ikubinfo/core/services/suggestion.service';
 import { Router } from '@angular/router';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+import { CategoriesService } from '@ikubinfo/core/services/categories.service';
+import { Category } from '@ikubinfo/core/models/category';
 
 @Component({
   selector: 'ikubinfo-dashboard',
@@ -12,16 +14,16 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 
 
 export class DashboardComponent implements OnInit {
-  categories: any;
-  constructor(private confirmationService: ConfirmationService,private logger: LoggerService,private categoryService: CategoryService, private router: Router) { 
-    this.categories=[];
+  categories: Category;
+  constructor(private confirmationService: ConfirmationService,private logger: LoggerService,private categoryService: CategoriesService, private router: Router) { 
+    this.categories={};
   }
 
   ngOnInit() {
    this.loadData();
   }
 
- subscribe(id: number){
+ subscribe(id: number) : void{
   this.confirmationService.confirm({
     message: 'Do you want to subscribe to this category?',
     header: 'Subscribe Confirmation',
@@ -38,7 +40,7 @@ export class DashboardComponent implements OnInit {
   });
 }
 
-loadData(){
+loadData() : void{
   this.categoryService.getUnsubscribedCategories().subscribe(res=>{
     this.categories=res;
   },err=>{

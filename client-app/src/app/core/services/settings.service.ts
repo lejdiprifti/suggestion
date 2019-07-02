@@ -9,20 +9,17 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class SettingsService {
-
+url='users';
   constructor(private apiService: ApiService,private router: Router ) {
   
   }
 
   update(registerUser: Register){
-    if (registerUser.username !== ""){
-      this.router.navigate(['login']);
-    }
-    return this.apiService.put('users',registerUser);
+    return this.apiService.put(this.url,registerUser);
   }
   
   deleteAccount(){
-    return this.apiService.delete('users');
+    return this.apiService.delete(this.url);
   }
 
 

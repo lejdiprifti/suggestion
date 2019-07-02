@@ -5,7 +5,7 @@ export interface Category {
     categoryId?: number;
     categoryName?: string;
     categoryDescription?: string;
-    user?: User;
+    proposedUser?: User;
     categoryState?: State;
     acceptedUser?: User;
     acceptedDate?: Date;

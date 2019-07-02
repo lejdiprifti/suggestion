@@ -2,23 +2,27 @@
   <div panel-content>
     <form role="form" [formGroup]="categoryForm">
       <ikubinfo-input label="Title">
-        <input formControlName="title" type="text" class="form-control"/>
+        <input formControlName="categoryName" type="text" class="form-control"/>
       </ikubinfo-input>
       <ikubinfo-input label="Icon">
-          <select class="custom-select" (change)="changeIcon($event)" formControlName="icon">
-              <option value="" disabled>Choose the icon</option>
-              <option *ngFor="let icon of icons" [ngValue]="icon">{{ icon }}</option>
-             
-            </select>
- 
+            <p-dropdown [options]="icons" formControlName="icon" filter="true">
+              <ng-template let-item pTemplate="selectedItem">
+                  <img src="assets/images/{{item.label}}.png" style="width:16px;vertical-align:middle" />
+                  <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+              </ng-template>
+              <ng-template let-icon pTemplate="item">
+                  <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                      <img src="assets/images/{{icon.label}}.png" style="width:24px;position:absolute;top:1px;left:5px"/>
+                      <div style="font-size:14px;float:right;margin-top:4px">{{icon.label}}</div>
+                  </div>
+              </ng-template>
+          </p-dropdown>
         </ikubinfo-input>
-        
       <ikubinfo-input label="Description">
-        <textarea formControlName="description" type="text" class="form-control"></textarea>
+        <textarea formControlName="categoryDescription" type="text" class="form-control"></textarea>
       </ikubinfo-input>
-     
     </form>
-    <button pButton type="submit" (click)="submit()" [disabled]="categoryForm.invalid" class="ui-button-success" label="Save" icon="pi pi-file"></button>
-    <button pButton (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
+    <button pButton type="submit" (click)="submit()" [disabled]="categoryForm.invalid" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
+    <button pButton type="button" (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
   </div>
 </ikubinfo-panel>

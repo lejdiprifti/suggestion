@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessagesService } from '@ikubinfo/core/services/messages.service';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
+import { Category } from '@ikubinfo/core/models/category';
 
 @Component({
   selector: 'ikubinfo-messages',
@@ -8,7 +9,7 @@ import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
-  categories: any;
+  categories: Category;
   constructor(private messagesService: MessagesService,private logger: LoggerService) { 
     this.categories={
 
@@ -19,7 +20,7 @@ export class MessagesComponent implements OnInit {
     this.loadData();
   }
 
-  loadData(){
+  loadData() : Object{
     return this.messagesService.getMessages().subscribe(res=>{
       this.categories=res;
     },

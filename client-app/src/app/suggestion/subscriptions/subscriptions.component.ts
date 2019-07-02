@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '@ikubinfo/core/services/category.service';
+
 import { Router } from '@angular/router';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+
+import { CategoriesService } from '@ikubinfo/core/services/categories.service';
 
 
 
@@ -14,7 +16,7 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 export class SubscriptionsComponent implements OnInit {
   subscriptions: Object;
  
-  constructor(private confirmationService: ConfirmationService,private categoryService: CategoryService, private router: Router,private logger: LoggerService ) { 
+  constructor(private confirmationService: ConfirmationService,private categoryService: CategoriesService, private router: Router,private logger: LoggerService ) { 
     this.subscriptions=[];
   }
   
@@ -22,12 +24,15 @@ export class SubscriptionsComponent implements OnInit {
     this.loadSubscribedCategories();
   }
 
-  loadSubscribedCategories(){
+  loadSubscribedCategories() : void{
     this.categoryService.getSubscribedCategories().subscribe(data=>{
       this.subscriptions=data;
+  },
+  err=>{
+    this.logger.error("Error","Something bad happened!");
   });
   }
-  unsubscribe(id:number){
+  unsubscribe(id:number): void{
     this.confirmationService.confirm({
       message: 'Are you sure you want to unsubscribe to this category?',
       header: 'Unsubscribe Confirmation',
@@ -43,7 +48,7 @@ export class SubscriptionsComponent implements OnInit {
   });
 }
 
-  viewPosts(id:number){
+  viewPosts(id:number): void{
     this.router.navigate(['suggestion/categories/'+id+'/posts']);
   }
 

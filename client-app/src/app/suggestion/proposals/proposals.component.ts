@@ -20,7 +20,7 @@ export class ProposalsComponent implements OnInit {
   }
 
 
-  getProposals(){
+  getProposals(): void{
     this.proposalsService.getProposals().subscribe(res=>{
       this.proposals=res;
       console.log(this.proposals);
@@ -31,7 +31,7 @@ export class ProposalsComponent implements OnInit {
     });
   }
 
-  accept(id: number){
+  accept(id: number) : void{
     this.confirmationService.confirm({
       message: 'Do you want to accept this proposal?',
       header: 'Accept Confirmation',
@@ -50,7 +50,7 @@ export class ProposalsComponent implements OnInit {
   });
 }
 
-  decline(id: number){
+  decline(id: number): void{
     this.confirmationService.confirm({
       message: 'Do you want to decline this proposal?',
       header: 'Decline Confirmation',

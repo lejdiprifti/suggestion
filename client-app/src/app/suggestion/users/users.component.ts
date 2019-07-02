@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-
-import { User } from '@ikubinfo/core/models/user';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { UsersService } from '@ikubinfo/core/services/users.service';
+import { User } from '@ikubinfo/core/models/user';
 
 @Component({
-  selector: 'ikubinfo-current-users',
-  templateUrl: './current-users.component.html',
-  styleUrls: ['./current-users.component.css']
+  selector: 'ikubinfo-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
 })
-export class CurrentUsersComponent implements OnInit {
+export class UsersComponent implements OnInit {
   users: Object;
   cols: any[];
 
@@ -29,8 +28,8 @@ export class CurrentUsersComponent implements OnInit {
     ];
   }
 
-loadUsers(){
-  return this.usersService.getActiveUsers().subscribe(res=>{
+loadUsers() : Object{
+  return this.usersService.getUsers().subscribe(res=>{
     this.users=res;
   },
   err=>{

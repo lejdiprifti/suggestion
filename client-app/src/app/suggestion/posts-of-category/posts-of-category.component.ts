@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '@ikubinfo/core/services/category.service';
+import { SuggestionService } from '@ikubinfo/core/services/suggestion.service';
 import { ActivatedRoute } from '@angular/router';
 import { post } from 'selenium-webdriver/http';
 import { Post } from '@ikubinfo/core/models/post';
 import { PostService } from '@ikubinfo/core/services/post.service';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
+import { CategoriesService } from '@ikubinfo/core/services/categories.service';
 
 @Component({
   selector: 'ikubinfo-posts-of-category',
@@ -13,15 +14,15 @@ import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 })
 export class PostsOfCategoryComponent implements OnInit {
   
-  posts: any;
-  constructor(private logger: LoggerService,private categoryService: CategoryService,private postService: PostService,private active: ActivatedRoute) { }
+  posts: Object;
+  constructor(private logger: LoggerService,private categoryService: CategoriesService,private postService: PostService,private active: ActivatedRoute) { }
 
   ngOnInit() {
     this.posts={};
     this.loadPosts();
   }
 
-  loadPosts(){
+  loadPosts() : void{
     const id = this.active.snapshot.paramMap.get('id')
     this.categoryService.getPostsOfCategory(Number(id)).subscribe(res=>{
       this.posts=res;
@@ -32,7 +33,7 @@ export class PostsOfCategoryComponent implements OnInit {
     });
   }
 
-  like(id: number){
+  like(id: number): void{
     this.postService.like(id).subscribe(res=>{
       this.logger.success("Success","You liked the post!");
       this.loadPosts();
@@ -42,7 +43,7 @@ export class PostsOfCategoryComponent implements OnInit {
     });
   }
 
-  unlike(id: number){
+  unlike(id: number) : void{
     this.postService.unlike(id).subscribe(res=>{
       this.logger.warning("Warning","You disliked the post!");
       this.loadPosts();

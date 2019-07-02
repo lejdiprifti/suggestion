@@ -6,8 +6,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { Category } from '@ikubinfo/core/models/category';
 import { MenuItem } from 'primeng/components/common/menuitem';
-import { CategoryComponent } from '../category/category.component';
+
 import { CategoriesService } from '@ikubinfo/core/services/categories.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -19,10 +20,10 @@ import { CategoriesService } from '@ikubinfo/core/services/categories.service';
 export class CategoriesComponent implements OnInit {
   categories: Object;
   items: MenuItem[];
-  cols: any[];
+  cols: Array<{field:string, header:string}>;
   selectedCategory: Category;
   constructor(private confirmationService: ConfirmationService, private categoriesService: CategoriesService,private router: Router,
-     private logger: LoggerService, private categoryComponent: CategoryComponent,private active: ActivatedRoute) { }
+     private logger: LoggerService,private active: ActivatedRoute) { }
 
   ngOnInit() {
     this.categories=[];
@@ -40,7 +41,7 @@ export class CategoriesComponent implements OnInit {
     ];
   }
 
-  getAllCategories(){
+  getAllCategories() : Subscription {
     return this.categoriesService.getCategories().subscribe(res=>{
       this.categories=res;
     },
@@ -49,11 +50,11 @@ export class CategoriesComponent implements OnInit {
     });
   }
   edit(category: Category){
-    this.categoriesService.setId(category.categoryId);
-    this.router.navigate(['suggestion/category']), { relativeTo: this.active.parent };
+ 
+    this.router.navigate(['suggestion/category/'+category.categoryId]);
   }
 
-  delete(category: Category){
+  delete(category: Category) : void{
     this.confirmationService.confirm({
       message: 'Do you want to delete this category?',
       header: 'Delete Confirmation',
@@ -70,7 +71,7 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  add(){
-    this.router.navigate(['suggestion/category/add']) ,{ relativeTo: this.active.parent };
+  add(): void{
+    this.router.navigate(['suggestion/category/add']);
   }
 }

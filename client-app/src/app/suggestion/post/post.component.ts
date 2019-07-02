@@ -5,7 +5,9 @@ import { Post } from '@ikubinfo/core/models/post';
 import { PostService } from '@ikubinfo/core/services/post.service';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { Category } from '@ikubinfo/core/models/category';
-import { CategoryService } from '@ikubinfo/core/services/category.service';
+import { SuggestionService } from '@ikubinfo/core/services/suggestion.service';
+import { CategoriesService } from '@ikubinfo/core/services/categories.service';
+import { SelectItem } from 'primeng/primeng';
 
 @Component({
   selector: 'ikubinfo-post',
@@ -17,23 +19,23 @@ export class PostComponent implements OnInit {
   categories: Object;
   postForm: FormGroup;
   post: Post;
-  images: Array<String>;
-  constructor(private categoryService: CategoryService ,private fb: FormBuilder, private active: ActivatedRoute, private postService: PostService, private logger: LoggerService, private router: Router) { }
+  images:  Array<SelectItem>;
+  constructor(private categoryService: CategoriesService ,private fb: FormBuilder, private active: ActivatedRoute, private postService: PostService, private logger: LoggerService, private router: Router) { }
 
   ngOnInit() {
     this.initializeForm();
     this.loadData();
     this.category={};
     this.images=[
-      'football',
-      'music',
-      'nature',
-      'restaurant',
-      'hotels',
-      'news',
-      'cars',
-      'holidays',
-      'technology',
+      {label:'football', value: 'football'},
+      {label: 'music', value: 'music'},
+      {label: 'nature', value: 'nature'},
+      {label: 'restaurant', value: 'restaurant'},
+      {label: 'hotels', value: 'hotels'},
+      {label: 'news', value: 'news'},
+      {label: 'cars', value: 'cars'},
+      {label: 'holidays', value: 'holidays'},
+      {label: 'technology', value: 'technology'}
     ]
   }
 
@@ -92,7 +94,7 @@ export class PostComponent implements OnInit {
     if (this.post) {
       this.postService.editPost(this.post.postId, this.getData()).subscribe(res => {
         this.logger.info('Success', 'Added !');
-        this.router.navigate(['posts'], { relativeTo: this.active.parent });
+        this.router.navigate(['suggestion/posts']);
 
       },
       err => {
@@ -102,7 +104,7 @@ export class PostComponent implements OnInit {
     else {
       this.postService.createPost(this.getData()).subscribe(res => {
         this.logger.info('Success', 'Post was created successfully.');
-        this.router.navigate(['posts'], { relativeTo: this.active.parent });
+        this.router.navigate(['suggestion/posts']);
       },
       err => {
         this.logger.error('Error', 'An error occured.');
@@ -112,8 +114,8 @@ export class PostComponent implements OnInit {
 
   }
 
-  getCategories(){
-    return this.categoryService.getAllCategories().subscribe(res=>{
+  getCategories() : Object{
+    return this.categoryService.getCategories().subscribe(res=>{
       this.categories=res;
     },
     err=>{
@@ -121,15 +123,5 @@ export class PostComponent implements OnInit {
     })
   }
 
-  changeCategory(e) {
-    this.category.categoryName = e.target.value, {
-    onlySelf: true
-    }
-    }
 
-    changeImage(e){
-      this.post.image=e.target.value,{
-        onlySelf: true
-      }
-    }
 }

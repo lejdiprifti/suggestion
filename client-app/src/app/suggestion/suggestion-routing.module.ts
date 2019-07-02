@@ -15,8 +15,7 @@ import { CategorySuggestionsComponent } from './category-suggestions/category-su
 import { ProposalsComponent } from './proposals/proposals.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoryComponent } from './category/category.component';
-import { AddCategoryComponent } from './add-category/add-category.component';
-import { CurrentUsersComponent } from './current-users/current-users.component';
+import { UsersComponent } from './users/users.component';
 import { ListOfProposalsComponent } from './list-of-proposals/list-of-proposals.component';
 import { MessagesComponent } from './messages/messages.component';
 
@@ -29,9 +28,10 @@ const suggestionRoutes: Routes = [
             { path: 'dashboard', component: DashboardComponent , canActivate:[UserGuard]},
             { path: 'categories', component: CategoriesComponent, canActivate: [AdminGuard]},
             { path: 'settings', component: SettingsComponent},
-            { path: 'users', component: CurrentUsersComponent, canActivate: [AdminGuard]},
-            { path: 'category/add', component: AddCategoryComponent, canActivate: [AdminGuard]},
-            { path: 'category', component: CategoryComponent, canActivate: [AdminGuard]},
+            { path: 'users', component: UsersComponent, canActivate: [AdminGuard]},
+            { path: 'category/add', component: CategoryComponent, canActivate: [AdminGuard]},
+            { path: 'category/:id', component: CategoryComponent, canActivate: [AdminGuard]},
+           
             { path: 'subscriptions', component: SubscriptionsComponent , canActivate: [UserGuard]},
             { path: 'posts', component: PostsComponent, canActivate: [AdminGuard] },
             { path: 'viewposts', component: PostViewComponent, canActivate: [UserGuard] },

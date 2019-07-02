@@ -2,11 +2,7 @@
 <p class="paragraph-text">Manage your personal data.</p>
 <form role="form" [formGroup]="settingsForm">
   <div class="form-content">
-    <!--Username -->
-    <div class="form-group">
-      <input type="text" formControlName="username" class="form-control input-underline input-lg"
-        placeholder="Username" [ngModel]= "user.username" minlength="3" maxlength="16"/>
-    </div>
+
     <!--Birthdate -->
     <div class="form-group">
       <input type="date" formControlName="birthdate" [ngModel]= "user.birthdate | date: 'yyyy-MM-dd'" class="form-control input-underline input-lg "

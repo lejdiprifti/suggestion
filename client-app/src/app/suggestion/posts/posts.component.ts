@@ -39,12 +39,12 @@ export class PostsComponent implements OnInit {
     ];
   }
 
-  viewPost(post: Post) {
-    this.router.navigate(['post', post.postId], { relativeTo: this.active.parent });
+  viewPost(post: Post):void {
+    this.router.navigate(['suggestion/post', post.postId]);
   }
 
-  addPost() {
-    this.router.navigate(['post'],  { relativeTo: this.active.parent });
+  addPost():void {
+    this.router.navigate(['suggestion/post']);
   }
 
   loadPosts(): void {

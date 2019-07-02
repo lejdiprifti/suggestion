@@ -14,7 +14,8 @@
       <div class="panel" >
       <ikubinfo-panel header="{{post.postName}}">
         <div panel-content >
-          <img src="assets/images/{{ post.image }}.jpg" width="480px" class="image" />
+          <img *ngIf="post.image !== ''" src="assets/images/{{ post.image }}.jpg" width="480px" class="image" />
+          <img *ngIf="post.image === ''" src="assets/images/football.jpg" width="480px" alt="football" class="image"/>
           <p class="text">{{ post.postDescription }}</p>
           <p class="link" *ngIf="post.link !== null">Source: <a href="{{ post.link }}"> {{ post.link }} </a></p>
           <div class="likeIconStatement">

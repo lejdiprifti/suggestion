@@ -28,17 +28,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required , Validators.minLength(4)]],
-      password: ['', [Validators.required , Validators.minLength(4)]]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
     this.user={};
-    this.role={
-      id: RoleEnum.ADMIN,
-      roleName: "ADMIN",
-      roleDescription: "Menaxhon_postet_dhe_kategorite"
-      
-    }
-    
+  
     
   }
 
@@ -48,7 +42,7 @@ export class LoginComponent implements OnInit {
   this.authService.setData(res);
   console.log(this.authService.user.role);
   console.log(this.role);
-  if (JSON.stringify(this.authService.user.role) === JSON.stringify(this.role)){
+  if (JSON.stringify(this.authService.user.role.id) === JSON.stringify(RoleEnum.ADMIN)){
     this.router.navigate(['suggestion/categories']);
   } else {
     this.router.navigate(['suggestion/dashboard']);

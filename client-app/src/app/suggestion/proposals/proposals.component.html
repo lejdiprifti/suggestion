@@ -7,9 +7,10 @@
     <ikubinfo-panel header="Proposal">
       <div panel-content>
         <img src="assets/images/{{ proposal.icon }}.png" alt="{{proposal.icon}}" class="icon"/>
+        <img *ngIf="proposal.icon === ''" src="assets/images/sports.png" alt="sports" class="icon"/>
         <h1>{{ proposal.categoryName }}</h1>
         <p>{{ proposal.categoryDescription }}</p>
-        <button pButton class="ui-button-success" icon="pi pi-check" (click)="accept(proposal.categoryId)" label="Accept"></button>
+        <button pButton class="ui-button-success accept" icon="pi pi-check" (click)="accept(proposal.categoryId)" label="Accept"></button>
         <button pButton class="ui-button-warning decline" icon="pi pi-times" (click)="decline(proposal.categoryId)" label="Decline"></button>
       </div>
     </ikubinfo-panel>

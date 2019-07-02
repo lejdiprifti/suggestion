@@ -10,7 +10,7 @@ import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { ApiService } from '@ikubinfo/core/utilities/api.service';
 import { AuthGuard } from '@ikubinfo/core/guards/auth-guard';
 import { TokenInterceptor } from '@ikubinfo/core/interceptors/token-interceptor';
-import { CategoryService } from './services/category.service';
+import { SuggestionService } from './services/suggestion.service';
 
 
 import { ProposalsService } from './services/proposals.service';

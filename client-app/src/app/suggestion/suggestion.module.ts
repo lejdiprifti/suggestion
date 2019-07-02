@@ -19,9 +19,9 @@ import { PostViewComponent } from './post-view/post-view.component';
 import { CategorySuggestionsComponent } from './category-suggestions/category-suggestions.component';
 import { ProposalsComponent } from './proposals/proposals.component';
 import { CategoriesComponent } from './categories/categories.component';
+
 import { CategoryComponent } from './category/category.component';
-import { AddCategoryComponent } from './add-category/add-category.component';
-import { CurrentUsersComponent } from './current-users/current-users.component';
+import { UsersComponent } from './users/users.component';
 import { ListOfProposalsComponent } from './list-of-proposals/list-of-proposals.component';
 import { MessagesComponent } from './messages/messages.component';
 
@@ -29,7 +29,7 @@ import { MessagesComponent } from './messages/messages.component';
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule,ReactiveFormsModule],
     exports: [],
-    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent,CategoriesComponent,ProposalsComponent,CategorySuggestionsComponent, CategoryComponent, AddCategoryComponent, CurrentUsersComponent,PostViewComponent,PostsOfCategoryComponent,ListOfProposalsComponent, MessagesComponent],
-    providers: [CategoryComponent]
+    declarations: [DashboardComponent, PostComponent, PostsComponent, SettingsComponent, SubscriptionsComponent,CategoriesComponent,ProposalsComponent,CategorySuggestionsComponent, CategoryComponent, UsersComponent,PostViewComponent,PostsOfCategoryComponent,ListOfProposalsComponent, MessagesComponent],
+    providers: []
 })
 export class SuggestionModule { }

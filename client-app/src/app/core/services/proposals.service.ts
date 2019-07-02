@@ -5,17 +5,17 @@ import { ApiService } from '@ikubinfo/core/utilities/api.service';
   providedIn: 'root'
 })
 export class ProposalsService {
-
+  url='suggestions';
   constructor(private apiService: ApiService) { }
 
   getProposals(){
-    return this.apiService.get('suggestions');
+    return this.apiService.get(this.url);
   }
 
   accept(id: number){
-    return this.apiService.put('suggestions/accept/'+id);
+    return this.apiService.put(this.url+'/accept/'+id);
   }
   decline(id: number){
-    return this.apiService.put('suggestions/decline/'+id);
+    return this.apiService.put(this.url+'/decline/'+id);
   }
 }

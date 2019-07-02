@@ -28,13 +28,13 @@ export class RegisterComponent implements OnInit {
   passwordForm: FormGroup;
   role: Role;
   registerUser: Register;
-  //kontrollo nqs eshte mbi 18 vjec
+
   static isOldEnough(control: AbstractControl): any {
     const birthDatePlus18 = new Date(control.value);
     birthDatePlus18.setFullYear(birthDatePlus18.getFullYear() + 18);
     return birthDatePlus18 < new Date() ? null : { tooYoung: true };
   }
-//kontrollo nqs password perputhen
+
 static passwordMatch(group: FormGroup):any{
   const password= group.get('password').value;
   const repeatPassword= group.get('repeatPassword').value;

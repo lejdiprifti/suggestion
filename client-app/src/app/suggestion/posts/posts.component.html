@@ -18,7 +18,8 @@
               <td *ngFor="let col of columns">
                <p *ngIf="col.field!=='image' && col.field !== 'link'"> {{ rowData[col.field] }}</p>
                <img *ngIf="col.field==='image' && col.field !== 'link'" src="assets/images/{{rowData[col.field]}}.jpg" alt="{{rowData[col.field]}}" width="240px" height="150px" />
-                <a *ngIf="col.field==='link'" href="{{ rowData[col.field] }}">{{rowData[col.field]}}</a>
+               <img *ngIf="col.field==='image' && col.field !== 'link' && rowData[col.field] === ''" src="assets/images/football.jpg" alt="football" width="240px" height="150px" />
+               <a *ngIf="col.field==='link'" href="{{ rowData[col.field] }}">{{rowData[col.field]}}</a>
               </td>
             </tr>
           </ng-template>
