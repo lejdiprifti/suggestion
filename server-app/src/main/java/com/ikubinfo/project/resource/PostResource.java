@@ -1,6 +1,9 @@
 package com.ikubinfo.project.resource;
 
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -49,8 +52,9 @@ public class PostResource extends BaseResource{
 	}
 	
 	@POST
-	public Response insert(PostModel post) {
-			return Response.ok(postService.insert(post,userRepository.getUserByUsername(getUsernameFromToken()))).build();
+	public Response insert(PostModel post) throws URISyntaxException {
+		postService.insert(post,userRepository.getUserByUsername(getUsernameFromToken()));
+			return Response.created(new URI("/posts/"+post.getPostId())).build();
 	}
 	
 	@DELETE

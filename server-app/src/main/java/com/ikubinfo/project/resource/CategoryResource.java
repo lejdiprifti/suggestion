@@ -1,5 +1,8 @@
 package com.ikubinfo.project.resource;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -60,8 +63,9 @@ public class CategoryResource  extends BaseResource {
 		}
 		
 		@POST
-		public Response insert(CategoryModel category) {
-				return Response.ok(categoryService.insert(category,userRepository.getUserByUsername(getUsernameFromToken()))).build();
+		public Response insert(CategoryModel category) throws URISyntaxException {
+			categoryService.insert(category,userRepository.getUserByUsername(getUsernameFromToken()));
+				return Response.created(new URI("/categories/"+category.getCategoryId())).build();
 		}
 		
 		@DELETE

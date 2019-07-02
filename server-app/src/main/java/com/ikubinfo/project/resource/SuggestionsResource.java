@@ -51,7 +51,7 @@ public class SuggestionsResource extends BaseResource {
 	public Response suggest(CategoryModel suggestion) throws URISyntaxException {
 
 		suggestionsService.suggest(suggestion,userRepository.getUserByUsername(getUsernameFromToken()));
-		return Response.created(new URI("/"+suggestion.getCategoryId())).build();
+		return Response.created(new URI("/suggestions/"+suggestion.getCategoryId())).build();
 	}
 
 	@PUT

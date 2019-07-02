@@ -23,10 +23,10 @@ import com.ikubinfo.project.service.UserService;
 @Produces(MediaType.APPLICATION_JSON)
 public class RegisterResource {
 	private RegisterService registerService;
-	private UserService userService;
+
 	public RegisterResource() {
 		this.registerService = new RegisterService();
-		this.userService= new UserService();
+		
 	}
 
 	@POST
