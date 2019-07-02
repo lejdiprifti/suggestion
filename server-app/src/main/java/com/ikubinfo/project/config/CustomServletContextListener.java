@@ -8,7 +8,7 @@ import com.ikubinfo.project.util.PersistenceSingleton;
 
 @WebListener
 public class CustomServletContextListener implements ServletContextListener {
-	// TODO gjeni kohen kur ekzekutohen kto metoda.
+
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 		PersistenceSingleton.INSTANCE.destroy();
