@@ -30,6 +30,7 @@ export class PostComponent implements OnInit {
       {label:'football', value: 'football'},
       {label: 'music', value: 'music'},
       {label: 'nature', value: 'nature'},
+      {label: 'soccer', value: 'soccer'},
       {label: 'restaurant', value: 'restaurant'},
       {label: 'hotels', value: 'hotels'},
       {label: 'news', value: 'news'},
@@ -93,12 +94,12 @@ export class PostComponent implements OnInit {
   submit(): void {
     if (this.post) {
       this.postService.editPost(this.post.postId, this.getData()).subscribe(res => {
-        this.logger.info('Success', 'Added !');
+        this.logger.info('Success', 'Post was successfully added.');
         this.router.navigate(['suggestion/posts']);
 
       },
       err => {
-        this.logger.error('Error', 'An error accured');
+        this.logger.error('Error', 'Post name already exists.');
       });
     }
     else {
@@ -107,7 +108,7 @@ export class PostComponent implements OnInit {
         this.router.navigate(['suggestion/posts']);
       },
       err => {
-        this.logger.error('Error', 'An error occured.');
+        this.logger.error('Error', 'Post name already exists.');
       });
 
     }

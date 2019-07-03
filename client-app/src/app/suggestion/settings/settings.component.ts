@@ -92,10 +92,10 @@ updatePassword(): void {
       icon: 'pi pi-info-circle',
       accept: () => {
         this.settingsService.update(this.updateUser).subscribe(res=>{
-          this.logger.success("Success", "Data saved successfully!");
+          this.logger.success("Success", "Your data were saved successfully!");
       },
       err=>{
-        this.logger.error("Error","Username is taken.");
+        this.logger.error("Error","Something bad happened.");
         this.router.navigate(["/suggestion/settings"]);
       });
       }

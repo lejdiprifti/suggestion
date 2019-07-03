@@ -62,7 +62,7 @@ public class CategoryResource  extends BaseResource {
 		
 		@POST
 		public Response insert(CategoryModel category) throws URISyntaxException {
-				return Response.created(new URI("/categories/"+categoryService.getCategoryByName(category.getCategoryName()).getCategoryId())).build();
+				return Response.created(new URI("/categories/"+categoryService.insert(category, userRepository.getUserByUsername(getUsernameFromToken())).getCategoryId())).build();
 		}
 		
 		@DELETE

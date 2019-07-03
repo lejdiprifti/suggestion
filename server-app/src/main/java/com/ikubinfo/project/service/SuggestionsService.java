@@ -118,11 +118,7 @@ public class SuggestionsService {
 	}
 
 	public List<CategoryModel> getSuggestions(LinkedHashMap roleFromToken, String username) {
-		RoleEntity userRole = new RoleEntity();
-		userRole.setId(2);
-		RoleEntity adminRole = new RoleEntity();
-		adminRole.setId(1);
-		if (roleFromToken.get("id").equals(userRole.getId())) {
+		if (roleFromToken.get("id").equals(2)) {
 			return categoryConverter.toModel(suggestionsRepository.getMySuggestions(username));
 		} else {
 			return categoryConverter.toModel(suggestionsRepository.getSuggestions());

@@ -40,7 +40,7 @@ export class ListOfProposalsComponent implements OnInit {
       this.categories=res;
     },
     err=>{
-     this.logger.error("Error","Something bad happened");
+     this.logger.error("Error","Something bad happened.");
     })
   }
 
@@ -51,11 +51,11 @@ export class ListOfProposalsComponent implements OnInit {
       icon: 'pi pi-info-circle',
       accept: () => {
         return this.categoryService.deleteSuggestion(suggestion.categoryId).subscribe(res => {
-          this.logger.info('Confirmed', 'Record deleted');
+          this.logger.info('Confirmed', 'Record was succesfully deleted');
           this.loadSuggestions();
         },
         err => {
-          this.logger.error('Error', 'An error accured');
+          this.logger.error('Error', 'Something bad happened.');
         });
       }
     });

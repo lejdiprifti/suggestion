@@ -55,8 +55,12 @@ public class PostService {
 		PostEntity foundPost= postConverter.toEntity(getPostById(postId));
 		if (post.getPostName() != null) {
 			try {
+				if (!foundPost.getPostName().equals(post.getPostName())) {
 				postRepository.isPost(post.getPostName().trim(),post.getCategoryId());
 				throw new BadRequestException();
+				} else {
+					throw new NotFoundException();
+				}
 			}catch(NotFoundException e) {
 			foundPost.setPostName(post.getPostName().trim());
 			}
