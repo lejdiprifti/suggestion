@@ -16,6 +16,11 @@ public class CommentsRepository {
 		this.entityManager = PersistenceSingleton.INSTANCE.getEntityManagerFactory().createEntityManager();
 	}
 	
+	public CommentsEntity getCommentById(final int id) {
+		CommentsEntity comment=entityManager.find(CommentsEntity.class, id);
+		return comment;
+	}
+	
 	public List<CommentsEntity> getAllComments(){
 		TypedQuery<CommentsEntity> query=entityManager.createQuery("Select c from CommentsEntity c where c.flag=?1",CommentsEntity.class);
 		query.setParameter(1, true);

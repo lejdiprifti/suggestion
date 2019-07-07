@@ -16,6 +16,7 @@ import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.model.PostModel;
 import com.ikubinfo.project.repository.PostRepository;
 import com.ikubinfo.project.repository.UserRepository;
+import com.ikubinfo.project.service.CommentsService;
 import com.ikubinfo.project.service.PostService;
 import com.ikubinfo.project.util.Paths;
 
@@ -26,10 +27,12 @@ public class PostResource extends BaseResource{
 	private PostService postService;
 	private PostRepository postRepository;
 	private UserRepository userRepository;
+	private CommentsService commentsService;
 	public PostResource() {
 		this.postService= new PostService();
 		this.postRepository=new PostRepository();
 		this.userRepository= new UserRepository();
+		this.commentsService=new CommentsService();
 	}
 	
 	@GET
@@ -79,5 +82,11 @@ public class PostResource extends BaseResource{
 	@Path("/{id}/liked")
 	public Response hasLiked(@PathParam("id") final int id) {
 		return Response.ok(postService.hasLiked(getUsernameFromToken(), postRepository.getPostById(id))).build();
+	}
+	
+	@GET
+	@Path("/{id}/comments")
+	public Response getPostOfComments(@PathParam("id") final int id) {
+		return Response.ok(commentsService.getCommentsOfPost(id)).build();
 	}
 }

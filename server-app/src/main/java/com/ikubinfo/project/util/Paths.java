@@ -9,7 +9,7 @@ public class Paths {
 	public static final String POSTS = "/posts";
 	public static final String SUGGESTIONS="/suggestions";
 	public static final String MESSAGES="/messages";
-
+	public static final String COMMENTS="/comments";
 	private Paths() {
 		super();
 	}
