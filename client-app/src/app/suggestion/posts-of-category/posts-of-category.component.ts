@@ -69,9 +69,9 @@ export class PostsOfCategoryComponent implements OnInit {
 
   comment(id:number){
     this.postService.comment(this.getData(),id).subscribe(res=>{
-      this.commentForm.get('description').setValue('');
       this.loadPosts();
       this.logger.success("Success","You commented successfully!");
+      this.commentForm.get('description').setValue('');
     },
     err=>{
       this.logger.error("Error","Something bad happened.");
