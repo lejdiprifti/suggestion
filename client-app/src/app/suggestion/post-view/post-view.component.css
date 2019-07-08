@@ -10,11 +10,11 @@
 }
 
 .like{
-    margin-top: 7%;
+    float: right;
 }
 
 .unlike{
-    margin-top:7%;
+    float: right;
 }
 
 .image{
@@ -51,4 +51,14 @@
 
 .likeIconStatement{
     margin-top: 5%;
+}
+
+.comment{
+    float: left;
+    width: 5%;
+    margin-right: 1%;
+}
+
+.commentSection{
+    margin-top: 2%;
 }

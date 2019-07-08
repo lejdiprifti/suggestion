@@ -12,7 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import com.ikubinfo.project.base.BaseResource;
-
+import com.ikubinfo.project.model.CommentsModel;
 import com.ikubinfo.project.model.PostModel;
 import com.ikubinfo.project.repository.PostRepository;
 import com.ikubinfo.project.repository.UserRepository;
@@ -84,9 +84,10 @@ public class PostResource extends BaseResource{
 		return Response.ok(postService.hasLiked(getUsernameFromToken(), postRepository.getPostById(id))).build();
 	}
 	
-	@GET
-	@Path("/{id}/comments")
-	public Response getPostOfComments(@PathParam("id") final int id) {
-		return Response.ok(commentsService.getCommentsOfPost(id)).build();
+	@POST
+	@Path("/{id}/comment")
+	public Response insert(CommentsModel comment,@PathParam("id") final int id) throws URISyntaxException {
+		comment.setPost(postRepository.getPostById(id));
+		return Response.created(new URI("/comment/"+commentsService.insert(comment,userRepository.getUserByUsername(getUsernameFromToken())).getId())).build();
 	}
 }

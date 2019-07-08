@@ -12,23 +12,21 @@ import javax.ws.rs.core.Response;
 
 import com.ikubinfo.project.base.BaseResource;
 import com.ikubinfo.project.model.CommentsModel;
+import com.ikubinfo.project.repository.UserRepository;
 import com.ikubinfo.project.service.CommentsService;
 import com.ikubinfo.project.util.Paths;
 @Path(Paths.COMMENTS)
 public class CommentsResource extends BaseResource {
 	private CommentsService commentsService;
+	private UserRepository userRepository;
 	public CommentsResource() {
 		commentsService=new CommentsService();
+		userRepository=new UserRepository();
 	}
 	
 	@GET
 	public Response getAllComments() {
 		return Response.ok(commentsService.getAllComments()).build();
-	}
-	
-	@POST
-	public Response insert(CommentsModel comment) throws URISyntaxException {
-		return Response.created(new URI("/comment/"+commentsService.insert(comment).getId())).build();
 	}
 	
 	@DELETE

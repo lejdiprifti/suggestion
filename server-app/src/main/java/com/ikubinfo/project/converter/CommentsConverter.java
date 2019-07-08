@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ikubinfo.project.base.BaseConverter;
-import com.ikubinfo.project.entity.CategoryEntity;
+
 import com.ikubinfo.project.entity.CommentsEntity;
-import com.ikubinfo.project.model.CategoryModel;
+
 import com.ikubinfo.project.model.CommentsModel;
 
 public class CommentsConverter implements BaseConverter<CommentsModel,CommentsEntity>{

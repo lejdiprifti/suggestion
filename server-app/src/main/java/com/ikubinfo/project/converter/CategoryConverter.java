@@ -24,7 +24,6 @@ public class CategoryConverter implements BaseConverter<CategoryModel, CategoryE
 
 	@Override
 	public CategoryEntity toEntity(CategoryModel model) {
-		// TODO Auto-generated method stub
 		CategoryEntity entity = new CategoryEntity();
 		entity.setCategoryId(model.getCategoryId());
 		entity.setCategoryName(model.getCategoryName());

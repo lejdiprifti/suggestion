@@ -1,11 +1,13 @@
 package com.ikubinfo.project.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 
 import com.ikubinfo.project.converter.CommentsConverter;
 import com.ikubinfo.project.entity.CommentsEntity;
+import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.CommentsModel;
 import com.ikubinfo.project.repository.CommentsRepository;
 import com.ikubinfo.project.repository.PostRepository;
@@ -30,7 +32,7 @@ public class CommentsService {
 	}
 	
 	public List<CommentsModel> getCommentsOfPost(final int postId){
-		return commentsConverter.toModel(commentsRepository.getCommentsOfPost(postRepository.getPostById(postId)));
+		return commentsConverter.toModel(commentsRepository.getCommentsOfPost(postId));
 	}
 	
 	public void delete(final int id) {
@@ -39,7 +41,18 @@ public class CommentsService {
 		commentsRepository.update(comment);
 	}
 	
-	public CommentsEntity insert(CommentsModel comment) {
-		return commentsRepository.insert(commentsConverter.toEntity(comment));
+	public CommentsEntity insert(CommentsModel comment,UserEntity user) {
+		comment.setAddedDate(new Date());
+		comment.setUser(user);
+		comment.setPost(postRepository.getPostById(comment.getPost().getPostId()));
+		comment.setFlag(true);
+		CommentsEntity entity = new CommentsEntity();
+		entity.setId(comment.getId());
+		entity.setDescription(comment.getDescription());
+		entity.setUser(comment.getUser());
+		entity.setPost(comment.getPost());
+		entity.setAddedDate(comment.getAddedDate());
+		entity.setFlag(comment.isFlag());
+		return commentsRepository.insert(entity);
 	}
 }

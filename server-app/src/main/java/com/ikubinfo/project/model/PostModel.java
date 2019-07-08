@@ -21,6 +21,8 @@ public class PostModel {
 	private boolean flag;
 	private boolean isLiked;
 	private List<String> likedUsers;
+	private List<CommentsModel> comments;
+	
 	public PostModel() {
 		super();
 	}
@@ -111,6 +113,14 @@ public class PostModel {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public List<CommentsModel> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<CommentsModel> comments) {
+		this.comments = comments;
 	}
 
 	@Override

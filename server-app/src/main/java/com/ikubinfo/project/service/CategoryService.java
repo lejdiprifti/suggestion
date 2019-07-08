@@ -10,6 +10,7 @@ import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.converter.CategoryConverter;
+import com.ikubinfo.project.converter.CommentsConverter;
 import com.ikubinfo.project.converter.PostConverter;
 import com.ikubinfo.project.entity.CategoryEntity;
 
@@ -17,6 +18,7 @@ import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.CategoryModel;
 import com.ikubinfo.project.model.PostModel;
 import com.ikubinfo.project.repository.CategoryRepository;
+import com.ikubinfo.project.repository.CommentsRepository;
 import com.ikubinfo.project.repository.PostRepository;
 
 public class CategoryService {
@@ -24,11 +26,15 @@ public class CategoryService {
 	private CategoryConverter categoryConverter;
 	private PostRepository postRepository;
 	private PostConverter postConverter;
+	private CommentsRepository commentsRepository;
+	private CommentsConverter commentsConverter;
 	public CategoryService() {
 		categoryRepository = new CategoryRepository();
 		categoryConverter = new CategoryConverter();
 		postRepository= new PostRepository();
 		postConverter=new PostConverter();
+		commentsRepository=new CommentsRepository();
+		commentsConverter=new CommentsConverter();
 	}
 
 	public CategoryModel getCategoryByName(String categoryName) {
@@ -106,10 +112,11 @@ public class CategoryService {
 				for (PostModel post: list) {
 					post.setLiked(postRepository.hasLiked(username, postConverter.toEntity(post)));
 					post.setLikedUsers(postRepository.getUsersLikingPost(post.getPostId()));
+					post.setComments(commentsConverter.toModel(commentsRepository.getCommentsOfPost(post.getPostId())));
 				}
 				return list;
 		}catch (NotFoundException e) {
-			throw new NotAllowedException("You are not subscribed.");
+			throw new BadRequestException("You are not subscribed.");
 		}
 	}
 	

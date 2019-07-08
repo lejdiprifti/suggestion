@@ -8,12 +8,13 @@ import javax.persistence.NoResultException;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 
+import com.ikubinfo.project.converter.CommentsConverter;
 import com.ikubinfo.project.converter.PostConverter;
 import com.ikubinfo.project.entity.PostEntity;
-import com.ikubinfo.project.entity.RoleEntity;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.PostModel;
 import com.ikubinfo.project.repository.CategoryRepository;
+import com.ikubinfo.project.repository.CommentsRepository;
 import com.ikubinfo.project.repository.PostRepository;
 
 public class PostService {
@@ -21,10 +22,15 @@ public class PostService {
 	private PostRepository postRepository;
 	private PostConverter postConverter;
 	private CategoryRepository categoryRepository;
+	
+	private CommentsRepository commentsRepository;
+	private CommentsConverter commentsConverter;
 	public PostService() {
 		postRepository = new PostRepository();
 		postConverter = new PostConverter();
 		categoryRepository=new CategoryRepository();
+		commentsRepository=new CommentsRepository();
+		commentsConverter=new CommentsConverter();
 	}
 	
 	public PostModel getPostById(int postId) {
@@ -46,6 +52,7 @@ public class PostService {
 			for (PostModel post: list) {
 				post.setLiked(postRepository.hasLiked(username, postConverter.toEntity(post)));
 				post.setLikedUsers(postRepository.getUsersLikingPost(post.getPostId()));
+				post.setComments(commentsConverter.toModel(commentsRepository.getCommentsOfPost(post.getPostId())));
 			}
 	   return list;
 		}

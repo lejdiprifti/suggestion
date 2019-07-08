@@ -53,4 +53,12 @@ export class PostService {
         const url = this.url + `/${id}`;
         return this.apiService.delete(url);
     }
+
+    public getPostsOfCategory(id:number): Observable<Comment>{
+        return this.apiService.get(this.url+"/"+id);
+    }
+
+    public comment(comment: any, id:number) {
+        return this.apiService.post(this.url+"/"+id+"/comment" , comment);
+      }
 }
