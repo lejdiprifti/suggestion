@@ -35,15 +35,16 @@
               <div class="ui-g-12 ui-md-4">
                   <div class="ui-inputgroup commentinput">
                       <input type="text" pInputText placeholder="Comment">   
-                      <button pButton type="button" icon="pi pi-comments" class="ui-button-warn" (click)="comment(post.postId)"></button>      
+                      <button pButton type="button" icon="pi pi-comment" class="ui-button-warn" (click)="comment(post.postId)"></button>      
                   </div>
               </div>
            
           </form>
                   <br>
-                  </div>
                   <p-button class="like" icon="pi pi-star-o" *ngIf="!post.liked" (click)="like(post.postId)" label="Like"></p-button>
                   <button pButton type="button" icon="pi pi-times" *ngIf="post.liked" label="Unlike" (click)="unlike(post.postId)" class="ui-button-rounded ui-button-danger unlike"></button>
+                  </div>
+                  
               
               </ikubinfo-panel>
               </div>
