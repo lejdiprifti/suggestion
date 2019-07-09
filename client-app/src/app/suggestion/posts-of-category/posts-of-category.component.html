@@ -5,7 +5,7 @@
     <div _ngcontent-c5="" class="card-header">
       <div _ngcontent-c5="" class="row back">
         <div _ngcontent-c5="" class="col col-xs-3 ">
-            <img src="assets/images/blog.png" alt="post" class="post" />
+            <img src="assets/images/{{posts[0].category.icon}}.png" alt="post" class="post" />
       </div>
         <div _ngcontent-c5="" class="col col-xs-9 text-right">
           <div _ngcontent-c5="" class="d-block huge">{{posts[0].category.categoryName}}</div>
@@ -27,9 +27,10 @@
         <span class="badge badge-primary" *ngIf="post.likedUsers === undefined || post.likedUsers.length === 0"> Be the first to like this post.</span>
         <span class="badge badge-primary" *ngIf="post.likedUsers.length > 0">{{ post.likedUsers }} like this post.</span>        
       </div>
-      <div class="commentSection">
-      <img src="assets/images/chat.png" class="comment" alt="comment"/>
+      <div class="commentSection" *ngIf="post.comments.length > 0">
+      <img  src="assets/images/chat.png" class="comment" alt="comment"/>
       <div class="commentText" *ngFor="let comment of post.comments" >
+          <img src="assets/images/superman.png" width="4%" alt="avatar"/>
       <span class="badge badge-info">{{comment.user.username}}: {{ comment.description }}</span>
       </div>
     </div>
@@ -38,7 +39,7 @@
     <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup commentinput">
             <input type="text" pInputText placeholder="Comment" formControlName="description">   
-            <button pButton type="button" icon="pi pi-comments" class="ui-button-warn" (click)="comment(post.postId)"></button>      
+            <button pButton type="button" icon="pi pi-comment" class="ui-button-warn" (click)="comment(post.postId)"></button>      
         </div>
     </div>
  

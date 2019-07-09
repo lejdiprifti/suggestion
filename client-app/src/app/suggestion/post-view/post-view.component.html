@@ -27,6 +27,7 @@
             <div class="commentSection">
                 <img src="assets/images/chat.png" class="comment" alt="comment"/>
                 <div class="commentText" *ngFor="let comment of post.comments" >
+                  <img src="assets/images/superman.png" width="4%" alt="avatar"/>
                 <span class="badge badge-info">{{comment.user.username}}: {{ comment.description }}</span>
                 </div>
               </div>
