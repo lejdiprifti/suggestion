@@ -29,7 +29,7 @@
        <div class="dropdown"  >
         <span class="badge badge-primary" *ngIf="post.likedUsers.length > 4">{{post.likedUsers | slice:0:4 }} and <span>others</span> like this post.</span>
         <div  class="dropdown-content">
-          <p class="user" *ngFor="let user of post.likedUsers"><img src="assets/images/batman.png" width="25%" alt="avatar" style="float: left; padding-top: 1%;"/>{{ user }}</p>
+          <p class="user" *ngFor="let user of post.likedUsers | slice:4"><img src="assets/images/batman.png" width="25%" alt="avatar" style="float: left; padding-top: 1%;"/>{{ user }}</p>
           
         </div>
       </div>

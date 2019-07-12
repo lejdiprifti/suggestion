@@ -24,7 +24,7 @@ public class CommentsRepository {
 	}
 	
 	public List<CommentsEntity> getAllComments(){
-		TypedQuery<CommentsEntity> query=entityManager.createQuery("Select c from CommentsEntity c where c.flag=?1",CommentsEntity.class);
+		TypedQuery<CommentsEntity> query=entityManager.createQuery("Select c from CommentsEntity c where c.flag=?1 order by c.addedDate DESC",CommentsEntity.class);
 		query.setParameter(1, true);
 		return query.getResultList();
 	}
