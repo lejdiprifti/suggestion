@@ -12,3 +12,41 @@ width:100%;
 .commentText{
     margin-left:7%;
 }
+
+
+
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #3a57ff;
+    min-width: 140px;
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content .user {
+    color: rgb(255, 255, 255);
+    padding-top: 2%;
+    text-align: center;
+    text-emphasis: bold;
+    font-size: 14px;
+    display: block;
+  }
+
+  .user{
+      margin-top: 2%;
+      margin-right: 2%;
+  }
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  
