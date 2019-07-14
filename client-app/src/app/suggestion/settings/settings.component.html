@@ -3,7 +3,7 @@
 <form role="form" [formGroup]="settingsForm">
   <div class="form-content">
 <!--Avatar-->
-<ikubinfo-input label="Avatar">
+<ikubinfo-input >
     <p-dropdown [options]="avatars" formControlName="avatar" filter="true">
       <ng-template let-item pTemplate="selectedItem">
           <img src="assets/images/{{item.label}}.png" style="width:32px;vertical-align:middle" />

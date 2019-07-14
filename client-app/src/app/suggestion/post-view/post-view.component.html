@@ -46,7 +46,7 @@
               <div class="ui-g-12 ui-md-4">
                   <div class="ui-inputgroup commentinput">
                       <input type="text" pInputText placeholder="Comment" formControlName="description">   
-                      <button pButton type="button" icon="pi pi-comment" class="ui-button-warn" (click)="comment(post.postId)"></button>      
+                      <button [disabled]="commentForm.invalid" pButton type="button" icon="pi pi-comment" class="ui-button-warn" (click)="comment(post.postId)"></button>      
                   </div>
               </div>
            
