@@ -42,8 +42,9 @@
           <img src="assets/images/{{comment.user.avatar}}.png" width="4%" alt="avatar"/>
       <span class="badge badge-info">{{comment.user.username}}: {{ comment.description }}</span>
     </div>
-    <a (click)="showComments()" class="badge badge-light" *ngIf="post.comments.length > 3">Load more comments...</a>
-    </div>
+    <a (click)="showComments()" class="badge badge-light" *ngIf="post.comments.length > i">Load more comments...</a>
+    <a (click)="showLessComments()" class="badge badge-light" *ngIf="post.comments.length <= i && post.comments.length > 3">Show less comments...</a>
+  </div>
 <form role="form" [formGroup]="commentForm" class="commentform">
 
     <div class="ui-g-12 ui-md-4">

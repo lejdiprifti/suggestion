@@ -81,4 +81,8 @@ export class PostsOfCategoryComponent implements OnInit {
   showComments(): void{
    this.i += 3;
   }
+
+  showLessComments(): void{
+    this.i=3;
+  }
 }
