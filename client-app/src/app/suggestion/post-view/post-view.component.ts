@@ -14,6 +14,7 @@ export class PostViewComponent implements OnInit {
   
   posts: Object;
   commentForm: FormGroup;
+  i :number=3;
   constructor(private fb: FormBuilder,private postService: PostService, private router: Router, private active: ActivatedRoute,
  private logger: LoggerService) { }
 
@@ -68,6 +69,10 @@ export class PostViewComponent implements OnInit {
       err=>{
         this.logger.error("Error","Something bad happened.");
       });
+    }
+
+    showComments(){
+      this.i += 3;
     }
   }
   

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SuggestionService } from '@ikubinfo/core/services/suggestion.service';
 import { ActivatedRoute } from '@angular/router';
-import { post } from 'selenium-webdriver/http';
-import { Post } from '@ikubinfo/core/models/post';
+
 import { PostService } from '@ikubinfo/core/services/post.service';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { CategoriesService } from '@ikubinfo/core/services/categories.service';
@@ -18,6 +16,7 @@ export class PostsOfCategoryComponent implements OnInit {
   commentObj: Comment;
   posts: Object;
   commentForm: FormGroup;
+   i: number=3;
   constructor(private commentsService:CommentsService,
     private logger: LoggerService,private categoryService: CategoriesService,
     private postService: PostService,private active: ActivatedRoute,private fb: FormBuilder) { }
@@ -76,5 +75,10 @@ export class PostsOfCategoryComponent implements OnInit {
     err=>{
       this.logger.error("Error","Something bad happened.");
     });
+  }
+
+
+  showComments(): void{
+   this.i += 3;
   }
 }

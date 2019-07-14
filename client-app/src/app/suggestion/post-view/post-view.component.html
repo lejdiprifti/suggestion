@@ -34,10 +34,11 @@
      
             <div class="commentSection" *ngIf="post.comments.length > 0">
                 <img src="assets/images/chat.png" class="comment" alt="comment"/>
-                <div class="commentText" *ngFor="let comment of post.comments" >
+                <div class="commentText" *ngFor="let comment of post.comments | slice:0:i" >
                   <img src="assets/images/{{comment.user.avatar}}.png" width="4%" alt="avatar"/>
                 <span class="badge badge-info">{{comment.user.username}}: {{ comment.description }}</span>
                 </div>
+                <a (click)="showComments()" class="badge badge-light" *ngIf="post.comments.length > 3">Load more comments...</a>
               </div>
           <form role="form" [formGroup]="commentForm" class="commentform">
           
