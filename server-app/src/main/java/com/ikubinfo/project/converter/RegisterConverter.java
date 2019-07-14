@@ -9,8 +9,8 @@ public class RegisterConverter implements BaseConverter<RegisterRequest, UserEnt
 
 	@Override
 	public RegisterRequest toModel(UserEntity entity) {
-		// TODO Auto-generated method stub
 		RegisterRequest model = new RegisterRequest();
+		model.setAvatar(entity.getAvatar());
 		model.setUsername(entity.getUsername());
 		model.setPassword(entity.getPassword());
 		model.setRole(entity.getRole());
@@ -25,6 +25,7 @@ public class RegisterConverter implements BaseConverter<RegisterRequest, UserEnt
 	public UserEntity toEntity(RegisterRequest model) {
 		// TODO Auto-generated method stub
 		UserEntity entity = new UserEntity();
+		entity.setAvatar(model.getAvatar());
 		entity.setUsername(model.getUsername());
 		entity.setPassword(model.getPassword());
 		entity.setRole(model.getRole());

@@ -20,7 +20,7 @@ public class PostModel {
 	private String link;
 	private boolean flag;
 	private boolean isLiked;
-	private List<String> likedUsers;
+	private List<UserModel> likedUsers;
 	private List<CommentsModel> comments;
 	
 	public PostModel() {
@@ -83,11 +83,11 @@ public class PostModel {
 		this.isLiked = isLiked;
 	}
 
-	public List<String> getLikedUsers() {
+	public List<UserModel> getLikedUsers() {
 		return likedUsers;
 	}
 
-	public void setLikedUsers(List<String> likedUsers) {
+	public void setLikedUsers(List<UserModel> likedUsers) {
 		this.likedUsers = likedUsers;
 	}
 

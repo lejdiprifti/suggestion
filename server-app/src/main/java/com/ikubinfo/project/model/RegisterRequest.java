@@ -5,6 +5,7 @@ import java.util.Date;
 import com.ikubinfo.project.entity.RoleEntity;
 
 public class RegisterRequest {
+	private String avatar;
 	private String username;
 	private String password;
 	private RoleEntity role;
@@ -15,6 +16,14 @@ public class RegisterRequest {
 	
 	public RegisterRequest() {
 		
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public String getUsername() {

@@ -13,6 +13,7 @@ public class UserConverter implements BaseConverter<UserModel, UserEntity> {
 	public UserModel toModel(UserEntity entity) {
 		UserModel model = new UserModel();
 		model.setId(entity.getId());
+		model.setAvatar(entity.getAvatar());
 		model.setUsername(entity.getUsername());
 		model.setPassword(entity.getPassword());
 		model.setRole(entity.getRole());
@@ -28,6 +29,7 @@ public class UserConverter implements BaseConverter<UserModel, UserEntity> {
 		// TODO Auto-generated method stub
 		UserEntity entity = new UserEntity();
 		entity.setId(model.getId());
+		entity.setAvatar(model.getAvatar());
 		entity.setUsername(model.getUsername());
 		entity.setPassword(model.getPassword());
 		entity.setRole(model.getRole());

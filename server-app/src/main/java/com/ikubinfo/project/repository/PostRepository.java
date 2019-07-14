@@ -160,16 +160,13 @@ try {
 		entityManager.getTransaction().commit();
 	}
 	
-	public List<String> getUsersLikingPost(final int id){
+	public List<UserEntity> getUsersLikingPost(final int id){
 		TypedQuery<UserEntity> query=entityManager.createQuery("Select p.user from PostsLiked p where p.post =?1 and p.flag=?2 ORDER BY p.date DESC",UserEntity.class);
 		query.setParameter(1, getPostById(id));
 		query.setParameter(2, true);
 		List<UserEntity> list=query.getResultList();
-		List<String> usernameList=new ArrayList<String>();
-		for (UserEntity post: list) {
-			usernameList.add(post.getUsername());
-		}
-		return usernameList;
+		
+		return list;
 	}
 	
 	public List<PostEntity> getLikedPostsByUser(UserEntity user){

@@ -10,6 +10,8 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "user_id", nullable = false, unique = true, length = 11)
 	private int id;
+	@Column (name="avatar")
+	private String avatar;
 	@Column(name = "username")
 	private String username;
 	@Column(name = "password")
@@ -94,10 +96,21 @@ public class UserEntity {
 		this.flag = flag;
 	}
 
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role
-				+ ", birthdate=" + birthdate + ", email=" + email + ", address=" + address + ", flag=" + flag + "]";
+		return "UserEntity [id=" + id + ", avatar=" + avatar + ", username=" + username + ", password=" + password
+				+ ", role=" + role + ", birthdate=" + birthdate + ", email=" + email + ", address=" + address
+				+ ", flag=" + flag + "]";
 	}
+
+	
 
 }

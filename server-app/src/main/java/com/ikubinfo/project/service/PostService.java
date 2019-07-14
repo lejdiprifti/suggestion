@@ -10,6 +10,7 @@ import javax.ws.rs.NotFoundException;
 
 import com.ikubinfo.project.converter.CommentsConverter;
 import com.ikubinfo.project.converter.PostConverter;
+import com.ikubinfo.project.converter.UserConverter;
 import com.ikubinfo.project.entity.PostEntity;
 import com.ikubinfo.project.entity.UserEntity;
 import com.ikubinfo.project.model.PostModel;
@@ -22,7 +23,7 @@ public class PostService {
 	private PostRepository postRepository;
 	private PostConverter postConverter;
 	private CategoryRepository categoryRepository;
-	
+	private UserConverter userConverter;
 	private CommentsRepository commentsRepository;
 	private CommentsConverter commentsConverter;
 	public PostService() {
@@ -31,6 +32,7 @@ public class PostService {
 		categoryRepository=new CategoryRepository();
 		commentsRepository=new CommentsRepository();
 		commentsConverter=new CommentsConverter();
+		userConverter=new UserConverter();
 	}
 	
 	public PostModel getPostById(int postId) {
@@ -51,7 +53,7 @@ public class PostService {
 			List<PostModel> list=postConverter.toModel(postRepository.getPostsOfSubscribedCategories(username));
 			for (PostModel post: list) {
 				post.setLiked(postRepository.hasLiked(username, postConverter.toEntity(post)));
-				post.setLikedUsers(postRepository.getUsersLikingPost(post.getPostId()));
+				post.setLikedUsers(userConverter.toModel(postRepository.getUsersLikingPost(post.getPostId())));
 				post.setComments(commentsConverter.toModel(commentsRepository.getCommentsOfPost(post.getPostId())));
 			}
 	   return list;

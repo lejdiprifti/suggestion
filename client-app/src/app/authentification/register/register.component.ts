@@ -16,6 +16,7 @@ import { Role } from "@ikubinfo/core/models/role";
 import { Register } from "@ikubinfo/core/models/register";
 import { RoleEnum } from "@ikubinfo/core/models/role.enum";
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
+import { SelectItem } from 'primeng/components/common/selectitem';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class RegisterComponent implements OnInit {
   passwordForm: FormGroup;
   role: Role;
   registerUser: Register;
+  avatars: Array<SelectItem>;
 
   static isOldEnough(control: AbstractControl): any {
     const birthDatePlus18 = new Date(control.value);
@@ -48,6 +50,14 @@ static passwordMatch(group: FormGroup):any{
   ) 
   {
     this.registerUser = {};
+    this.avatars=[
+      {label: 'batman' , value: 'batman'},
+      {label: 'superman', value: 'superman'},
+      {label: 'joker', value: 'joker'},
+      {label: 'ironman', value: 'ironman'}
+    ];
+
+    
   }
   ngOnInit() {
  
@@ -69,6 +79,7 @@ static passwordMatch(group: FormGroup):any{
   {validators: RegisterComponent.passwordMatch});
 
   this.registerForm = this.fb.group({
+    avatar: [""],
     username: [
       "",
       [
@@ -94,6 +105,7 @@ static passwordMatch(group: FormGroup):any{
   }
 
   register(): void {
+    this.registerUser.avatar=this.registerForm.value.avatar || 'batman';
     this.registerUser.username = this.registerForm.value.username;
     this.registerUser.password = this.passwordForm.value.password;
     this.registerUser.birthdate = this.registerForm.value.birthdate;

@@ -21,11 +21,13 @@
           <div class="likeIconStatement">
               <img class="likeIcon" src="assets/images/like.png" alt="like"/>
               <span class="badge badge-primary" *ngIf="post.likedUsers === undefined || post.likedUsers.length === 0"> Be the first to like this post.</span>
-        <span class="badge badge-primary" *ngIf="post.likedUsers.length > 0 && post.likedUsers.length <= 4">{{ post.likedUsers }} like this post.</span>        
-       <div class="dropdown"  >
-        <span class="badge badge-primary" *ngIf="post.likedUsers.length > 4">{{post.likedUsers | slice:0:4}} and <span>others</span> like this post.</span>
+        <div *ngIf="post.likedUsers.length > 0 && post.likedUsers.length <= 4">
+              <span class="badge badge-primary" *ngFor="let user of post.likedUsers">{{ user.username }} like this post.</span>        
+        </div>
+              <div class="dropdown" *ngIf="post.likedUsers.length > 4" >
+        <span class="badge badge-primary" *ngFor="let user of post.likedUsers | slice:0:4">{{user.username}} </span><span class="badge badge-primary">and <span>others</span> like this post.</span>
         <div  class="dropdown-content">
-          <p class="user" *ngFor="let user of post.likedUsers | slice:4"><img src="assets/images/superhero.png" width="25%" alt="avatar" style="float: left; padding-top: 1%;"/>{{ user }}</p> 
+          <p class="user" *ngFor="let user of post.likedUsers | slice:4"><img src="assets/images/{{user.avatar}}.png" width="25%" alt="avatar" style="float: left; padding-top: 1%;"/>{{ user.username }}</p> 
         </div>
       </div>
       </div>
@@ -33,7 +35,7 @@
             <div class="commentSection">
                 <img src="assets/images/chat.png" class="comment" alt="comment"/>
                 <div class="commentText" *ngFor="let comment of post.comments" >
-                  <img src="assets/images/superman.png" width="4%" alt="avatar"/>
+                  <img src="assets/images/{{comment.user.avatar}}.png" width="4%" alt="avatar"/>
                 <span class="badge badge-info">{{comment.user.username}}: {{ comment.description }}</span>
                 </div>
               </div>

@@ -86,7 +86,7 @@ public class UserService {
 		if (user.getAddress()!=null) {
 			foundUser.setAddress(user.getAddress().trim());
 		}
-		
+		foundUser.setAvatar(user.getAvatar());
 		return userConverter.toModel(userRepository.update(foundUser));
 		
 	}

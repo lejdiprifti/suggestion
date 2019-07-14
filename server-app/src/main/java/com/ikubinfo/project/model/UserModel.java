@@ -7,6 +7,7 @@ import com.ikubinfo.project.entity.RoleEntity;
 
 public class UserModel {
 	private int id;
+	private String avatar;
 	private String username;
 	private String password;
 	private RoleEntity role;
@@ -29,6 +30,17 @@ public class UserModel {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	
+	public String getAvatar() {
+		return avatar;
+	}
+
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
 
 	public String getUsername() {
 		return username;

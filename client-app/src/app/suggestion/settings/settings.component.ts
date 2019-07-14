@@ -10,6 +10,7 @@ import { User } from '@ikubinfo/core/models/user';
 import { AuthService } from '@ikubinfo/core/services/auth.service';
 import { RegisterService } from '@ikubinfo/core/services/register.service';
 import { DatePipe } from '@angular/common';
+import { SelectItem } from 'primeng/components/common/selectitem';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class SettingsComponent implements OnInit {
  passwordForm: FormGroup;
  authService: AuthService;
  user: User;
+ avatars: Array<SelectItem>
   constructor(private confirmationService: ConfirmationService,
               private logger: LoggerService,private router: Router ,
               private fb:FormBuilder,
@@ -32,7 +34,12 @@ export class SettingsComponent implements OnInit {
     this.updateUser={
 
     }
-    
+    this.avatars=[
+      {label: 'batman' , value: 'batman'},
+      {label: 'superman', value: 'superman'},
+      {label: 'joker', value: 'joker'},
+      {label: 'ironman', value: 'ironman'}
+    ];
   }
 
   ngOnInit() {
@@ -43,6 +50,7 @@ export class SettingsComponent implements OnInit {
         const newDate= new Date(dateString);
         const convertedDate = this.datePipe.transform(newDate, "yyyy-MM-dd");
         this.settingsForm.get('birthdate').setValue(convertedDate);
+        this.settingsForm.get('avatar').setValue(this.user.avatar);
         this.settingsForm.get('address').setValue(this.user.address);
         this.settingsForm.get('email').setValue(this.user.email);
       }
@@ -64,6 +72,7 @@ export class SettingsComponent implements OnInit {
     {validators: RegisterComponent.passwordMatch});
 
     this.settingsForm=this.fb.group({
+      avatar: [''],
       birthdate: ['',
     [
       RegisterComponent.isOldEnough
@@ -104,6 +113,7 @@ updatePassword(): void {
     
 }
 updateData(): void {
+  this.updateUser.avatar=this.settingsForm.value.avatar;
   if (this.settingsForm.value.birthdate !== null){
     this.updateUser.birthdate=this.settingsForm.value.birthdate;
   }
