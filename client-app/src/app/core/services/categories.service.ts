@@ -55,5 +55,11 @@ export class CategoriesService {
     return this.apiService.get(this.url+'/'+id+'/check');
   }
 
-
+  getSubscribedCategoriesByName(name: string){
+    return this.apiService.get(this.url+'/'+name+'/subscribed');
+  }
+  
+  getUnsubscribedCategoriesByName(name: string){
+    return this.apiService.get(this.url+'/'+name+'/unsubscribed');
+  }
 }

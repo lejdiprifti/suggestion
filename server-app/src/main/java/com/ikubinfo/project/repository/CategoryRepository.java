@@ -193,5 +193,28 @@ public class CategoryRepository  {
 		return query.getResultList();
 	}
 	
+	public List<Object>getSubscribedCategoriesByName(String categoryName,String username){
+		UserEntity user=userRepository.getUserByUsername(username);
+		Query query = entityManager
+				.createNativeQuery("Select * from category c where ( c.category_name LIKE ?1 or c.category_description LIKE ?1 ) and c.category_id in (Select category_id from subscriptions where user_id=?2 and flag=?3) and c.category_state=?4 and c.flag=?3 ORDER BY accepted_date DESC");
+		query.setParameter(1, "%"+categoryName+"%");
+		query.setParameter(2, user.getId());
+		query.setParameter(4, 1);
+		query.setParameter(3, true); 
+	
+		return query.getResultList();
+	}
+	
+	public List<Object> getUnsubscribedCategoriesByName(String categoryName,String username){
+		UserEntity user=userRepository.getUserByUsername(username);
+		Query query = entityManager
+				.createNativeQuery("Select * from category c where ( c.category_name LIKE ?1 or c.category_description LIKE ?1 ) and c.category_id not in (Select category_id from subscriptions where user_id=?2 and flag=?3) and c.category_state=?4 and c.flag=?3 ORDER BY accepted_date DESC");
+		query.setParameter(1, "%"+categoryName+"%");
+		query.setParameter(2, user.getId());
+		query.setParameter(4, 1);
+		query.setParameter(3, true);
+	
+		return query.getResultList();
+	}
 	
 }

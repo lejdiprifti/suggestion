@@ -16,10 +16,11 @@ public class UserEntity {
 	private String username;
 	@Column(name = "password")
 	private String password;
-	@ManyToOne(cascade = { CascadeType.MERGE })
+	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "role_id", nullable = false)
 	private RoleEntity role;
 	@Column(name = "birthdate")
+	@Temporal (TemporalType.DATE)
 	private Date birthdate;
 	@Column(name = "email")
 	private String email;

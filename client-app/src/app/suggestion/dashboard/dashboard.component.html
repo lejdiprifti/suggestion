@@ -10,16 +10,21 @@
           <div _ngcontent-c5="" class="d-block huge">{{categories.length}}</div>
           <div _ngcontent-c5="" class="d-block">New Categories!</div></div></div></div>
     </div>
+    <div class="ui-inputgroup searchgroup ">
+      <input type="text" #keyword pInputText placeholder="Category" class="search" >
+      <button pButton type="button" icon="fa fa-search" class="ui-button-warn" (click)="getSubscriptionByName(keyword.value)"></button>      
+  </div>
+
 <div class="row" *ngIf="categories.length > 0">
             
   <div class="col col-xl-6 col-lg-12" *ngFor="let category of categories">
     <div class="panel">
-    <ikubinfo-panel header="{{ category[3] }}">
+    <ikubinfo-panel header="{{ category[3] || category.categoryName }}">
       <div panel-content  >
-        <img src="assets/images/{{category[8]}}.png" alt="{{category[8]}}" width="80px" class="icon"/>
-        <h1 >{{ category[3] }}</h1>
-        <p>{{ category[2] }}</p>
-        <button pButton icon="pi pi-check" class="ui-button-success button" (click)="subscribe(category[0])" label="Subscribe"></button>
+        <img src="assets/images/{{category[8] || category.icon}}.png" alt="{{category[8] || category.icon}}" width="80px" class="icon"/>
+        <h1 >{{ category[3] || category.categoryName }}</h1>
+        <p>{{ category[2] || category.categoryDescription }}</p>
+        <button pButton icon="pi pi-check" class="ui-button-success button" (click)="subscribe(category[0] || category.categoryId)" label="Subscribe"></button>
       </div>
     </ikubinfo-panel>
     </div>

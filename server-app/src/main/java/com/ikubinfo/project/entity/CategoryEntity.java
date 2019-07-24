@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 @Entity
@@ -41,6 +43,7 @@ public class CategoryEntity {
 	private UserEntity acceptedUser;
 
 	@Column(name = "accepted_date")
+	@Temporal (TemporalType.TIMESTAMP)
 	private Date acceptedDate;
 	
 	@Column(name="icon")

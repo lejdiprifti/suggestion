@@ -48,5 +48,10 @@ width:100%;
   
   /* Show the dropdown menu on hover */
   .dropdown:hover .dropdown-content {display: block;}
-  
-  
+  .search{
+   width: 200%;
+  }
+  .searchgroup{
+    margin-left: 80%;
+  margin-bottom: 3%;
+  }

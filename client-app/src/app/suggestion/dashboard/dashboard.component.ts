@@ -47,4 +47,13 @@ loadData() : void{
     this.logger.error("Error","Something bad happened.");
   });
 }
+
+getSubscriptionByName(keyword: string):void{
+  this.categoryService.getUnsubscribedCategoriesByName(keyword).subscribe(data=>{
+    this.categories=data;
+  },
+  err=>{
+    this.logger.error("Error", "Something bad happened.");
+  });
+}
 }

@@ -1,16 +1,22 @@
 <div _ngcontent-c27="" class="alert alert-warning" *ngIf="subscriptions.length === 0">
     <strong _ngcontent-c27="" class="ng-tns-c27-3">Oh snap!</strong> You have not subscribed to a category yet.</div>
-<div class="row">
-            
+
+      <div class="ui-inputgroup searchgroup ">
+          <input type="text" #keyword pInputText placeholder="Subscription" class="search" >
+          <button pButton type="button" icon="fa fa-search" class="ui-button-warn" (click)="getSubscriptionByName(keyword.value)"></button>      
+      </div>
+ 
+    <div class="row">
+ 
   <div class="col col-xl-6 col-lg-12" *ngFor="let category of subscriptions" >
     <div class="panel" >
-    <ikubinfo-panel header="{{ category[3] }}"  >
+    <ikubinfo-panel header="{{ category[3] || category.categoryName }}"  >
       <div panel-content >
-        <img src="assets/images/{{category[8]}}.png" alt="{{category[8]}}" width="80px" class="icon"/>
-        <h1>{{ category[3] }}</h1>
-        <p>{{ category[2] }}</p>
-        <button pButton type="button" label="Open" class="ui-button-info" (click)="viewPosts(category[0])"></button>
-        <button pButton type="button" label="Unsubscribe" icon="pi pi-times" class="ui-button-danger button" (click)="unsubscribe(category[0])"></button>
+        <img src="assets/images/{{category[8] || category.icon }}.png" alt="{{category[8] || category.icon }}" width="80px" class="icon"/>
+        <h1>{{ category[3] || category.categoryName }}</h1>
+        <p>{{ category[2] || category.categoryDescription }}</p>
+        <button pButton type="button" label="Open" class="ui-button-info" (click)="viewPosts(category[0] || category.categoryId)"></button>
+        <button pButton type="button" label="Unsubscribe" icon="pi pi-times" class="ui-button-danger button" (click)="unsubscribe(category[0] || category.categoryId)"></button>
 
       </div>
     </ikubinfo-panel>

@@ -48,6 +48,18 @@ public class CategoryResource  extends BaseResource {
 		}
 		
 		@GET
+		@Path("/{categoryName}/subscribed")
+		public Response getSubscribedCategoriesByName(@PathParam("categoryName") String categoryName) {
+			return Response.ok(categoryRepository.getSubscribedCategoriesByName(categoryName, getUsernameFromToken())).build();
+		}
+		
+		@GET
+		@Path("/{categoryName}/unsubscribed")
+		public Response getUnsubscribedCategoriesByName(@PathParam("categoryName") String categoryName) {
+			return Response.ok(categoryRepository.getUnsubscribedCategoriesByName(categoryName, getUsernameFromToken())).build();
+		}
+		
+		@GET
 		@Path("/id/{categoryId}")
 		public Response getCategoryById(@PathParam("categoryId") int categoryId) {
 			return Response.ok(categoryService.getCategoryById(categoryId)).build();

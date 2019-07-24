@@ -52,6 +52,13 @@ export class SubscriptionsComponent implements OnInit {
     this.router.navigate(['suggestion/categories/'+id+'/posts']);
   }
 
-  
+  getSubscriptionByName(keyword: string):void{
+    this.categoryService.getSubscribedCategoriesByName(keyword).subscribe(data=>{
+      this.subscriptions=data;
+    },
+    err=>{
+      this.logger.error("Error", "Something bad happened.");
+    });
+  }
     
 }
