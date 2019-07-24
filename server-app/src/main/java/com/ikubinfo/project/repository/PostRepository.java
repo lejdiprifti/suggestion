@@ -175,4 +175,13 @@ try {
 		query.setParameter(2, true);
 		return query.getResultList();
 	}
+	
+	public List<Object[]> getPostsByName(String postName,String username){
+		Query query=entityManager.createNativeQuery("Select * from post p where ( p.post_name LIKE ?1 or p.post_description LIKE ?1 ) and "
+				+ "p.category_id in (Select c.category_id from subscriptions c where c.flag=?2 and c.user_id=?3) and p.flag=?2");
+		query.setParameter(1, "%"+postName+"%");
+		query.setParameter(2, true);
+		query.setParameter(3, userRepository.getUserByUsername(username).getId());
+		return query.getResultList();
+	}
 }

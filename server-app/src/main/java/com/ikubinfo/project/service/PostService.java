@@ -44,7 +44,15 @@ public class PostService {
 			throw new NotFoundException();
 		}
 		}
-
+	public List<PostModel> getPostsByName(String postName,String username) {
+		List<PostModel> list=postConverter.toModelObject(postRepository.getPostsByName(postName, username));
+		for (PostModel post: list) {
+			post.setLiked(postRepository.hasLiked(username, postConverter.toEntity(post)));
+			post.setLikedUsers(userConverter.toModel(postRepository.getUsersLikingPost(post.getPostId())));
+			post.setComments(commentsConverter.toModel(commentsRepository.getCommentsOfPost(post.getPostId())));
+		}
+   return list;
+	}
 	public List<PostModel> getPosts(String username,LinkedHashMap role) {
 		if (role.get("id").equals(1)) {
 		List<PostModel> list=postConverter.toModel(postRepository.getPosts());

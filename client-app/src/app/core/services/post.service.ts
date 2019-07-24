@@ -61,4 +61,8 @@ export class PostService {
     public comment(comment: any, id:number) {
         return this.apiService.post(this.url+"/"+id+"/comment" , comment);
       }
+
+    public getPostsByName(name: string){
+        return this.apiService.get(this.url+"/"+name);
+    }
 }

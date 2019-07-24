@@ -77,5 +77,15 @@ export class PostViewComponent implements OnInit {
     showLessComments(): void{
       this.i=3;
     }
+
+    public getPostsByName(name: string){
+      this.postService.getPostsByName(name).subscribe(res=>{
+        this.posts=res;
+        console.log(res);
+      },
+      err=>{
+        this.logger.info("Info", "Type something first.");
+      });
+    }
   }
   

@@ -40,6 +40,11 @@ public class PostResource extends BaseResource{
 		return Response.ok(postService.getPosts(getUsernameFromToken(),getRoleFromToken())).build();
 	}
 	
+	@GET
+	@Path("/{postName}")
+	public Response getPostsByUsername(@PathParam("postName") String postName) {
+		return Response.ok(postService.getPostsByName(postName,getUsernameFromToken())).build();
+	}
 	
 	@GET
 	@Path("/id/{postId}")

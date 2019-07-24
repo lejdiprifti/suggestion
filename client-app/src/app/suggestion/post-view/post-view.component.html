@@ -8,11 +8,16 @@
           <div _ngcontent-c5="" class="d-block huge">{{posts.length}}</div>
           <div _ngcontent-c5="" class="d-block">Latest Posts!</div></div></div></div>
     </div>
+
+    <div class="ui-inputgroup searchgroup ">
+      <input type="text" #keyword pInputText placeholder="Search" class="search" >
+      <button pButton type="button" icon="fa fa-search" class="ui-button-warn" (click)="getPostsByName(keyword.value)"></button>      
+  </div>
 <div class="row">
             
     <div class="col col-xl-6 col-lg-12" *ngFor="let post of posts" >
       <div class="panel" >
-      <ikubinfo-panel header="{{post.postName}}">
+      <ikubinfo-panel header="{{ post.postName }}">
         <div panel-content >
           <img *ngIf="post.image !== ''" src="assets/images/{{ post.image }}.jpg" width="480px" class="image" />
           <img *ngIf="post.image === ''" src="assets/images/football.jpg" width="480px" alt="football" class="image"/>
